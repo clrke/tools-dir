@@ -21,7 +21,7 @@ class PaperTableSeeder extends Seeder {
 			]);
 		Paper::create([
 			'title' => 'Pregnancy Test',
-			'abstract' => 'You need to know what to do when you\'re pregnant',
+			'abstract' => 'You need to know what to do when you are pregnant',
 			'authors' => 'Aquino, et al', 'pageCount' => '65', 'year' => '2015',
 			]);
 		Paper::create([
