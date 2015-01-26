@@ -14,7 +14,9 @@
 Route::get('/', function()
 {
 	$papers = Paper::all();
-	$years = json_encode([2015]);
+	$years = array_unique(Paper::lists('year'));
+	rsort($years);
+	$years = json_encode($years);
 
 	return View::make('papers.index', compact('papers', 'years'));
 });
