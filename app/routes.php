@@ -13,10 +13,31 @@
 
 Route::get('/', function()
 {
-	$papers = Paper::all();
-	$years = array_unique(Paper::lists('year'));
-	rsort($years);
-	$years = json_encode($years);
+	if(Auth::check())
+	{
+		$papers = Paper::all();
+		$years = array_unique(Paper::lists('year'));
+		rsort($years);
+		$years = json_encode($years);
 
-	return View::make('papers.index', compact('papers', 'years'));
+		return View::make('papers.index', compact('papers', 'years'));
+	}
+	else
+	{
+		return View::make('login');
+	}
+});
+
+Route::post('/login', function ()
+{
+	if(Auth::attempt(Input::all()))
+		return Redirect::to('/');
+	else
+		return Redirect::back()->withInput(Input::all())->withError('Invalid credentials');
+});
+
+Route::get('/logout', function ()
+{
+	Auth::logout();
+	return Redirect::to('/');
 });

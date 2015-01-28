@@ -24,7 +24,7 @@
 							<a href="#">Clarke Benedict Plumo</a>
 							<ul class="dropdown">
 								<li><a href="#">Submit Paper</a></li>
-								<li><a href="#">Log Out</a></li>
+								<li><a href="/logout">Log Out</a></li>
 							</ul>
 						</li>
 					</ul>
