@@ -24,7 +24,9 @@ Route::get('/', function()
 	}
 	else
 	{
-		return View::make('login');
+		$input = Session::get('input');
+		$error = Session::get('error');
+		return View::make('login', compact('input', 'error'));
 	}
 });
 
