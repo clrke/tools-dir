@@ -4,6 +4,8 @@
 		<title>Thesis Papers</title>
 		<link rel="stylesheet" type="text/css" href="foundation/css/foundation.min.css">
 		<link rel="stylesheet" type="text/css" href="src/css/main.css">
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="foundation/js/foundation.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
 	</head>
 	<body>
@@ -13,6 +15,8 @@
 					<li class="name">
 						<h1><a href="#">Thesis Papers Directory</a></h1>
 					</li>
+				     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+				    <li class="toggle-topbar menu-icon"><a href="#"><span>MENU</span></a></li>
 				</ul>
 				<section class="top-bar-section">
 					<ul class="right">
