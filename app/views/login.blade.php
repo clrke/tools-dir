@@ -11,7 +11,9 @@
 		<div class="row">
 			<form method="post" action="/login">
 				<fieldset class="column medium-6 small-10 small-centered medium-centered">
-					@if(Session::get('error'))<small class="error">{{Session::get('error')}}</small>@endif
+					@if(Session::get('error'))
+						<small class="error">{{Session::get('error')}}</small>
+					@endif
 					<input type="text" name="username" placeholder="Username">
 					<input type="password" name="password" placeholder="Password">
 					<button type="submit" class="button">Log In</button>
