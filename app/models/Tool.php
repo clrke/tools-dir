@@ -1,5 +1,5 @@
 <?php
 
-class Paper extends Eloquent {
+class Tool extends Eloquent {
 	protected $fillable = ['title', 'abstract', 'authors', 'pageCount', 'year'];
 }

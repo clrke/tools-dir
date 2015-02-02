@@ -15,8 +15,8 @@ Route::get('/', function()
 {
 	if(Auth::check())
 	{
-		$papers = Paper::all();
-		$years = array_unique(Paper::lists('year'));
+		$papers = Tool::all();
+		$years = array_unique(Tool::lists('year'));
 		rsort($years);
 		$years = json_encode($years);
 
