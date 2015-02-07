@@ -7,7 +7,6 @@ ToolsTable = React.createClass({
 	},
 	propTypes: {
 		tools: React.PropTypes.array,
-		years: React.PropTypes.number
 	},
 	render: function () {
 		var createTr = function (tool) {
@@ -21,13 +20,10 @@ ToolsTable = React.createClass({
 							<th width="450"> Title </th>
 							<th width="250"> Authors </th>
 							<th width="150"> Page Count </th>
-							<th width="250"> Actions </th>
+							<th width="250"> Date of Submission </th>
 						</tr>
 					</thead>
-					<tbody ng-repeat="year in years">
-						<tr>
-							<td colspan="4"> <h3><u> {years} </u></h3> </td>
-						</tr>
+					<tbody>
 						{this.props.tools.map(createTr)}
 					</tbody>
 				</table>

@@ -8,7 +8,7 @@ var MainPage = React.createClass({
 		return (
 			<div>
 				<TopBar />
-				<ToolsTable tools={tools} years={years}/>
+				<ToolsTable tools={tools}/>
 			</div>
 		)
 	}

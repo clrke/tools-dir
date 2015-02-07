@@ -20015,7 +20015,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 		return (
 			React.createElement("div", null, 
 				React.createElement(TopBar, null), 
-				React.createElement(ToolsTable, {tools: tools, years: years})
+				React.createElement(ToolsTable, {tools: tools})
 			)
 		)
 	}
@@ -20043,11 +20043,7 @@ TableRow = React.createClass({displayName: "TableRow",
 				React.createElement("td", null, " ", tool.title, " "), 
 				React.createElement("td", null, " ", tool.authors, " "), 
 				React.createElement("td", null, " ", tool.pageCount, " "), 
-				React.createElement("td", null, 
-					React.createElement("a", {href: "#", className: "button small small-bottom-margin expand"}, 
-						"More Information"
-					)
-				)
+				React.createElement("td", null, " ", tool.created_at, " ")
 			)
 		)
 	}
@@ -20065,7 +20061,6 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 	},
 	propTypes: {
 		tools: React.PropTypes.array,
-		years: React.PropTypes.number
 	},
 	render: function () {
 		var createTr = function (tool) {
@@ -20079,13 +20074,10 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 							React.createElement("th", {width: "450"}, " Title "), 
 							React.createElement("th", {width: "250"}, " Authors "), 
 							React.createElement("th", {width: "150"}, " Page Count "), 
-							React.createElement("th", {width: "250"}, " Actions ")
+							React.createElement("th", {width: "250"}, " Date of Submission ")
 						)
 					), 
-					React.createElement("tbody", {"ng-repeat": "year in years"}, 
-						React.createElement("tr", null, 
-							React.createElement("td", {colspan: "4"}, " ", React.createElement("h3", null, React.createElement("u", null, " ", years, " ")), " ")
-						), 
+					React.createElement("tbody", null, 
 						this.props.tools.map(createTr)
 					)
 				)

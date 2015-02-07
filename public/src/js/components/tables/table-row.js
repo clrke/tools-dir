@@ -14,11 +14,7 @@ TableRow = React.createClass({
 				<td> {tool.title} </td>
 				<td> {tool.authors} </td>
 				<td> {tool.pageCount} </td>
-				<td>
-					<a href="#" className="button small small-bottom-margin expand">
-						More Information
-					</a>
-				</td>
+				<td> {tool.created_at} </td>
 			</tr>
 		)
 	}

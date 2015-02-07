@@ -15,12 +15,9 @@ Route::get('/', function()
 {
 	if(Auth::check())
 	{
-		$tools = Tool::all();
-		$years = array_unique(Tool::lists('year'));
-		rsort($years);
-		$years = json_encode($years);
+		$tools = Tool::orderBy('created_at')->get();
 
-		return View::make('papers.index', compact('tools', 'years'));
+		return View::make('papers.index', compact('tools'));
 	}
 	else
 	{
