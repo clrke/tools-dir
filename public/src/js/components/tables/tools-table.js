@@ -18,7 +18,7 @@ ToolsTable = React.createClass({
 					<thead>
 						<tr>
 							<th width="450"> Title | Abstract </th>
-							<th width="250"> Authors </th>
+							<th width="250"> Author(s) </th>
 							<th width="150"> Page Count </th>
 							<th width="250"> Date of Submission </th>
 						</tr>
