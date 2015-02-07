@@ -20036,11 +20036,22 @@ TableRow = React.createClass({displayName: "TableRow",
 	propTypes: {
 		tool: React.PropTypes.object.isRequired
 	},
+	shorten: function (string) {
+		if(string.length > 100) {
+			return string.substr(0, 100) + "...";
+		}
+		else {
+			return string;
+		}
+	},
 	render: function () {
 		var tool = this.props.tool;
 		return (
 			React.createElement("tr", null, 
-				React.createElement("td", null, " ", tool.title, " "), 
+				React.createElement("td", null, 
+					React.createElement("h5", null, React.createElement("a", {href: "#"}, React.createElement("b", null, tool.title))), 
+					React.createElement("p", {className: "subheader"}, " ", this.shorten(tool.abstract), " ")
+				), 
 				React.createElement("td", null, " ", tool.authors, " "), 
 				React.createElement("td", null, " ", tool.pageCount, " "), 
 				React.createElement("td", null, " ", tool.created_at, " ")
@@ -20071,7 +20082,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 				React.createElement("table", null, 
 					React.createElement("thead", null, 
 						React.createElement("tr", null, 
-							React.createElement("th", {width: "450"}, " Title "), 
+							React.createElement("th", {width: "450"}, " Title | Abstract "), 
 							React.createElement("th", {width: "250"}, " Authors "), 
 							React.createElement("th", {width: "150"}, " Page Count "), 
 							React.createElement("th", {width: "250"}, " Date of Submission ")
