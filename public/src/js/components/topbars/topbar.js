@@ -1,6 +1,6 @@
 var React = require('react/addons');
 
-module.exports = React.createClass({
+TopBar = React.createClass({
 	render: function () {
 		return (
 			<div className="fixed">
@@ -33,3 +33,5 @@ module.exports = React.createClass({
 		);
 	}
 });
+
+module.exports = TopBar;

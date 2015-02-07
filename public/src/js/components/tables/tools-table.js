@@ -1,18 +1,17 @@
 var React = require('react/addons');
+var TableRow = require('./table-row');
 
-module.exports = React.createClass({
+ToolsTable = React.createClass({
+	getInitialState: function () {
+		return {tools: this.props.tools};
+	},
+	propTypes: {
+		tools: React.PropTypes.array,
+		years: React.PropTypes.number
+	},
 	render: function () {
 		var createTr = function (tool) {
-			return (
-				<tr>
-					<td> tool.title </td>
-					<td> tool.authors </td>
-					<td> tool.pageCount </td>
-					<td>
-						<a href="#" className="button small small-bottom-margin expand">More Information</a> <br/>
-					</td>
-				</tr>
-			)
+			return <TableRow tool={tool} />
 		}
 		return (
 			<div className="row">
@@ -27,19 +26,14 @@ module.exports = React.createClass({
 					</thead>
 					<tbody ng-repeat="year in years">
 						<tr>
-							<td colspan="4"> <h3><u>yea </u></h3> </td>
+							<td colspan="4"> <h3><u> {years} </u></h3> </td>
 						</tr>
-						<tr ng-repeat="paper in papers | filter: {year: year} | filter:search">
-							<td> paper.title </td>
-							<td> paper.authors </td>
-							<td> paper.pageCount </td>
-							<td>
-								<a href="#" className="button small small-bottom-margin expand">More Information</a> <br/>
-							</td>
-						</tr>
+						{this.props.tools.map(createTr)}
 					</tbody>
 				</table>
 			</div>
 		);
 	}
 });
+
+module.exports = ToolsTable;

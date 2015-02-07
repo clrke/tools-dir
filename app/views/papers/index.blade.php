@@ -8,6 +8,10 @@
 		<script type="text/javascript" src="foundation/js/foundation.min.js"></script>
 	</head>
 	<body>
+		<script type="text/javascript">
+			var tools = {{ $tools }};
+			var years = {{ $years }};
+		</script>
 		<script type="text/javascript" src="src/js/main.js"></script>
 	</body>
 </html>

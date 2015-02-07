@@ -15,12 +15,12 @@ Route::get('/', function()
 {
 	if(Auth::check())
 	{
-		$papers = Tool::all();
+		$tools = Tool::all();
 		$years = array_unique(Tool::lists('year'));
 		rsort($years);
 		$years = json_encode($years);
 
-		return View::make('papers.index', compact('papers', 'years'));
+		return View::make('papers.index', compact('tools', 'years'));
 	}
 	else
 	{

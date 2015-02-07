@@ -20015,7 +20015,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 		return (
 			React.createElement("div", null, 
 				React.createElement(TopBar, null), 
-				React.createElement(ToolsTable, null)
+				React.createElement(ToolsTable, {tools: tools, years: years})
 			)
 		)
 	}
@@ -20026,22 +20026,50 @@ React.render(
 	document.body
 );
 
-},{"./tables/tools-table":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/tools-table.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/tools-table.js":[function(require,module,exports){
+},{"./tables/tools-table":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/tools-table.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/table-row.js":[function(require,module,exports){
 var React = require('react/addons');
 
-module.exports = React.createClass({displayName: "exports",
+TableRow = React.createClass({displayName: "TableRow",
+	getInitialState: function () {
+		return {tool: this.props.tool};
+	},
+	propTypes: {
+		tool: React.PropTypes.object.isRequired
+	},
 	render: function () {
-		var createTr = function (tool) {
-			return (
-				React.createElement("tr", null, 
-					React.createElement("td", null, " tool.title "), 
-					React.createElement("td", null, " tool.authors "), 
-					React.createElement("td", null, " tool.pageCount "), 
-					React.createElement("td", null, 
-						React.createElement("a", {href: "#", className: "button small small-bottom-margin expand"}, "More Information"), " ", React.createElement("br", null)
+		var tool = this.props.tool;
+		return (
+			React.createElement("tr", null, 
+				React.createElement("td", null, " ", tool.title, " "), 
+				React.createElement("td", null, " ", tool.authors, " "), 
+				React.createElement("td", null, " ", tool.pageCount, " "), 
+				React.createElement("td", null, 
+					React.createElement("a", {href: "#", className: "button small small-bottom-margin expand"}, 
+						"More Information"
 					)
 				)
 			)
+		)
+	}
+});
+
+module.exports = TableRow;
+
+},{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/tools-table.js":[function(require,module,exports){
+var React = require('react/addons');
+var TableRow = require('./table-row');
+
+ToolsTable = React.createClass({displayName: "ToolsTable",
+	getInitialState: function () {
+		return {tools: this.props.tools};
+	},
+	propTypes: {
+		tools: React.PropTypes.array,
+		years: React.PropTypes.number
+	},
+	render: function () {
+		var createTr = function (tool) {
+			return React.createElement(TableRow, {tool: tool})
 		}
 		return (
 			React.createElement("div", {className: "row"}, 
@@ -20056,16 +20084,9 @@ module.exports = React.createClass({displayName: "exports",
 					), 
 					React.createElement("tbody", {"ng-repeat": "year in years"}, 
 						React.createElement("tr", null, 
-							React.createElement("td", {colspan: "4"}, " ", React.createElement("h3", null, React.createElement("u", null, "yea ")), " ")
+							React.createElement("td", {colspan: "4"}, " ", React.createElement("h3", null, React.createElement("u", null, " ", years, " ")), " ")
 						), 
-						React.createElement("tr", {"ng-repeat": "paper in papers | filter: {year: year} | filter:search"}, 
-							React.createElement("td", null, " paper.title "), 
-							React.createElement("td", null, " paper.authors "), 
-							React.createElement("td", null, " paper.pageCount "), 
-							React.createElement("td", null, 
-								React.createElement("a", {href: "#", className: "button small small-bottom-margin expand"}, "More Information"), " ", React.createElement("br", null)
-							)
-						)
+						this.props.tools.map(createTr)
 					)
 				)
 			)
@@ -20073,10 +20094,12 @@ module.exports = React.createClass({displayName: "exports",
 	}
 });
 
-},{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
+module.exports = ToolsTable;
+
+},{"./table-row":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/table-row.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
 var React = require('react/addons');
 
-module.exports = React.createClass({displayName: "exports",
+TopBar = React.createClass({displayName: "TopBar",
 	render: function () {
 		return (
 			React.createElement("div", {className: "fixed"}, 
@@ -20109,5 +20132,7 @@ module.exports = React.createClass({displayName: "exports",
 		);
 	}
 });
+
+module.exports = TopBar;
 
 },{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}]},{},["/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/main.js"]);
