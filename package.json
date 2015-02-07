@@ -1,0 +1,26 @@
+{
+  "name": "thesis-dir",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "build": "watchify -t reactify -o public/src/js/main.js public/src/js/components/main.js -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arkeidolon/thesis-dir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arkeidolon/thesis-dir/issues"
+  },
+  "homepage": "https://github.com/arkeidolon/thesis-dir",
+  "devDependencies": {
+    "browserify": "^8.0.3",
+    "reactify": "^0.17.1",
+    "watchify": "^2.2.1"
+  },
+  "dependencies": {
+    "react": "^0.12.2",
+    "superagent": "^0.21.0",
+    "velocity-animate": "^1.2.1"
+  }
+}
