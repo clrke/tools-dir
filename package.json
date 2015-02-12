@@ -21,6 +21,7 @@
   "dependencies": {
     "react": "^0.12.2",
     "superagent": "^0.21.0",
-    "velocity-animate": "^1.2.1"
+    "velocity-animate": "^1.2.1",
+    "react-foundation-apps": "~0.6.0"
   }
 }
