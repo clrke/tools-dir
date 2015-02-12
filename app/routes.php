@@ -15,7 +15,7 @@ Route::get('/', function()
 {
 	if(Auth::check())
 	{
-		$tools = Tool::orderBy('created_at')->get();
+		$tools = Tool::orderBy('created_at')->with('voters')->get();
 
 		return View::make('papers.index', compact('tools'));
 	}

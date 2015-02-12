@@ -5,3 +5,19 @@
 body {
 	margin-top: 50px;
 }
+
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
+
+.blue {
+	color: blue;
+}
+
+.tool-info {
+	text-align: center;
+}

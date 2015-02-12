@@ -20044,13 +20044,55 @@ TableRow = React.createClass({displayName: "TableRow",
 			return string;
 		}
 	},
+	getVoters: function (tool, isPositive) {
+		var voters = tool.voters;
+		var upvoters = [],
+			downvoters = [];
+
+		for (var i = 0; i < voters.length; i++) {
+			var voter = voters[i];
+
+			if(voter.pivot.is_positive == '1') {
+				upvoters.push(voter);
+			} else {
+				downvoters.push(voter);
+			}
+		}
+
+		if(isPositive) {
+			voters = upvoters;
+		} else {
+			voters = downvoters;
+		}
+
+		return voters.length;
+	},
+	getComments: function (tool) {
+		return 0;
+	},
 	render: function () {
 		var tool = this.props.tool;
 		return (
 			React.createElement("tr", null, 
 				React.createElement("td", null, 
 					React.createElement("h5", null, React.createElement("a", {href: "#"}, React.createElement("b", null, tool.title))), 
-					React.createElement("p", {className: "subheader"}, " ", this.shorten(tool.abstract), " ")
+					React.createElement("p", {className: "subheader"}, " ", this.shorten(tool.abstract), " "), 
+					React.createElement("div", {className: "panel"}, 
+						React.createElement("div", {className: "row"}, 
+							React.createElement("span", {className: "column small-4 tool-info"}, 
+								React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+								this.getVoters(tool, true)
+							), 
+							React.createElement("span", {className: "column small-4 tool-info"}, 
+								React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
+								this.getVoters(tool, false)
+							), 
+							React.createElement("span", {className: "column small-4 tool-info"}, 
+								React.createElement("i", {className: "foundicon-chat green"}, " "), 
+								this.getComments(tool)
+							)
+						)
+					)
 				), 
 				React.createElement("td", null, " ", tool.authors, " "), 
 				React.createElement("td", null, " ", tool.pageCount, " "), 
