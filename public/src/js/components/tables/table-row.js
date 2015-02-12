@@ -48,7 +48,7 @@ TableRow = React.createClass({
 				<td>
 					<h5><a href="#"><b>{tool.title}</b></a></h5>
 					<p className="subheader"> {this.shorten(tool.abstract)} </p>
-					<div className="panel">
+					<div className="panel small-padding">
 						<div className="row">
 							<span className="column small-4 tool-info">
 								<i className="foundicon-thumb-up blue"> </i>
