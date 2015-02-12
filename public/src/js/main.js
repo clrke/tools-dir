@@ -20124,7 +20124,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 				React.createElement("table", null, 
 					React.createElement("thead", null, 
 						React.createElement("tr", null, 
-							React.createElement("th", {width: "450"}, " Tool "), 
+							React.createElement("th", {width: "650"}, " Tool "), 
 							React.createElement("th", {width: "250"}, " Author(s) "), 
 							React.createElement("th", {width: "150"}, " Page Count "), 
 							React.createElement("th", {width: "250"}, " Date of Submission ")
