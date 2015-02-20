@@ -25,3 +25,7 @@ body {
 .panel.small-padding {
 	padding: 5px;
 }
+
+.panel.white {
+	background-color: white;
+}

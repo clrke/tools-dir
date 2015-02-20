@@ -33,7 +33,7 @@ ToolsTable = React.createClass({
 					</table>
 				</div>
 				<div className="column small-4">
-					<div className="panel radius">
+					<div className="panel radius white">
 						<h3>{this.state.tool.title}</h3>
 						<p> {this.state.tool.abstract} </p>
 						<div className="panel small-padding">

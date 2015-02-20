@@ -20140,7 +20140,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 					)
 				), 
 				React.createElement("div", {className: "column small-4"}, 
-					React.createElement("div", {className: "panel radius"}, 
+					React.createElement("div", {className: "panel radius white"}, 
 						React.createElement("h3", null, this.state.tool.title), 
 						React.createElement("p", null, " ", this.state.tool.abstract, " "), 
 						React.createElement("div", {className: "panel small-padding"}, 
