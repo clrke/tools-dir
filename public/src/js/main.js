@@ -20075,7 +20075,7 @@ TableRow = React.createClass({displayName: "TableRow",
 		return (
 			React.createElement("tr", null, 
 				React.createElement("td", null, 
-					React.createElement("h5", null, React.createElement("a", {href: "#"}, React.createElement("b", null, tool.title))), 
+					React.createElement("h5", null, React.createElement("a", {href: "#", onClick: this.props.onClick}, React.createElement("b", null, tool.title))), 
 					React.createElement("p", {className: "subheader"}, " ", this.shorten(tool.abstract), " "), 
 					React.createElement("div", {className: "panel small-padding"}, 
 						React.createElement("div", {className: "row"}, 
@@ -20110,29 +20110,37 @@ var TableRow = require('./table-row');
 
 ToolsTable = React.createClass({displayName: "ToolsTable",
 	getInitialState: function () {
-		return {tools: this.props.tools};
+		return {tools: this.props.tools, tool: this.props.tools[0]};
 	},
 	propTypes: {
 		tools: React.PropTypes.array,
 	},
+	setCurrentTool: function (tool) {
+		this.setState({tool: tool});
+	},
 	render: function () {
 		var createTr = function (tool) {
-			return React.createElement(TableRow, {tool: tool})
+			return React.createElement(TableRow, {tool: tool, onClick: this.setCurrentTool.bind(this, tool)})
 		}
 		return (
 			React.createElement("div", {className: "row"}, 
-				React.createElement("table", null, 
-					React.createElement("thead", null, 
-						React.createElement("tr", null, 
-							React.createElement("th", {width: "650"}, " Tool "), 
-							React.createElement("th", {width: "250"}, " Author(s) "), 
-							React.createElement("th", {width: "150"}, " Page Count "), 
-							React.createElement("th", {width: "250"}, " Date of Submission ")
+				React.createElement("div", {className: "column small-8"}, 
+					React.createElement("table", null, 
+						React.createElement("thead", null, 
+							React.createElement("tr", null, 
+								React.createElement("th", {width: "650"}, " Tool "), 
+								React.createElement("th", {width: "250"}, " Author(s) "), 
+								React.createElement("th", {width: "150"}, " Page Count "), 
+								React.createElement("th", {width: "250"}, " Date of Submission ")
+							)
+						), 
+						React.createElement("tbody", null, 
+							this.props.tools.map(createTr, this)
 						)
-					), 
-					React.createElement("tbody", null, 
-						this.props.tools.map(createTr)
 					)
+				), 
+				React.createElement("div", {className: "column small-4"}, 
+					this.state.tool.title
 				)
 			)
 		);
