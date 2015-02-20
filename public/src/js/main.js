@@ -20124,7 +20124,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 		}
 		return (
 			React.createElement("div", null, 
-				React.createElement("div", {className: "column small-8"}, 
+				React.createElement("div", {className: "column small-8 fixed-container"}, 
 					React.createElement("table", null, 
 						React.createElement("thead", null, 
 							React.createElement("tr", null, 

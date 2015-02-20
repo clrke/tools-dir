@@ -17,7 +17,7 @@ ToolsTable = React.createClass({
 		}
 		return (
 			<div>
-				<div className="column small-8">
+				<div className="column small-8 fixed-container">
 					<table>
 						<thead>
 							<tr>
