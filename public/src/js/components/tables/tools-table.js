@@ -16,7 +16,7 @@ ToolsTable = React.createClass({
 			return <TableRow tool={tool} onClick={this.setCurrentTool.bind(this, tool)}/>
 		}
 		return (
-			<div className="row">
+			<div>
 				<div className="column small-8">
 					<table>
 						<thead>
