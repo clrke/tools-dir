@@ -20140,7 +20140,23 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 					)
 				), 
 				React.createElement("div", {className: "column small-4"}, 
-					this.state.tool.title
+					React.createElement("div", {className: "panel radius"}, 
+						React.createElement("h3", null, this.state.tool.title), 
+						React.createElement("p", null, " ", this.state.tool.abstract, " "), 
+						React.createElement("div", {className: "panel small-padding"}, 
+							React.createElement("div", {className: "row"}, 
+								React.createElement("span", {className: "column small-4 tool-info"}, 
+									React.createElement("i", {className: "foundicon-thumb-up blue"}, " ")
+								), 
+								React.createElement("span", {className: "column small-4 tool-info"}, 
+									React.createElement("i", {className: "foundicon-thumb-down red"}, " ")
+								), 
+								React.createElement("span", {className: "column small-4 tool-info"}, 
+									React.createElement("i", {className: "foundicon-chat green"}, " ")
+								)
+							)
+						)
+					)
 				)
 			)
 		);

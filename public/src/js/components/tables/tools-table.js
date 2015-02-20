@@ -33,7 +33,23 @@ ToolsTable = React.createClass({
 					</table>
 				</div>
 				<div className="column small-4">
-					{this.state.tool.title}
+					<div className="panel radius">
+						<h3>{this.state.tool.title}</h3>
+						<p> {this.state.tool.abstract} </p>
+						<div className="panel small-padding">
+							<div className="row">
+								<span className="column small-4 tool-info">
+									<i className="foundicon-thumb-up blue"> </i>
+								</span>
+								<span className="column small-4 tool-info">
+									<i className="foundicon-thumb-down red"> </i>
+								</span>
+								<span className="column small-4 tool-info">
+									<i className="foundicon-chat green"> </i>
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
