@@ -23611,27 +23611,12 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		tool: React.PropTypes.object.isRequired
 	},
 	getVoters: function (isPositive) {
-		var voters = this.props.tool.voters;
-		var upvoters = [],
-			downvoters = [];
-
-		for (var i = 0; i < voters.length; i++) {
-			var voter = voters[i];
-
-			if(voter.pivot.is_positive == '1') {
-				upvoters.push(voter);
-			} else {
-				downvoters.push(voter);
-			}
-		}
-
+		var tool = this.props.tool;
 		if(isPositive) {
-			voters = upvoters;
+			return tool.upvoters;
 		} else {
-			voters = downvoters;
+			return tool.downvoters;
 		}
-
-		return voters;
 	},
 	getComments: function () {
 		return 0;
