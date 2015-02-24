@@ -23530,6 +23530,8 @@ React.render(
 	document.body
 );
 
+$(document).foundation();
+
 },{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js":[function(require,module,exports){
 var React = require('react/addons');
 var moment = require('moment');

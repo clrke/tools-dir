@@ -18,3 +18,5 @@ React.render(
 	<MainPage />,
 	document.body
 );
+
+$(document).foundation();
