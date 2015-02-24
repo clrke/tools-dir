@@ -23587,11 +23587,12 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 					), 
 					React.createElement("small", null, " by ", tool.authors, " ")
 				), 
-				React.createElement("h5", {className: "subheader"}, 
+				React.createElement("div", {className: "panel white tool-info"}, 
+					React.createElement(ToolStats, {tool: tool}), 
 					this.shorten(tool.abstract), 
-					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " ")
-				), 
-				React.createElement(ToolStats, {tool: tool})
+					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " "), 
+					 React.createElement("div", {className: "clearfix"}, " ")
+				)
 			)
 		)
 	}
@@ -23623,20 +23624,18 @@ ToolStats = React.createClass({displayName: "ToolStats",
 	},
 	render: function () {
 		return (
-			React.createElement("div", {className: "panel small-padding"}, 
-				React.createElement("div", {className: "row"}, 
-					React.createElement("span", {className: "column small-4 tool-info"}, 
-						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-						prettyLists.format1(this.getVoters(true), 'username')
-					), 
-					React.createElement("span", {className: "column small-4 tool-info"}, 
-						React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-						prettyLists.format1(this.getVoters(false), 'username')
-					), 
-					React.createElement("span", {className: "column small-4 tool-info"}, 
-						React.createElement("i", {className: "foundicon-chat green"}, " "), 
-						this.getComments()
-					)
+			React.createElement("ul", {className: "vcard tool-stats"}, 
+				React.createElement("li", null, 
+					React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+					prettyLists.format1(this.getVoters(true), 'username')
+				), 
+				React.createElement("li", null, 
+					React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
+					prettyLists.format1(this.getVoters(false), 'username')
+				), 
+				React.createElement("li", null, 
+					React.createElement("i", {className: "foundicon-chat green"}, " "), 
+					this.getComments()
 				)
 			)
 		)
@@ -23670,14 +23669,17 @@ ToolsList = React.createClass({displayName: "ToolsList",
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
 					React.createElement("div", {className: "panel radius white"}, 
 						React.createElement("h3", null, this.state.tool.title), 
-						React.createElement("p", null, " ", this.state.tool.abstract, " "), 
-						React.createElement(ToolStats, {tool: this.state.tool})
+						React.createElement("div", {className: "panel white tool-info small-padding"}, 
+							React.createElement(ToolStats, {tool: this.state.tool}), 
+							React.createElement("p", {className: "tool-info"}, 
+								this.state.tool.abstract
+							), 
+							React.createElement("div", {className: "clearfix"}, " ")
+						)
 					)
 				), 
 				React.createElement("div", {className: "column medium-pull-6 medium-6 fixed-container"}, 
-					React.createElement("div", null, 
-						this.props.tools.map(createTr, this)
-					)
+					this.props.tools.map(createTr, this)
 				)
 			)
 		);

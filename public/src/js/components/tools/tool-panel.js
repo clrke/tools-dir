@@ -54,11 +54,12 @@ ToolPanel = React.createClass({
 					</a>
 					<small> by {tool.authors} </small>
 				</h3>
-				<h5 className="subheader">
+				<div className="panel white tool-info">
+					<ToolStats tool={tool}/>
 					{this.shorten(tool.abstract)}
 					<small> {moment(tool.created_at).fromNow()} </small>
-				</h5>
-				<ToolStats tool={tool}/>
+					 <div className="clearfix"> </div>
+				</div>
 			</div>
 		)
 	}

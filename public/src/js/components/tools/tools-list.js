@@ -22,14 +22,17 @@ ToolsList = React.createClass({
 				<div className="column medium-6 medium-push-6">
 					<div className="panel radius white">
 						<h3>{this.state.tool.title}</h3>
-						<p> {this.state.tool.abstract} </p>
-						<ToolStats tool={this.state.tool}/>
+						<div className="panel white tool-info small-padding">
+							<ToolStats tool={this.state.tool}/>
+							<p className="tool-info">
+								{this.state.tool.abstract}
+							</p>
+							<div className="clearfix"> </div>
+						</div>
 					</div>
 				</div>
 				<div className="column medium-pull-6 medium-6 fixed-container">
-					<div>
-						{this.props.tools.map(createTr, this)}
-					</div>
+					{this.props.tools.map(createTr, this)}
 				</div>
 			</div>
 		);

@@ -31,3 +31,16 @@ body {
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
+
+.vcard.tool-stats {
+	margin: 0px 5px 0px 0px !important;
+	float: left;
+}
+
+.clearfix:after {
+   content: ".";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}

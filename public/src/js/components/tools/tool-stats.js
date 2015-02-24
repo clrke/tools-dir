@@ -21,22 +21,20 @@ ToolStats = React.createClass({
 	},
 	render: function () {
 		return (
-			<div className="panel small-padding">
-				<div className="row">
-					<span className="column small-4 tool-info">
-						<i className="foundicon-thumb-up blue"> </i>
-						{prettyLists.format1(this.getVoters(true), 'username')}
-					</span>
-					<span className="column small-4 tool-info">
-						<i className="foundicon-thumb-down red"> </i>
-						{prettyLists.format1(this.getVoters(false), 'username')}
-					</span>
-					<span className="column small-4 tool-info">
-						<i className="foundicon-chat green"> </i>
-						{this.getComments()}
-					</span>
-				</div>
-			</div>
+			<ul className="vcard tool-stats">
+				<li>
+					<i className="foundicon-thumb-up blue"> </i>
+					{prettyLists.format1(this.getVoters(true), 'username')}
+				</li>
+				<li>
+					<i className="foundicon-thumb-down red"> </i>
+					{prettyLists.format1(this.getVoters(false), 'username')}
+				</li>
+				<li>
+					<i className="foundicon-chat green"> </i>
+					{this.getComments()}
+				</li>
+			</ul>
 		)
 	}
 });
