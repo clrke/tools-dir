@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var moment = require('moment');
 
 ToolPanel = React.createClass({
 	getInitialState: function () {
@@ -55,7 +56,7 @@ ToolPanel = React.createClass({
 					<b>Abstract:</b> {this.shorten(tool.abstract)}
 				</h5>
 				<h5 className="subheader">
-					<b>Pages:</b> {tool.pageCount} <b>Submitted on:</b>{tool.created_at}
+					<b>Pages:</b> {tool.pageCount} <b>Submitted on:</b>{moment(tool.created_at).fromNow()}
 				</h5>
 				<div className="panel small-padding">
 					<div className="row">
