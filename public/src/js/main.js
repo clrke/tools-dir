@@ -23610,8 +23610,8 @@ ToolStats = React.createClass({displayName: "ToolStats",
 	propTypes: {
 		tool: React.PropTypes.object.isRequired
 	},
-	getVoters: function (tool, isPositive) {
-		var voters = tool.voters;
+	getVoters: function (isPositive) {
+		var voters = this.props.tool.voters;
 		var upvoters = [],
 			downvoters = [];
 
@@ -23633,25 +23633,24 @@ ToolStats = React.createClass({displayName: "ToolStats",
 
 		return voters;
 	},
-	getComments: function (tool) {
+	getComments: function () {
 		return 0;
 	},
 	render: function () {
-		var tool = this.props.tool;
 		return (
 			React.createElement("div", {className: "panel small-padding"}, 
 				React.createElement("div", {className: "row"}, 
 					React.createElement("span", {className: "column small-4 tool-info"}, 
 						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-						prettyLists.format1(this.getVoters(tool, true), 'username')
+						prettyLists.format1(this.getVoters(true), 'username')
 					), 
 					React.createElement("span", {className: "column small-4 tool-info"}, 
 						React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-						prettyLists.format1(this.getVoters(tool, false), 'username')
+						prettyLists.format1(this.getVoters(false), 'username')
 					), 
 					React.createElement("span", {className: "column small-4 tool-info"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
-						this.getComments(tool)
+						this.getComments()
 					)
 				)
 			)

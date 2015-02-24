@@ -8,8 +8,8 @@ ToolStats = React.createClass({
 	propTypes: {
 		tool: React.PropTypes.object.isRequired
 	},
-	getVoters: function (tool, isPositive) {
-		var voters = tool.voters;
+	getVoters: function (isPositive) {
+		var voters = this.props.tool.voters;
 		var upvoters = [],
 			downvoters = [];
 
@@ -31,25 +31,24 @@ ToolStats = React.createClass({
 
 		return voters;
 	},
-	getComments: function (tool) {
+	getComments: function () {
 		return 0;
 	},
 	render: function () {
-		var tool = this.props.tool;
 		return (
 			<div className="panel small-padding">
 				<div className="row">
 					<span className="column small-4 tool-info">
 						<i className="foundicon-thumb-up blue"> </i>
-						{prettyLists.format1(this.getVoters(tool, true), 'username')}
+						{prettyLists.format1(this.getVoters(true), 'username')}
 					</span>
 					<span className="column small-4 tool-info">
 						<i className="foundicon-thumb-down red"> </i>
-						{prettyLists.format1(this.getVoters(tool, false), 'username')}
+						{prettyLists.format1(this.getVoters(false), 'username')}
 					</span>
 					<span className="column small-4 tool-info">
 						<i className="foundicon-chat green"> </i>
-						{this.getComments(tool)}
+						{this.getComments()}
 					</span>
 				</div>
 			</div>
