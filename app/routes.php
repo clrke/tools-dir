@@ -35,6 +35,22 @@ Route::post('/login', function ()
 		return Redirect::back()->withInput(Input::all())->withError('Invalid credentials');
 });
 
+Route::post('/vote/{id}/{status}', function ($id, $status)
+{
+	$tool = Tool::find($id);
+	$user = Auth::user();
+
+	if($tool->voters->contains($user->id)) {
+		$tool->voters()->updateExistingPivot($user->id, [
+			'is_positive' => $status == '1']);
+	} else {
+		$tool->voters()->attach($user, [
+			'is_positive' => $status == '1']);
+	}
+
+	return Redirect::back();
+});
+
 Route::get('/logout', function ()
 {
 	Auth::logout();

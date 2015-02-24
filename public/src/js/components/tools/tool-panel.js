@@ -77,7 +77,11 @@ ToolPanel = React.createClass({
 		return (
 			<div className="panel white">
 				{this.getTitle()}
-				<ToolStats tool={tool} current={this.props.current}/>
+				<ToolStats
+					tool={tool}
+					current={this.props.current}
+					update={this.props.onClick} />
+
 				{this.getAbstact()}
 				<small> {moment(tool.created_at).fromNow()} </small>
 				<div className="clearfix"> </div>

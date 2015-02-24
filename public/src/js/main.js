@@ -23610,7 +23610,11 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 		return (
 			React.createElement("div", {className: "panel white"}, 
 				this.getTitle(), 
-				React.createElement(ToolStats, {tool: tool, current: this.props.current}), 
+				React.createElement(ToolStats, {
+					tool: tool, 
+					current: this.props.current, 
+					update: this.props.onClick}), 
+
 				this.getAbstact(), 
 				React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " "), 
 				React.createElement("div", {className: "clearfix"}, " ")
@@ -23643,31 +23647,62 @@ ToolStats = React.createClass({displayName: "ToolStats",
 	getComments: function () {
 		return 0;
 	},
+	vote: function (status) {
+		var tool = this.props.tool;
+		var id = tool.id;
+		$.post('/vote/'+id+'/'+status);
+
+		var upvoteId = tool.upvoters.map(function(x) {return x.id; })
+			.indexOf(authUser.id);
+		var downvoteId = tool.downvoters.map(function(x) {return x.id; })
+			.indexOf(authUser.id);
+
+		if(upvoteId != -1) {
+			tool.upvoters.splice(upvoteId, 1);
+		} else if(downvoteId != -1) {
+			tool.downvoters.splice(downvoteId, 1);
+		}
+
+		if(status === 1) {
+			tool.upvoters.push(authUser);
+		} else {
+			tool.downvoters.push(authUser);
+		}
+
+		this.props.update(tool.id);
+	},
 	render: function () {
+		var id = this.props.tool.id;
 		var upvoters = this.getVoters(true);
 		var downvoters = this.getVoters(false);
 
 		return (
 			React.createElement("ul", {className: "vcard tool-stats"}, 
 				React.createElement("li", null, 
-					React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-					
-						this.props.current ?
-							prettyLists.format1(upvoters, 'username') :
-							upvoters.length
-					
+					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 1)}, 
+						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+						
+							this.props.current ?
+								prettyLists.format1(upvoters, 'username') :
+								upvoters.length
+						
+					)
 				), 
 				React.createElement("li", null, 
-					React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-					
-						this.props.current ?
-							prettyLists.format1(downvoters, 'username') :
-							downvoters.length
-					
+					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 0)}, 
+						React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
+						
+							this.props.current ?
+								prettyLists.format1(downvoters, 'username') :
+								downvoters.length
+						
+					)
 				), 
 				React.createElement("li", null, 
-					React.createElement("i", {className: "foundicon-chat green"}, " "), 
-					this.getComments()
+					React.createElement("a", {href: "#"}, 
+						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						this.getComments()
+					)
 				)
 			)
 		)
@@ -23699,7 +23734,10 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		return (
 			React.createElement("div", null, 
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
-					React.createElement(ToolPanel, {tool: this.state.tool, current: true})
+					React.createElement(ToolPanel, {
+						tool: this.state.tool, 
+						current: true, 
+						onClick: this.setCurrentTool.bind(this, this.state.tool)})
 				), 
 				React.createElement("div", {className: "column medium-pull-6 medium-6 fixed-container"}, 
 					this.props.tools.map(createTr, this)

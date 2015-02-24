@@ -20,7 +20,10 @@ ToolsList = React.createClass({
 		return (
 			<div>
 				<div className="column medium-6 medium-push-6">
-					<ToolPanel tool={this.state.tool} current={true}/>
+					<ToolPanel
+						tool={this.state.tool}
+						current={true}
+						onClick={this.setCurrentTool.bind(this, this.state.tool)}/>
 				</div>
 				<div className="column medium-pull-6 medium-6 fixed-container">
 					{this.props.tools.map(createTr, this)}
