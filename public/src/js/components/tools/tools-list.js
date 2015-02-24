@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var TableRow = require('./table-row');
+var ToolPanel = require('./tool-panel');
 
 ToolsTable = React.createClass({
 	getInitialState: function () {
@@ -13,26 +13,11 @@ ToolsTable = React.createClass({
 	},
 	render: function () {
 		var createTr = function (tool) {
-			return <TableRow tool={tool} onClick={this.setCurrentTool.bind(this, tool)}/>
+			return <ToolPanel tool={tool} onClick={this.setCurrentTool.bind(this, tool)}/>
 		}
 		return (
 			<div>
-				<div className="column small-8 fixed-container">
-					<table>
-						<thead>
-							<tr>
-								<th width="650"> Tool </th>
-								<th width="250"> Author(s) </th>
-								<th width="150"> Page Count </th>
-								<th width="250"> Date of Submission </th>
-							</tr>
-						</thead>
-						<tbody>
-							{this.props.tools.map(createTr, this)}
-						</tbody>
-					</table>
-				</div>
-				<div className="column small-4">
+				<div className="column medium-6 medium-push-6">
 					<div className="panel radius white">
 						<h3>{this.state.tool.title}</h3>
 						<p> {this.state.tool.abstract} </p>
@@ -49,6 +34,11 @@ ToolsTable = React.createClass({
 								</span>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div className="column medium-pull-6 medium-6 fixed-container">
+					<div>
+						{this.props.tools.map(createTr, this)}
 					</div>
 				</div>
 			</div>

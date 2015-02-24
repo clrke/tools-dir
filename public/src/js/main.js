@@ -20008,14 +20008,14 @@ module.exports = require('./lib/React');
 var React = require('react');
 
 var TopBar = require('./topbars/topbar');
-var ToolsTable = require('./tables/tools-table');
+var ToolsList = require('./tools/tools-list');
 
 var MainPage = React.createClass({displayName: "MainPage",
 	render: function () {
 		return (
 			React.createElement("div", null, 
 				React.createElement(TopBar, null), 
-				React.createElement(ToolsTable, {tools: tools})
+				React.createElement(ToolsList, {tools: tools})
 			)
 		)
 	}
@@ -20026,10 +20026,10 @@ React.render(
 	document.body
 );
 
-},{"./tables/tools-table":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/tools-table.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/table-row.js":[function(require,module,exports){
+},{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js":[function(require,module,exports){
 var React = require('react/addons');
 
-TableRow = React.createClass({displayName: "TableRow",
+ToolPanel = React.createClass({displayName: "ToolPanel",
 	getInitialState: function () {
 		return {tool: this.props.tool};
 	},
@@ -20073,40 +20073,45 @@ TableRow = React.createClass({displayName: "TableRow",
 	render: function () {
 		var tool = this.props.tool;
 		return (
-			React.createElement("tr", null, 
-				React.createElement("td", null, 
-					React.createElement("h5", null, React.createElement("a", {href: "#", onClick: this.props.onClick}, React.createElement("b", null, tool.title))), 
-					React.createElement("p", {className: "subheader"}, " ", this.shorten(tool.abstract), " "), 
-					React.createElement("div", {className: "panel small-padding"}, 
-						React.createElement("div", {className: "row"}, 
-							React.createElement("span", {className: "column small-4 tool-info"}, 
-								React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-								this.getVoters(tool, true)
-							), 
-							React.createElement("span", {className: "column small-4 tool-info"}, 
-								React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-								this.getVoters(tool, false)
-							), 
-							React.createElement("span", {className: "column small-4 tool-info"}, 
-								React.createElement("i", {className: "foundicon-chat green"}, " "), 
-								this.getComments(tool)
-							)
+			React.createElement("div", {className: "panel white"}, 
+				React.createElement("h3", null, 
+					React.createElement("a", {href: "#", onClick: this.props.onClick}, 
+						React.createElement("b", null, tool.title)
+					), 
+					React.createElement("small", null, " by ", tool.authors, " ")
+				), 
+				React.createElement("h5", {className: "subheader"}, 
+					React.createElement("b", null, "Abstract:"), " ", this.shorten(tool.abstract)
+				), 
+				React.createElement("h5", {className: "subheader"}, 
+					React.createElement("b", null, "Pages:"), " ", tool.pageCount, " ", React.createElement("b", null, "Submitted on:"), tool.created_at
+				), 
+				React.createElement("div", {className: "panel small-padding"}, 
+					React.createElement("div", {className: "row"}, 
+						React.createElement("span", {className: "column small-4 tool-info"}, 
+							React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+							this.getVoters(tool, true)
+						), 
+						React.createElement("span", {className: "column small-4 tool-info"}, 
+							React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
+							this.getVoters(tool, false)
+						), 
+						React.createElement("span", {className: "column small-4 tool-info"}, 
+							React.createElement("i", {className: "foundicon-chat green"}, " "), 
+							this.getComments(tool)
 						)
 					)
-				), 
-				React.createElement("td", null, " ", tool.authors, " "), 
-				React.createElement("td", null, " ", tool.pageCount, " "), 
-				React.createElement("td", null, " ", tool.created_at, " ")
+				)
 			)
 		)
 	}
 });
 
-module.exports = TableRow;
+module.exports = ToolPanel;
 
-},{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/tools-table.js":[function(require,module,exports){
+},{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js":[function(require,module,exports){
 var React = require('react/addons');
-var TableRow = require('./table-row');
+var ToolPanel = require('./tool-panel');
 
 ToolsTable = React.createClass({displayName: "ToolsTable",
 	getInitialState: function () {
@@ -20120,26 +20125,11 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 	},
 	render: function () {
 		var createTr = function (tool) {
-			return React.createElement(TableRow, {tool: tool, onClick: this.setCurrentTool.bind(this, tool)})
+			return React.createElement(ToolPanel, {tool: tool, onClick: this.setCurrentTool.bind(this, tool)})
 		}
 		return (
 			React.createElement("div", null, 
-				React.createElement("div", {className: "column small-8 fixed-container"}, 
-					React.createElement("table", null, 
-						React.createElement("thead", null, 
-							React.createElement("tr", null, 
-								React.createElement("th", {width: "650"}, " Tool "), 
-								React.createElement("th", {width: "250"}, " Author(s) "), 
-								React.createElement("th", {width: "150"}, " Page Count "), 
-								React.createElement("th", {width: "250"}, " Date of Submission ")
-							)
-						), 
-						React.createElement("tbody", null, 
-							this.props.tools.map(createTr, this)
-						)
-					)
-				), 
-				React.createElement("div", {className: "column small-4"}, 
+				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
 					React.createElement("div", {className: "panel radius white"}, 
 						React.createElement("h3", null, this.state.tool.title), 
 						React.createElement("p", null, " ", this.state.tool.abstract, " "), 
@@ -20157,6 +20147,11 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 							)
 						)
 					)
+				), 
+				React.createElement("div", {className: "column medium-pull-6 medium-6 fixed-container"}, 
+					React.createElement("div", null, 
+						this.props.tools.map(createTr, this)
+					)
 				)
 			)
 		);
@@ -20165,7 +20160,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 
 module.exports = ToolsTable;
 
-},{"./table-row":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tables/table-row.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
+},{"./tool-panel":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
 var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",
