@@ -35,6 +35,8 @@ body {
 .vcard.tool-stats {
 	margin: 0px 5px 0px 0px !important;
 	float: left;
+	border-color: #b6edff;
+	background-color: #ecfaff;
 }
 
 .clearfix:after {
