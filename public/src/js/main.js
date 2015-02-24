@@ -23209,7 +23209,7 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
-ToolsTable = React.createClass({displayName: "ToolsTable",
+ToolsList = React.createClass({displayName: "ToolsList",
 	getInitialState: function () {
 		return {tools: this.props.tools, tool: this.props.tools[0]};
 	},
@@ -23242,7 +23242,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 	}
 });
 
-module.exports = ToolsTable;
+module.exports = ToolsList;
 
 },{"./tool-panel":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js","./tool-stats":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
 var React = require('react/addons');

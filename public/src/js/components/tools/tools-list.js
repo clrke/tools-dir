@@ -3,7 +3,7 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
-ToolsTable = React.createClass({
+ToolsList = React.createClass({
 	getInitialState: function () {
 		return {tools: this.props.tools, tool: this.props.tools[0]};
 	},
@@ -36,4 +36,4 @@ ToolsTable = React.createClass({
 	}
 });
 
-module.exports = ToolsTable;
+module.exports = ToolsList;
