@@ -1,6 +1,8 @@
 var React = require('react/addons');
 var ToolPanel = require('./tool-panel');
 
+var ToolStats = require('./tool-stats');
+
 ToolsTable = React.createClass({
 	getInitialState: function () {
 		return {tools: this.props.tools, tool: this.props.tools[0]};
@@ -21,19 +23,7 @@ ToolsTable = React.createClass({
 					<div className="panel radius white">
 						<h3>{this.state.tool.title}</h3>
 						<p> {this.state.tool.abstract} </p>
-						<div className="panel small-padding">
-							<div className="row">
-								<span className="column small-4 tool-info">
-									<i className="foundicon-thumb-up blue"> </i>
-								</span>
-								<span className="column small-4 tool-info">
-									<i className="foundicon-thumb-down red"> </i>
-								</span>
-								<span className="column small-4 tool-info">
-									<i className="foundicon-chat green"> </i>
-								</span>
-							</div>
-						</div>
+						<ToolStats tool={this.state.tool}/>
 					</div>
 				</div>
 				<div className="column medium-pull-6 medium-6 fixed-container">

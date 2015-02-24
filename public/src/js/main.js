@@ -23077,6 +23077,8 @@ React.render(
 var React = require('react/addons');
 var moment = require('moment');
 
+var ToolStats = require('./tool-stats');
+
 ToolPanel = React.createClass({displayName: "ToolPanel",
 	getInitialState: function () {
 		return {tool: this.props.tool};
@@ -23132,22 +23134,7 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 					this.shorten(tool.abstract), 
 					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " ")
 				), 
-				React.createElement("div", {className: "panel small-padding"}, 
-					React.createElement("div", {className: "row"}, 
-						React.createElement("span", {className: "column small-4 tool-info"}, 
-							React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-							this.getVoters(tool, true)
-						), 
-						React.createElement("span", {className: "column small-4 tool-info"}, 
-							React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-							this.getVoters(tool, false)
-						), 
-						React.createElement("span", {className: "column small-4 tool-info"}, 
-							React.createElement("i", {className: "foundicon-chat green"}, " "), 
-							this.getComments(tool)
-						)
-					)
-				)
+				React.createElement(ToolStats, {tool: tool})
 			)
 		)
 	}
@@ -23155,9 +23142,72 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 
 module.exports = ToolPanel;
 
-},{"moment":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/moment/moment.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js":[function(require,module,exports){
+},{"./tool-stats":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js","moment":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/moment/moment.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js":[function(require,module,exports){
+var React = require('react/addons');
+
+ToolStats = React.createClass({displayName: "ToolStats",
+	getInitialState: function () {
+		return {tool: this.props.tool};
+	},
+	propTypes: {
+		tool: React.PropTypes.object.isRequired
+	},
+	getVoters: function (tool, isPositive) {
+		var voters = tool.voters;
+		var upvoters = [],
+			downvoters = [];
+
+		for (var i = 0; i < voters.length; i++) {
+			var voter = voters[i];
+
+			if(voter.pivot.is_positive == '1') {
+				upvoters.push(voter);
+			} else {
+				downvoters.push(voter);
+			}
+		}
+
+		if(isPositive) {
+			voters = upvoters;
+		} else {
+			voters = downvoters;
+		}
+
+		return voters.length;
+	},
+	getComments: function (tool) {
+		return 0;
+	},
+	render: function () {
+		var tool = this.props.tool;
+		return (
+			React.createElement("div", {className: "panel small-padding"}, 
+				React.createElement("div", {className: "row"}, 
+					React.createElement("span", {className: "column small-4 tool-info"}, 
+						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+						this.getVoters(tool, true)
+					), 
+					React.createElement("span", {className: "column small-4 tool-info"}, 
+						React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
+						this.getVoters(tool, false)
+					), 
+					React.createElement("span", {className: "column small-4 tool-info"}, 
+						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						this.getComments(tool)
+					)
+				)
+			)
+		)
+	}
+});
+
+module.exports = ToolStats;
+
+},{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js":[function(require,module,exports){
 var React = require('react/addons');
 var ToolPanel = require('./tool-panel');
+
+var ToolStats = require('./tool-stats');
 
 ToolsTable = React.createClass({displayName: "ToolsTable",
 	getInitialState: function () {
@@ -23179,19 +23229,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 					React.createElement("div", {className: "panel radius white"}, 
 						React.createElement("h3", null, this.state.tool.title), 
 						React.createElement("p", null, " ", this.state.tool.abstract, " "), 
-						React.createElement("div", {className: "panel small-padding"}, 
-							React.createElement("div", {className: "row"}, 
-								React.createElement("span", {className: "column small-4 tool-info"}, 
-									React.createElement("i", {className: "foundicon-thumb-up blue"}, " ")
-								), 
-								React.createElement("span", {className: "column small-4 tool-info"}, 
-									React.createElement("i", {className: "foundicon-thumb-down red"}, " ")
-								), 
-								React.createElement("span", {className: "column small-4 tool-info"}, 
-									React.createElement("i", {className: "foundicon-chat green"}, " ")
-								)
-							)
-						)
+						React.createElement(ToolStats, {tool: this.state.tool})
 					)
 				), 
 				React.createElement("div", {className: "column medium-pull-6 medium-6 fixed-container"}, 
@@ -23206,7 +23244,7 @@ ToolsTable = React.createClass({displayName: "ToolsTable",
 
 module.exports = ToolsTable;
 
-},{"./tool-panel":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
+},{"./tool-panel":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js","./tool-stats":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
 var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",

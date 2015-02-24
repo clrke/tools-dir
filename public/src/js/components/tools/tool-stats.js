@@ -1,22 +1,11 @@
 var React = require('react/addons');
-var moment = require('moment');
 
-var ToolStats = require('./tool-stats');
-
-ToolPanel = React.createClass({
+ToolStats = React.createClass({
 	getInitialState: function () {
 		return {tool: this.props.tool};
 	},
 	propTypes: {
 		tool: React.PropTypes.object.isRequired
-	},
-	shorten: function (string) {
-		if(string.length > 100) {
-			return string.substr(0, 100) + "...";
-		}
-		else {
-			return string;
-		}
 	},
 	getVoters: function (tool, isPositive) {
 		var voters = tool.voters;
@@ -47,21 +36,24 @@ ToolPanel = React.createClass({
 	render: function () {
 		var tool = this.props.tool;
 		return (
-			<div className="panel white">
-				<h3>
-					<a href="#" onClick={this.props.onClick}>
-						<b>{tool.title}</b>
-					</a>
-					<small> by {tool.authors} </small>
-				</h3>
-				<h5 className="subheader">
-					{this.shorten(tool.abstract)}
-					<small> {moment(tool.created_at).fromNow()} </small>
-				</h5>
-				<ToolStats tool={tool}/>
+			<div className="panel small-padding">
+				<div className="row">
+					<span className="column small-4 tool-info">
+						<i className="foundicon-thumb-up blue"> </i>
+						{this.getVoters(tool, true)}
+					</span>
+					<span className="column small-4 tool-info">
+						<i className="foundicon-thumb-down red"> </i>
+						{this.getVoters(tool, false)}
+					</span>
+					<span className="column small-4 tool-info">
+						<i className="foundicon-chat green"> </i>
+						{this.getComments(tool)}
+					</span>
+				</div>
 			</div>
 		)
 	}
 });
 
-module.exports = ToolPanel;
+module.exports = ToolStats;
