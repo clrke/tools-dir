@@ -53,10 +53,8 @@ ToolPanel = React.createClass({
 					<small> by {tool.authors} </small>
 				</h3>
 				<h5 className="subheader">
-					<b>Abstract:</b> {this.shorten(tool.abstract)}
-				</h5>
-				<h5 className="subheader">
-					<b>Pages:</b> {tool.pageCount} <b>Submitted on:</b>{moment(tool.created_at).fromNow()}
+					{this.shorten(tool.abstract)}
+					<small> {moment(tool.created_at).fromNow()} </small>
 				</h5>
 				<div className="panel small-padding">
 					<div className="row">

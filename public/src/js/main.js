@@ -23129,10 +23129,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 					React.createElement("small", null, " by ", tool.authors, " ")
 				), 
 				React.createElement("h5", {className: "subheader"}, 
-					React.createElement("b", null, "Abstract:"), " ", this.shorten(tool.abstract)
-				), 
-				React.createElement("h5", {className: "subheader"}, 
-					React.createElement("b", null, "Pages:"), " ", tool.pageCount, " ", React.createElement("b", null, "Submitted on:"), moment(tool.created_at).fromNow()
+					this.shorten(tool.abstract), 
+					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " ")
 				), 
 				React.createElement("div", {className: "panel small-padding"}, 
 					React.createElement("div", {className: "row"}, 
