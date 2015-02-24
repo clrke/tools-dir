@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var prettyLists = require('pretty-lists/pretty-lists');
 
 ToolStats = React.createClass({
 	getInitialState: function () {
@@ -28,7 +29,7 @@ ToolStats = React.createClass({
 			voters = downvoters;
 		}
 
-		return voters.length;
+		return voters;
 	},
 	getComments: function (tool) {
 		return 0;
@@ -40,11 +41,11 @@ ToolStats = React.createClass({
 				<div className="row">
 					<span className="column small-4 tool-info">
 						<i className="foundicon-thumb-up blue"> </i>
-						{this.getVoters(tool, true)}
+						{prettyLists.format1(this.getVoters(tool, true), 'username')}
 					</span>
 					<span className="column small-4 tool-info">
 						<i className="foundicon-thumb-down red"> </i>
-						{this.getVoters(tool, false)}
+						{prettyLists.format1(this.getVoters(tool, false), 'username')}
 					</span>
 					<span className="column small-4 tool-info">
 						<i className="foundicon-chat green"> </i>

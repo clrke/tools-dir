@@ -23,6 +23,7 @@
     "superagent": "^0.21.0",
     "velocity-animate": "^1.2.1",
     "react-foundation-apps": "~0.6.0",
-    "moment": "~2.9.0"
+    "moment": "~2.9.0",
+    "pretty-lists": "~1.0.0"
   }
 }
