@@ -27,7 +27,7 @@
 }
 
 .fixed-container {
-	height: 90vh;
+	height: 100%;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
