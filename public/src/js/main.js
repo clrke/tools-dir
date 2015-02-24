@@ -23610,12 +23610,10 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 		return (
 			React.createElement("div", {className: "panel white"}, 
 				this.getTitle(), 
-				React.createElement("div", {className: "panel white tool-info"}, 
-					React.createElement(ToolStats, {tool: tool, current: this.props.current}), 
-					this.getAbstact(), 
-					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " "), 
-					 React.createElement("div", {className: "clearfix"}, " ")
-				)
+				React.createElement(ToolStats, {tool: tool, current: this.props.current}), 
+				this.getAbstact(), 
+				React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " "), 
+				React.createElement("div", {className: "clearfix"}, " ")
 			)
 		)
 	}
