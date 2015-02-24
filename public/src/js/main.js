@@ -23551,6 +23551,34 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			return string;
 		}
 	},
+	getTitle: function () {
+		var tool = this.props.tool;
+		if(this.props.current) {
+			return (
+				React.createElement("h3", null, 
+					React.createElement("b", {className: "link-color"}, " ", tool.title, " "), 
+					React.createElement("small", null, " by ", tool.authors, " ")
+				)
+			);
+		} else {
+			return (
+				React.createElement("h3", null, 
+					React.createElement("a", {href: "#", onClick: this.props.onClick}, 
+						React.createElement("b", null, tool.title)
+					), 
+					React.createElement("small", null, " by ", tool.authors, " ")
+				)
+			);
+		}
+	},
+	getAbstact: function () {
+		var tool = this.props.tool;
+		if(this.props.current) {
+			return tool.abstract;
+		} else {
+			return this.shorten(tool.abstract);
+		}
+	},
 	getVoters: function (tool, isPositive) {
 		var voters = tool.voters;
 		var upvoters = [],
@@ -23581,15 +23609,10 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 		var tool = this.props.tool;
 		return (
 			React.createElement("div", {className: "panel white"}, 
-				React.createElement("h3", null, 
-					React.createElement("a", {href: "#", onClick: this.props.onClick}, 
-						React.createElement("b", null, tool.title)
-					), 
-					React.createElement("small", null, " by ", tool.authors, " ")
-				), 
+				this.getTitle(), 
 				React.createElement("div", {className: "panel white tool-info"}, 
-					React.createElement(ToolStats, {tool: tool}), 
-					this.shorten(tool.abstract), 
+					React.createElement(ToolStats, {tool: tool, current: this.props.current}), 
+					this.getAbstact(), 
 					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " "), 
 					 React.createElement("div", {className: "clearfix"}, " ")
 				)
@@ -23623,15 +23646,26 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		return 0;
 	},
 	render: function () {
+		var upvoters = this.getVoters(true);
+		var downvoters = this.getVoters(false);
+
 		return (
 			React.createElement("ul", {className: "vcard tool-stats"}, 
 				React.createElement("li", null, 
 					React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-					prettyLists.format1(this.getVoters(true), 'username')
+					
+						this.props.current ?
+							prettyLists.format1(upvoters, 'username') :
+							upvoters.length
+					
 				), 
 				React.createElement("li", null, 
 					React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-					prettyLists.format1(this.getVoters(false), 'username')
+					
+						this.props.current ?
+							prettyLists.format1(downvoters, 'username') :
+							downvoters.length
+					
 				), 
 				React.createElement("li", null, 
 					React.createElement("i", {className: "foundicon-chat green"}, " "), 
@@ -23667,16 +23701,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		return (
 			React.createElement("div", null, 
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
-					React.createElement("div", {className: "panel radius white"}, 
-						React.createElement("h3", null, this.state.tool.title), 
-						React.createElement("div", {className: "panel white tool-info small-padding"}, 
-							React.createElement(ToolStats, {tool: this.state.tool}), 
-							React.createElement("p", {className: "tool-info"}, 
-								this.state.tool.abstract
-							), 
-							React.createElement("div", {className: "clearfix"}, " ")
-						)
-					)
+					React.createElement(ToolPanel, {tool: this.state.tool, current: true})
 				), 
 				React.createElement("div", {className: "column medium-pull-6 medium-6 fixed-container"}, 
 					this.props.tools.map(createTr, this)

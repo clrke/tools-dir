@@ -44,3 +44,7 @@ body {
    height: 0;
    clear: both;
 }
+
+.link-color {
+	color: #008CBA;
+}

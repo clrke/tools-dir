@@ -20,15 +20,26 @@ ToolStats = React.createClass({
 		return 0;
 	},
 	render: function () {
+		var upvoters = this.getVoters(true);
+		var downvoters = this.getVoters(false);
+
 		return (
 			<ul className="vcard tool-stats">
 				<li>
 					<i className="foundicon-thumb-up blue"> </i>
-					{prettyLists.format1(this.getVoters(true), 'username')}
+					{
+						this.props.current ?
+							prettyLists.format1(upvoters, 'username') :
+							upvoters.length
+					}
 				</li>
 				<li>
 					<i className="foundicon-thumb-down red"> </i>
-					{prettyLists.format1(this.getVoters(false), 'username')}
+					{
+						this.props.current ?
+							prettyLists.format1(downvoters, 'username') :
+							downvoters.length
+					}
 				</li>
 				<li>
 					<i className="foundicon-chat green"> </i>
