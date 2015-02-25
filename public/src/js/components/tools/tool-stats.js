@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var prettyLists = require('pretty-lists/pretty-lists');
+var prettyLists = require('pretty-lists');
 
 ToolStats = React.createClass({
 	getInitialState: function () {

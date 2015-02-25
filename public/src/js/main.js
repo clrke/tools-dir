@@ -23629,7 +23629,7 @@ module.exports = ToolPanel;
 
 },{"./tool-stats":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js","moment":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/moment/moment.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js":[function(require,module,exports){
 var React = require('react/addons');
-var prettyLists = require('pretty-lists/pretty-lists');
+var prettyLists = require('pretty-lists');
 
 ToolStats = React.createClass({displayName: "ToolStats",
 	getInitialState: function () {
@@ -23713,7 +23713,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 
 module.exports = ToolStats;
 
-},{"pretty-lists/pretty-lists":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/pretty-lists/pretty-lists.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js":[function(require,module,exports){
+},{"pretty-lists":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/pretty-lists/pretty-lists.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-list.js":[function(require,module,exports){
 var React = require('react/addons');
 var ToolPanel = require('./tool-panel');
 
