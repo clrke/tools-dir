@@ -24,17 +24,19 @@ ToolPanel = React.createClass({
 			return (
 				<h3>
 					<b className="link-color"> {tool.title} </b>
-					<small> by {tool.authors} </small>
+					<small> by {tool.authors} </small> |
+					<small> {moment(tool.created_at).fromNow()} </small>
 				</h3>
 			);
 		} else {
 			return (
-				<h3>
+				<div>
 					<a href="#" onClick={this.props.onClick}>
 						<b>{tool.title}</b>
-					</a>
-					<small> by {tool.authors} </small>
-				</h3>
+					</a><br/>
+					<span className="small-padding-right"> by {tool.authors}</span>
+					{moment(tool.created_at).fromNow()}
+				</div>
 			);
 		}
 	},
@@ -74,19 +76,34 @@ ToolPanel = React.createClass({
 	},
 	render: function () {
 		var tool = this.props.tool;
-		return (
-			<div className="panel white">
-				{this.getTitle()}
-				<ToolStats
-					tool={tool}
-					current={this.props.current}
-					update={this.props.onClick} />
 
-				{this.getAbstact()}
-				<small> {moment(tool.created_at).fromNow()} </small>
-				<div className="clearfix"> </div>
-			</div>
-		)
+		if(this.props.current) {
+			return (
+				<div className="panel white">
+					{this.getTitle()}
+
+					{this.getAbstact()}
+
+					<ToolStats
+						tool={tool}
+						current={this.props.current}
+						update={this.props.onClick} />
+
+					<div className="clearfix"> </div>
+				</div>
+			)
+		} else {
+			return (
+				<div className="panel white small-padding">
+					{this.getTitle()}
+					<ToolStats
+						tool={tool}
+						current={this.props.current}
+						update={this.props.onClick} />
+				</div>
+			);
+
+		}
 	}
 });
 

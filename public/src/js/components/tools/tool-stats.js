@@ -48,36 +48,43 @@ ToolStats = React.createClass({
 		var upvoters = this.getVoters(true);
 		var downvoters = this.getVoters(false);
 
-		return (
-			<ul className="vcard tool-stats">
-				<li>
+		if(this.props.current) {
+			return (
+				<ul className="panel callout tool-stats">
 					<a href="#" onClick={this.vote.bind(this, 1)}>
 						<i className="foundicon-thumb-up blue"> </i>
-						{
-							this.props.current ?
-								prettyLists.format1(upvoters, 'username') :
-								upvoters.length
-						}
-					</a>
-				</li>
-				<li>
-					<a href="#" onClick={this.vote.bind(this, 0)}>
-						<i className="foundicon-thumb-down red"> </i>
-						{
-							this.props.current ?
-								prettyLists.format1(downvoters, 'username') :
-								downvoters.length
-						}
-					</a>
-				</li>
-				<li>
+						{ prettyLists.format1(upvoters, 'username') }
+					</a> <br/>
 					<a href="#">
 						<i className="foundicon-chat green"> </i>
 						{this.getComments()}
 					</a>
-				</li>
-			</ul>
-		)
+				</ul>
+			);
+		} else {
+			return (
+				<div className="tool-stats">
+					<span
+						className="small-padding-right"
+						onClick={this.vote.bind(this, 1)}>
+						<i className="foundicon-thumb-up blue"> </i>
+						{ upvoters.length }
+					</span>
+					<span className="small-padding-right">
+						<i className="foundicon-chat green"> </i>
+						0
+					</span>
+					<span className="small-padding-right">
+						<i className="foundicon-chat green"> </i>
+						0
+					</span>
+					<span className="small-padding-right">
+						<i className="foundicon-chat green"> </i>
+						0
+					</span>
+				</div>
+			);
+		}
 	}
 });
 

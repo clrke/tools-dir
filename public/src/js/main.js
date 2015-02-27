@@ -23559,16 +23559,18 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			return (
 				React.createElement("h3", null, 
 					React.createElement("b", {className: "link-color"}, " ", tool.title, " "), 
-					React.createElement("small", null, " by ", tool.authors, " ")
+					React.createElement("small", null, " by ", tool.authors, " "), " |", 
+					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " ")
 				)
 			);
 		} else {
 			return (
-				React.createElement("h3", null, 
+				React.createElement("div", null, 
 					React.createElement("a", {href: "#", onClick: this.props.onClick}, 
 						React.createElement("b", null, tool.title)
-					), 
-					React.createElement("small", null, " by ", tool.authors, " ")
+					), React.createElement("br", null), 
+					React.createElement("span", {className: "small-padding-right"}, " by ", tool.authors), 
+					moment(tool.created_at).fromNow()
 				)
 			);
 		}
@@ -23609,19 +23611,34 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 	},
 	render: function () {
 		var tool = this.props.tool;
-		return (
-			React.createElement("div", {className: "panel white"}, 
-				this.getTitle(), 
-				React.createElement(ToolStats, {
-					tool: tool, 
-					current: this.props.current, 
-					update: this.props.onClick}), 
 
-				this.getAbstact(), 
-				React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " "), 
-				React.createElement("div", {className: "clearfix"}, " ")
+		if(this.props.current) {
+			return (
+				React.createElement("div", {className: "panel white"}, 
+					this.getTitle(), 
+
+					this.getAbstact(), 
+
+					React.createElement(ToolStats, {
+						tool: tool, 
+						current: this.props.current, 
+						update: this.props.onClick}), 
+
+					React.createElement("div", {className: "clearfix"}, " ")
+				)
 			)
-		)
+		} else {
+			return (
+				React.createElement("div", {className: "panel white small-padding"}, 
+					this.getTitle(), 
+					React.createElement(ToolStats, {
+						tool: tool, 
+						current: this.props.current, 
+						update: this.props.onClick})
+				)
+			);
+
+		}
 	}
 });
 
@@ -23678,36 +23695,43 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		var upvoters = this.getVoters(true);
 		var downvoters = this.getVoters(false);
 
-		return (
-			React.createElement("ul", {className: "vcard tool-stats"}, 
-				React.createElement("li", null, 
+		if(this.props.current) {
+			return (
+				React.createElement("ul", {className: "panel callout tool-stats"}, 
 					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 1)}, 
 						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
-						
-							this.props.current ?
-								prettyLists.format1(upvoters, 'username') :
-								upvoters.length
-						
-					)
-				), 
-				React.createElement("li", null, 
-					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 0)}, 
-						React.createElement("i", {className: "foundicon-thumb-down red"}, " "), 
-						
-							this.props.current ?
-								prettyLists.format1(downvoters, 'username') :
-								downvoters.length
-						
-					)
-				), 
-				React.createElement("li", null, 
+						 prettyLists.format1(upvoters, 'username') 
+					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
 						this.getComments()
 					)
 				)
-			)
-		)
+			);
+		} else {
+			return (
+				React.createElement("div", {className: "tool-stats"}, 
+					React.createElement("span", {
+						className: "small-padding-right", 
+						onClick: this.vote.bind(this, 1)}, 
+						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+						 upvoters.length
+					), 
+					React.createElement("span", {className: "small-padding-right"}, 
+						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						"0"
+					), 
+					React.createElement("span", {className: "small-padding-right"}, 
+						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						"0"
+					), 
+					React.createElement("span", {className: "small-padding-right"}, 
+						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						"0"
+					)
+				)
+			);
+		}
 	}
 });
 
