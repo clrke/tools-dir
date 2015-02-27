@@ -23559,18 +23559,18 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			return (
 				React.createElement("h3", null, 
 					React.createElement("b", {className: "link-color"}, " ", tool.title, " "), 
-					React.createElement("small", null, " by ", tool.authors, " "), " |", 
+					React.createElement("small", null, " by ", tool.authors, ", "), 
 					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " ")
 				)
 			);
 		} else {
 			return (
-				React.createElement("div", null, 
+				React.createElement("h5", null, 
 					React.createElement("a", {href: "#", onClick: this.props.onClick}, 
 						React.createElement("b", null, tool.title)
-					), React.createElement("br", null), 
-					React.createElement("span", {className: "small-padding-right"}, " by ", tool.authors), 
-					moment(tool.created_at).fromNow()
+					), 
+					React.createElement("small", null, " by ", tool.authors, ","), 
+					React.createElement("small", null, " ", moment(tool.created_at).fromNow(), " ")
 				)
 			);
 		}
