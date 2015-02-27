@@ -36,9 +36,9 @@ ToolStats = React.createClass({
 		}
 
 		if(status === 1) {
-			tool.upvoters.push(authUser);
+			tool.upvoters.splice(0, 0, authUser);
 		} else {
-			tool.downvoters.push(authUser);
+			tool.downvoters.splice(0, 0, authUser);
 		}
 
 		this.props.update(tool.id);
