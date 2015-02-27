@@ -9,10 +9,10 @@ class Tool extends Eloquent {
 	}
 	public function upvoters()
 	{
-		return $this->voters()->where('is_positive', true)->orderBy('created_at', 'desc');
+		return $this->voters()->where('is_positive', true)->orderBy('updated_at');
 	}
 	public function downvoters()
 	{
-		return $this->voters()->where('is_positive', false)->orderBy('created_at', 'desc');
+		return $this->voters()->where('is_positive', false)->orderBy('updated_at');
 	}
 }

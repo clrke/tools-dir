@@ -42,10 +42,14 @@ Route::post('/vote/{id}/{status}', function ($id, $status)
 
 	if($tool->voters->contains($user->id)) {
 		$tool->voters()->updateExistingPivot($user->id, [
-			'is_positive' => $status == '1']);
+			'is_positive' => $status == '1',
+			'updated_at' => Carbon\Carbon::now()
+		]);
 	} else {
 		$tool->voters()->attach($user, [
-			'is_positive' => $status == '1']);
+			'is_positive' => $status == '1',
+			'updated_at' => Carbon\Carbon::now()
+		]);
 	}
 
 	return Redirect::back();
