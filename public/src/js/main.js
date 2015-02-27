@@ -23712,20 +23712,20 @@ ToolStats = React.createClass({displayName: "ToolStats",
 			return (
 				React.createElement("div", {className: "tool-stats"}, 
 					React.createElement("span", {
-						className: "small-padding-right", 
+						className: "small-padding-left", 
 						onClick: this.vote.bind(this, 1)}, 
 						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
 						 upvoters.length
 					), 
-					React.createElement("span", {className: "small-padding-right"}, 
+					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
 						"0"
 					), 
-					React.createElement("span", {className: "small-padding-right"}, 
+					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
 						"0"
 					), 
-					React.createElement("span", {className: "small-padding-right"}, 
+					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
 						"0"
 					)

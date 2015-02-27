@@ -65,20 +65,20 @@ ToolStats = React.createClass({
 			return (
 				<div className="tool-stats">
 					<span
-						className="small-padding-right"
+						className="small-padding-left"
 						onClick={this.vote.bind(this, 1)}>
 						<i className="foundicon-thumb-up blue"> </i>
 						{ upvoters.length }
 					</span>
-					<span className="small-padding-right">
+					<span className="small-padding-left">
 						<i className="foundicon-chat green"> </i>
 						0
 					</span>
-					<span className="small-padding-right">
+					<span className="small-padding-left">
 						<i className="foundicon-chat green"> </i>
 						0
 					</span>
-					<span className="small-padding-right">
+					<span className="small-padding-left">
 						<i className="foundicon-chat green"> </i>
 						0
 					</span>
