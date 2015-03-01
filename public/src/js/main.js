@@ -23585,7 +23585,7 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			return (
 				React.createElement("div", null, 
 					React.createElement("h5", null, 
-						React.createElement("a", {href: "#", onClick: this.props.onClick}, 
+						React.createElement("a", {href: "#", onClick: !this.props.highlight? this.props.onClick: null}, 
 							React.createElement("b", null, tool.title)
 						)
 					), 
@@ -23722,6 +23722,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		var id = this.props.tool.id;
 		var upvoters = this.getVoters(true);
 		var downvoters = this.getVoters(false);
+		var views = this.state.tool.views;
 
 		if(this.props.current) {
 			return (
@@ -23747,7 +23748,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
-						"0"
+						views 
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "foundicon-chat green"}, " "), 
@@ -23786,6 +23787,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		pageLength: React.PropTypes.number
 	},
 	setCurrentTool: function (tool) {
+		$.post('/view/'+tool.id);
+		tool.views++;
 		this.setState({tool: tool});
 	},
 	handlePrev: function () {

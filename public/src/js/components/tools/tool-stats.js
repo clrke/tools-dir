@@ -47,6 +47,7 @@ ToolStats = React.createClass({
 		var id = this.props.tool.id;
 		var upvoters = this.getVoters(true);
 		var downvoters = this.getVoters(false);
+		var views = this.state.tool.views;
 
 		if(this.props.current) {
 			return (
@@ -72,7 +73,7 @@ ToolStats = React.createClass({
 					</span>
 					<span className="small-padding-left">
 						<i className="foundicon-chat green"> </i>
-						0
+						{ views }
 					</span>
 					<span className="small-padding-left">
 						<i className="foundicon-chat green"> </i>

@@ -55,6 +55,27 @@ Route::post('/vote/{id}/{status}', function ($id, $status)
 	return Redirect::back();
 });
 
+Route::post('view/{id}', function ($id)
+{
+	$tool = Tool::find($id);
+	$user = Auth::user();
+
+	$view = $tool->viewers()->whereUserId($user->id)->first();
+	if(isset($view)) {
+		$view->pivot->update([
+			'count' => $view->pivot->count+1,
+			'updated_at' => Carbon\Carbon::now()
+		]);
+	} else {
+		$tool->viewers()->attach($user, [
+			'count' => 1,
+			'updated_at' => Carbon\Carbon::now()
+		]);
+	}
+
+	return $view;
+});
+
 Route::get('/logout', function ()
 {
 	Auth::logout();

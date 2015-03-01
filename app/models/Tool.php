@@ -2,10 +2,23 @@
 
 class Tool extends Eloquent {
 	protected $fillable = ['title', 'abstract', 'authors', 'pageCount', 'year'];
+	protected $appends = ['views'];
 
+	public function getViewsAttribute()
+	{
+		$views = 0;
+		foreach ($this->viewers as $viewer) {
+			$views += $viewer->pivot->count;
+		}
+		return $views;
+	}
 	public function voters()
 	{
 		return $this->belongsToMany('User', 'votes');
+	}
+	public function viewers()
+	{
+		return $this->belongsToMany('User', 'views')->withPivot('count');
 	}
 	public function upvoters()
 	{

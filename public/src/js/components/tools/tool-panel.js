@@ -36,7 +36,7 @@ ToolPanel = React.createClass({
 			return (
 				<div>
 					<h5>
-						<a href="#" onClick={this.props.onClick}>
+						<a href="#" onClick={!this.props.highlight? this.props.onClick: null}>
 							<b>{tool.title}</b>
 						</a>
 					</h5>
