@@ -16,11 +16,6 @@ class Tool extends Eloquent {
 	{
 		return $this->belongsToMany('User', 'votes');
 	}
-	public function viewers()
-	{
-		return $this->belongsToMany('User', 'views')
-			->withPivot('count')->orderBy('count', 'desc');
-	}
 	public function upvoters()
 	{
 		return $this->voters()->where('is_positive', true)->orderBy('updated_at');
@@ -28,5 +23,10 @@ class Tool extends Eloquent {
 	public function downvoters()
 	{
 		return $this->voters()->where('is_positive', false)->orderBy('updated_at');
+	}
+	public function viewers()
+	{
+		return $this->belongsToMany('User', 'views')
+			->withPivot('count')->orderBy('count', 'desc');
 	}
 }
