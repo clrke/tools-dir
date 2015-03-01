@@ -48,6 +48,7 @@ Route::post('/vote/{id}/{status}', function ($id, $status)
 	} else {
 		$tool->voters()->attach($user, [
 			'is_positive' => $status == '1',
+			'created_at' => Carbon\Carbon::now(),
 			'updated_at' => Carbon\Carbon::now()
 		]);
 	}
@@ -69,6 +70,7 @@ Route::post('view/{id}', function ($id)
 	} else {
 		$tool->viewers()->attach($user, [
 			'count' => 1,
+			'created_at' => Carbon\Carbon::now(),
 			'updated_at' => Carbon\Carbon::now()
 		]);
 	}
