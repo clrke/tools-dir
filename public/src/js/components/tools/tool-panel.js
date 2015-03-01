@@ -106,7 +106,6 @@ ToolPanel = React.createClass({
 			var classNames = React.addons.classSet({
 				'panel small-padding animated': true,
 				'fadeIn': this.props.pageChange != 0,
-				'zoomIn': this.props.pageChange == 0,
 				'callout': this.props.highlight,
 				'white':  !this.props.highlight
 			});

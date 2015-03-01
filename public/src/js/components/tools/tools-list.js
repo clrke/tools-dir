@@ -57,7 +57,7 @@ ToolsList = React.createClass({
 				<div className="column medium-6 medium-push-6">
 					{currentTool}
 				</div>
-				<div className="column medium-pull-6 medium-6">
+				<div className="column medium-pull-6 medium-6 animated fadeInRight">
 					<div className="panel white">
 						<ToolsPagination
 							prev={this.handlePrev}

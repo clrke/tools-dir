@@ -23641,7 +23641,6 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			var classNames = React.addons.classSet({
 				'panel small-padding animated': true,
 				'fadeIn': this.props.pageChange != 0,
-				'zoomIn': this.props.pageChange == 0,
 				'callout': this.props.highlight,
 				'white':  !this.props.highlight
 			});
@@ -23814,7 +23813,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
 					currentTool
 				), 
-				React.createElement("div", {className: "column medium-pull-6 medium-6"}, 
+				React.createElement("div", {className: "column medium-pull-6 medium-6 animated fadeInRight"}, 
 					React.createElement("div", {className: "panel white"}, 
 						React.createElement(ToolsPagination, {
 							prev: this.handlePrev, 
