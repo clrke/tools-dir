@@ -35,6 +35,7 @@ ToolsList = React.createClass({
 			} else {
 				tool.viewers.push({
 					id: authUser.id,
+					username: authUser.username,
 					pivot: {count:1}
 				});
 			}
