@@ -11,7 +11,7 @@ TopBar = React.createClass({
 				<nav className="top-bar" data-topbar role="navigation">
 					<ul className="title-area">
 						<li className="name">
-							<h1><a href="#">Thesis Papers Directory</a></h1>
+							<h1><a href="#">PUP NLP &gt; Software</a></h1>
 						</li>
 					    <li className="toggle-topbar menu-icon"><a href="#"><span>MENU</span></a></li>
 					</ul>
