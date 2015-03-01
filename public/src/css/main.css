@@ -14,6 +14,14 @@
 	color: red;
 }
 
+.yellow {
+	color: yellow;
+}
+
+.purple {
+	color: purple;
+}
+
 .blue {
 	color: blue;
 }
@@ -54,4 +62,8 @@
 
 .link-color {
 	color: #008CBA;
+}
+
+.fa {
+	margin-right: 5px;
 }

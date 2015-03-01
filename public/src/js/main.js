@@ -23728,11 +23728,11 @@ ToolStats = React.createClass({displayName: "ToolStats",
 			return (
 				React.createElement("ul", {className: "panel callout tool-stats"}, 
 					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 1)}, 
-						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+						React.createElement("i", {className: "fa fa-thumbs-up blue"}, " "), 
 						 prettyLists.format1(upvoters, 'username') 
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#"}, 
-						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						React.createElement("i", {className: "fa fa-comments green"}, " "), 
 						this.getComments()
 					)
 				)
@@ -23743,19 +23743,19 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					React.createElement("span", {
 						className: "small-padding-left", 
 						onClick: this.vote.bind(this, 1)}, 
-						React.createElement("i", {className: "foundicon-thumb-up blue"}, " "), 
+						React.createElement("i", {className: "fa fa-thumbs-up blue"}), 
 						 upvoters.length
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
-						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						React.createElement("i", {className: "fa fa-eye red"}, " "), 
 						views 
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
-						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						React.createElement("i", {className: "fa fa-download purple"}, " "), 
 						"0"
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
-						React.createElement("i", {className: "foundicon-chat green"}, " "), 
+						React.createElement("i", {className: "fa fa-comments green"}, " "), 
 						"0"
 					)
 				)

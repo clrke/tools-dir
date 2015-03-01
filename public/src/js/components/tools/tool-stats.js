@@ -53,11 +53,11 @@ ToolStats = React.createClass({
 			return (
 				<ul className="panel callout tool-stats">
 					<a href="#" onClick={this.vote.bind(this, 1)}>
-						<i className="foundicon-thumb-up blue"> </i>
+						<i className="fa fa-thumbs-up blue"> </i>
 						{ prettyLists.format1(upvoters, 'username') }
 					</a> <br/>
 					<a href="#">
-						<i className="foundicon-chat green"> </i>
+						<i className="fa fa-comments green"> </i>
 						{this.getComments()}
 					</a>
 				</ul>
@@ -68,19 +68,19 @@ ToolStats = React.createClass({
 					<span
 						className="small-padding-left"
 						onClick={this.vote.bind(this, 1)}>
-						<i className="foundicon-thumb-up blue"> </i>
+						<i className="fa fa-thumbs-up blue"></i>
 						{ upvoters.length }
 					</span>
 					<span className="small-padding-left">
-						<i className="foundicon-chat green"> </i>
+						<i className="fa fa-eye red"> </i>
 						{ views }
 					</span>
 					<span className="small-padding-left">
-						<i className="foundicon-chat green"> </i>
+						<i className="fa fa-download purple"> </i>
 						0
 					</span>
 					<span className="small-padding-left">
-						<i className="foundicon-chat green"> </i>
+						<i className="fa fa-comments green"> </i>
 						0
 					</span>
 				</div>
