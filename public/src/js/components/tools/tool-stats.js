@@ -10,10 +10,26 @@ ToolStats = React.createClass({
 	},
 	getVoters: function (isPositive) {
 		var tool = this.props.tool;
+		var voters = [];
+
 		if(isPositive) {
-			return tool.upvoters;
+			tool.upvoters.forEach(function (voter) {
+				if(voter.id != authUser.id) {
+					voters.push(voter);
+				} else {
+					voters.unshift({username:'You'});
+				}
+			});
+			return voters;
 		} else {
-			return tool.downvoters;
+			tool.downvoters.forEach(function (voter) {
+				if(voter.id != authUser.id) {
+					voters.push(voter);
+				} else {
+					voters.unshift('You');
+				}
+			});
+			return voters;
 		}
 	},
 	getComments: function () {
