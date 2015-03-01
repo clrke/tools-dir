@@ -15,7 +15,8 @@ Route::get('/', function()
 {
 	if(Auth::check())
 	{
-		$tools = Tool::orderBy('created_at')->with('upvoters', 'downvoters')->get();
+		$tools = Tool::orderBy('created_at')
+			->with('upvoters', 'downvoters', 'comments')->get();
 
 		return View::make('papers.index', compact('tools'));
 	}
@@ -76,6 +77,20 @@ Route::post('view/{id}', function ($id)
 	}
 
 	return $view;
+});
+
+Route::post('comment/{id}', function ($id)
+{
+	$tool = Tool::find($id);
+	$user = Auth::user();
+
+	$tool->comments()->attach($user, [
+		'text' => Input::get('text'),
+		'created_at' => Carbon\Carbon::now(),
+		'updated_at' => Carbon\Carbon::now()
+	]);
+
+	return $tool->comments;
 });
 
 Route::get('/logout', function ()

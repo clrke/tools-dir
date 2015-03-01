@@ -42,6 +42,10 @@
 	margin: 0px;
 }
 
+.write.comment {
+	margin: 0px;
+}
+
 .fixed-container {
 	height: 100%;
 	overflow-x: hidden;

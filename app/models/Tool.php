@@ -29,4 +29,9 @@ class Tool extends Eloquent {
 		return $this->belongsToMany('User', 'views')
 			->withPivot('count')->orderBy('count', 'desc');
 	}
+	public function comments()
+	{
+		return $this->belongsToMany('User', 'comments')
+			->withPivot('text');
+	}
 }

@@ -2,6 +2,7 @@ var React = require('react/addons');
 var moment = require('moment');
 
 var ToolStats = require('./tool-stats');
+var ToolComments = require('./tool-comments');
 
 ToolPanel = React.createClass({
 	getInitialState: function () {
@@ -86,18 +87,23 @@ ToolPanel = React.createClass({
 		var tool = this.props.tool;
 
 		if(this.props.current) {
+			var classNames = React.addons.classSet({
+				'tool panel white animated slideInLeft': true
+			});
 			return (
-				<div className="tool panel white animated slideInLeft">
-					{this.getTitle()}
+				<div className="fixed-container">
+					<div className={classNames}>
+						{this.getTitle()}
 
-					{this.getAbstact()}
+						{this.getAbstact()}
 
-					<ToolStats
-						tool={tool}
-						current={this.props.current}
-						update={this.props.onClick} />
-
-					<div className="clearfix"> </div>
+						<ToolStats
+							tool={tool}
+							current={this.props.current}
+							update={this.props.onClick} />
+						<ToolComments tool={tool} />
+						<div className="clearfix"> </div>
+					</div>
 				</div>
 			)
 		} else {

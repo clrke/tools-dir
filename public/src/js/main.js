@@ -23561,11 +23561,61 @@ React.render(
 
 $(document).foundation();
 
-},{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-panel.js":[function(require,module,exports){
+},{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
+var React = require('react/addons');
+
+ToolStats = React.createClass({displayName: "ToolStats",
+	propTypes: {
+		tool: React.PropTypes.object.isRequired
+	},
+	getInitialState: function () {
+	    return {
+	        comments: this.props.tool.comments
+	    };
+	},
+	handleSubmit: function (event) {
+		event.preventDefault();
+		var text = this.refs.comment.getDOMNode().value;
+		this.state.comments.push({
+			username: authUser.username,
+			pivot: {text: text}
+		});
+		$.post('/comment/'+this.props.tool.id, {text: text});
+		this.setState({comments: this.state.comments});
+		this.refs.comment.getDOMNode().value='';
+	},
+	commentPanels: function () {
+		return this.state.comments.map(function (comment) {
+			return (
+				React.createElement("div", {className: "tool panel white "}, 
+					React.createElement("b", null, " ", comment.username, ": "), 
+					comment.pivot.text
+				)
+			);
+		}, this);
+	},
+	render: function () {
+		return (
+			React.createElement("div", {className: "panel white radius"}, 
+				this.commentPanels(), 
+				React.createElement("form", {onSubmit: this.handleSubmit}, 
+					React.createElement("input", {type: "text", ref: "comment", 
+						className: "write comment", 
+						placeholder: "Write a comment..."})
+				)
+			)
+		)
+	}
+});
+
+module.exports = ToolStats;
+
+},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-panel.js":[function(require,module,exports){
 var React = require('react/addons');
 var moment = require('moment');
 
 var ToolStats = require('./tool-stats');
+var ToolComments = require('./tool-comments');
 
 ToolPanel = React.createClass({displayName: "ToolPanel",
 	getInitialState: function () {
@@ -23650,18 +23700,23 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 		var tool = this.props.tool;
 
 		if(this.props.current) {
+			var classNames = React.addons.classSet({
+				'tool panel white animated slideInLeft': true
+			});
 			return (
-				React.createElement("div", {className: "tool panel white animated slideInLeft"}, 
-					this.getTitle(), 
+				React.createElement("div", {className: "fixed-container"}, 
+					React.createElement("div", {className: classNames}, 
+						this.getTitle(), 
 
-					this.getAbstact(), 
+						this.getAbstact(), 
 
-					React.createElement(ToolStats, {
-						tool: tool, 
-						current: this.props.current, 
-						update: this.props.onClick}), 
-
-					React.createElement("div", {className: "clearfix"}, " ")
+						React.createElement(ToolStats, {
+							tool: tool, 
+							current: this.props.current, 
+							update: this.props.onClick}), 
+						React.createElement(ToolComments, {tool: tool}), 
+						React.createElement("div", {className: "clearfix"}, " ")
+					)
 				)
 			)
 		} else {
@@ -23687,7 +23742,7 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 
 module.exports = ToolPanel;
 
-},{"./tool-stats":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-stats.js","moment":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/moment/moment.js","react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-stats.js":[function(require,module,exports){
+},{"./tool-comments":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js","./tool-stats":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-stats.js","moment":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/moment/moment.js","react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-stats.js":[function(require,module,exports){
 var React = require('react/addons');
 var prettyLists = require('pretty-lists');
 
