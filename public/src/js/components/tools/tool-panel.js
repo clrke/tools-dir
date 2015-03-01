@@ -101,7 +101,8 @@ ToolPanel = React.createClass({
 							tool={tool}
 							current={this.props.current}
 							update={this.props.onClick} />
-						<ToolComments tool={tool} />
+						<ToolComments tool={tool}
+							update={this.props.onClick} />
 						<div className="clearfix"> </div>
 					</div>
 				</div>

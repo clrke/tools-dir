@@ -49,6 +49,8 @@ ToolStats = React.createClass({
 		var downvoters = this.getVoters(false);
 		var viewers = this.state.tool.viewers;
 		var views = this.state.tool.views;
+		var comments = this.state.tool.comments;
+		var commenters = this.state.tool.commenters;
 
 		if(this.props.current) {
 			return (
@@ -63,7 +65,7 @@ ToolStats = React.createClass({
 					</a> <br/>
 					<a href="#">
 						<i className="fa fa-comments green"> </i>
-						{this.getComments()}
+						{ prettyLists.format1(commenters, 'username') }
 					</a>
 				</ul>
 			);
@@ -86,7 +88,7 @@ ToolStats = React.createClass({
 					</span>
 					<span className="small-padding-left">
 						<i className="fa fa-comments green"> </i>
-						0
+						{ comments.length }
 					</span>
 				</div>
 			);

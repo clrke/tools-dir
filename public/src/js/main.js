@@ -23583,6 +23583,8 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		$.post('/comment/'+this.props.tool.id, {text: text});
 		this.setState({comments: this.state.comments});
 		this.refs.comment.getDOMNode().value='';
+
+		this.props.update(this.props.tool.id);
 	},
 	commentPanels: function () {
 		return this.state.comments.map(function (comment) {
@@ -23714,7 +23716,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 							tool: tool, 
 							current: this.props.current, 
 							update: this.props.onClick}), 
-						React.createElement(ToolComments, {tool: tool}), 
+						React.createElement(ToolComments, {tool: tool, 
+							update: this.props.onClick}), 
 						React.createElement("div", {className: "clearfix"}, " ")
 					)
 				)
@@ -23799,6 +23802,8 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		var downvoters = this.getVoters(false);
 		var viewers = this.state.tool.viewers;
 		var views = this.state.tool.views;
+		var comments = this.state.tool.comments;
+		var commenters = this.state.tool.commenters;
 
 		if(this.props.current) {
 			return (
@@ -23813,7 +23818,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#"}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
-						this.getComments()
+						 prettyLists.format1(commenters, 'username') 
 					)
 				)
 			);
@@ -23836,7 +23841,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
-						"0"
+						 comments.length
 					)
 				)
 			);

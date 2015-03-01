@@ -19,6 +19,8 @@ ToolStats = React.createClass({
 		$.post('/comment/'+this.props.tool.id, {text: text});
 		this.setState({comments: this.state.comments});
 		this.refs.comment.getDOMNode().value='';
+
+		this.props.update(this.props.tool.id);
 	},
 	commentPanels: function () {
 		return this.state.comments.map(function (comment) {
