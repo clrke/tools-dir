@@ -38,6 +38,10 @@
 	background-color: white;
 }
 
+.tool.panel {
+	margin: 0px;
+}
+
 .fixed-container {
 	height: 100%;
 	overflow-x: hidden;
