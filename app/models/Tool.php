@@ -18,7 +18,8 @@ class Tool extends Eloquent {
 	}
 	public function viewers()
 	{
-		return $this->belongsToMany('User', 'views')->withPivot('count');
+		return $this->belongsToMany('User', 'views')
+			->withPivot('count')->orderBy('count', 'desc');
 	}
 	public function upvoters()
 	{
