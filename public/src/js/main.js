@@ -23519,7 +23519,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 		return (
 			React.createElement("div", null, 
 				React.createElement(TopBar, null), 
-				React.createElement(ToolsList, {tools: tools})
+				React.createElement(ToolsList, {tools: tools, pageLength: 5})
 			)
 		)
 	}
@@ -23756,15 +23756,31 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
+var ToolsPagination = require('./tools-pagination');
+
 ToolsList = React.createClass({displayName: "ToolsList",
 	getInitialState: function () {
-		return {tools: this.props.tools, tool: this.props.tools[0]};
+		return {
+			tools: this.props.tools,
+			tool: this.props.tools[0],
+			page: 1
+		};
 	},
 	propTypes: {
 		tools: React.PropTypes.array,
+		pageLength: React.PropTypes.number
 	},
 	setCurrentTool: function (tool) {
 		this.setState({tool: tool});
+	},
+	handlePrev: function () {
+		this.setState({page: this.state.page-1});
+	},
+	handleNext: function () {
+		this.setState({page: this.state.page+1});
+	},
+	handleSkip: function (page) {
+		this.setState({page: page});
 	},
 	render: function () {
 		var createTr = function (tool) {
@@ -23776,6 +23792,9 @@ ToolsList = React.createClass({displayName: "ToolsList",
 					onClick: this.setCurrentTool.bind(this, tool)})
 			);
 		}
+
+		var pageCount = Math.ceil(this.props.tools.length/this.props.pageLength);
+
 		return (
 			React.createElement("div", null, 
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
@@ -23785,8 +23804,19 @@ ToolsList = React.createClass({displayName: "ToolsList",
 						current: true, 
 						onClick: this.setCurrentTool.bind(this, this.state.tool)})
 				), 
-				React.createElement("div", {className: "column medium-pull-6 medium-6 fixed-container"}, 
-					this.props.tools.map(createTr, this)
+				React.createElement("div", {className: "column medium-pull-6 medium-6"}, 
+					React.createElement("div", {className: "panel white"}, 
+						React.createElement(ToolsPagination, {
+							prev: this.handlePrev, 
+							next: this.handleNext, 
+							skip: this.handleSkip, 
+							page: this.state.page, 
+							pageCount: pageCount}), 
+						this.props.tools.slice(
+							this.props.pageLength*(this.state.page-1),
+							this.props.pageLength*this.state.page
+						).map(createTr, this)
+					)
 				)
 			)
 		);
@@ -23795,7 +23825,77 @@ ToolsList = React.createClass({displayName: "ToolsList",
 
 module.exports = ToolsList;
 
-},{"./tool-panel":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js","./tool-stats":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
+},{"./tool-panel":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-panel.js","./tool-stats":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tool-stats.js","./tools-pagination":"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-pagination.js","react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/tools/tools-pagination.js":[function(require,module,exports){
+var React = require('react/addons');
+
+ToolsPagination = React.createClass({displayName: "ToolsPagination",
+	getInitialState: function () {
+		pages = [];
+
+		for (var i = 0; i < this.props.pageCount; i++) {
+			pages.push({key: i+1});
+		};
+
+		return {
+			pages: pages
+		};
+	},
+	render: function () {
+		var classSet = React.addons.classSet;
+
+		var pages = function (page) {
+
+			var classNames = classSet({
+				'current': this.props.page == page.key
+			});
+
+			return (
+				React.createElement("li", {key: page.key, className: classNames}, 
+					React.createElement("a", {href: "#", 
+						onClick: this.props.skip.bind(null, page.key)}, 
+							page.key
+					)
+				)
+			);
+		};
+
+		var prevClassNames = classSet({
+			'arrow': true,
+			'unavailable': this.props.page <= 1
+		});
+
+		var nextClassNames = classSet({
+			'arrow': true,
+			'unavailable': this.props.page >= this.props.pageCount
+		});
+
+		return (
+			React.createElement("div", {className: "pagination-centered"}, 
+				React.createElement("ul", {className: "pagination"}, 
+					React.createElement("li", {className: prevClassNames}, 
+						React.createElement("a", {href: "#", 
+							onClick: 
+								this.props.page > 1?
+								this.props.prev: null
+							}, "«")
+					), 
+					this.state.pages.map(pages, this), 
+					React.createElement("li", {className: nextClassNames}, 
+						React.createElement("a", {href: "#", 
+							onClick: 
+								this.props.page < this.props.pageCount?
+								this.props.next: null
+							}, "»")
+					)
+				)
+			)
+		);
+	}
+});
+
+module.exports = ToolsPagination;
+
+},{"react/addons":"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/thesis-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
 var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",

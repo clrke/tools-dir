@@ -8,7 +8,7 @@ var MainPage = React.createClass({
 		return (
 			<div>
 				<TopBar />
-				<ToolsList tools={tools}/>
+				<ToolsList tools={tools} pageLength={5}/>
 			</div>
 		)
 	}
