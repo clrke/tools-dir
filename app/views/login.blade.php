@@ -1,6 +1,6 @@
 <html ng-app>
 	<head>
-		<title>Thesis Papers</title>
+		<title>PUP - Natural Language Processing SIG</title>
 		<link rel="stylesheet" type="text/css" href="foundation/css/foundation.min.css">
 		<link rel="stylesheet" type="text/css" href="src/css/main.css">
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>

@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html ng-app>
 	<head>
-		<title>Tools Directory</title>
+		<title>PUP NLP - Software</title>
 		<link rel="stylesheet" type="text/css" href="foundation/css/foundation.min.css">
 		<link rel="stylesheet" type="text/css" href="font-awesome/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="src/css/main.css">
