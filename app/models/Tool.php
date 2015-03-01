@@ -38,7 +38,7 @@ class Tool extends Eloquent {
 	}
 	public function commenters()
 	{
-		return $this->belongsToMany('User', 'comments')
-			->orderBy('comments.id', 'desc')->distinct();
+		return $this->belongsToMany('User', 'comments')->distinct()
+			->orderBy('comments.id', 'desc');
 	}
 }
