@@ -23712,7 +23712,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 	vote: function (status) {
 		var tool = this.props.tool;
 		var id = tool.id;
-		$.post('/vote/'+id+'/'+status);
+		$.post('/vote/'+id+'/'+status, 'vote');
 
 		var upvoteId = tool.upvoters.map(function(x) {return x.id; })
 			.indexOf(authUser.id);
@@ -23807,7 +23807,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		pageLength: React.PropTypes.number
 	},
 	setCurrentTool: function (tool) {
-		$.post('/view/'+tool.id);
+		$.post('/view/'+tool.id, 'view');
 		tool.views++;
 		this.setState({tool: tool});
 	},

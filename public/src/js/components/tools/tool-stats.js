@@ -22,7 +22,7 @@ ToolStats = React.createClass({
 	vote: function (status) {
 		var tool = this.props.tool;
 		var id = tool.id;
-		$.post('/vote/'+id+'/'+status);
+		$.post('/vote/'+id+'/'+status, 'vote');
 
 		var upvoteId = tool.upvoters.map(function(x) {return x.id; })
 			.indexOf(authUser.id);
