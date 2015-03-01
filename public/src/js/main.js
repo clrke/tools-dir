@@ -23772,10 +23772,10 @@ ToolStats = React.createClass({displayName: "ToolStats",
 	getComments: function () {
 		return 0;
 	},
-	vote: function (status) {
+	vote: function () {
 		var tool = this.props.tool;
 		var id = tool.id;
-		$.post('/vote/'+id+'/'+status, 'vote');
+		$.post('/vote/'+id, 'vote');
 
 		var upvoteId = tool.upvoters.map(function(x) {return x.id; })
 			.indexOf(authUser.id);
@@ -23784,14 +23784,10 @@ ToolStats = React.createClass({displayName: "ToolStats",
 
 		if(upvoteId != -1) {
 			tool.upvoters.splice(upvoteId, 1);
+			tool.downvoters.splice(0, 0, authUser);
 		} else if(downvoteId != -1) {
 			tool.downvoters.splice(downvoteId, 1);
-		}
-
-		if(status === 1) {
 			tool.upvoters.splice(0, 0, authUser);
-		} else {
-			tool.downvoters.splice(0, 0, authUser);
 		}
 
 		this.props.update(tool.id);
@@ -23808,7 +23804,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		if(this.props.current) {
 			return (
 				React.createElement("ul", {className: "panel callout tool-stats"}, 
-					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 1)}, 
+					React.createElement("a", {href: "#", onClick: this.vote.bind(this)}, 
 						React.createElement("i", {className: "fa fa-thumbs-up blue"}, " "), 
 						 prettyLists.format1(upvoters, 'username') 
 					), " ", React.createElement("br", null), 
@@ -23827,7 +23823,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 				React.createElement("div", {className: "tool-stats"}, 
 					React.createElement("span", {
 						className: "small-padding-left", 
-						onClick: this.vote.bind(this, 1)}, 
+						onClick: this.vote.bind(this)}, 
 						React.createElement("i", {className: "fa fa-thumbs-up blue"}), 
 						 upvoters.length
 					), 

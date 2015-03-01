@@ -37,25 +37,26 @@ Route::post('/login', function ()
 		return Redirect::back()->withInput(Input::all())->withError('Invalid credentials');
 });
 
-Route::post('/vote/{id}/{status}', function ($id, $status)
+Route::post('/vote/{id}', function ($id)
 {
 	$tool = Tool::find($id);
 	$user = Auth::user();
 
-	if($tool->voters->contains($user->id)) {
-		$tool->voters()->updateExistingPivot($user->id, [
-			'is_positive' => $status == '1',
+	$vote = $tool->voters()->whereUserId($user->id)->first();
+	if(isset($vote)) {
+		$vote->pivot->update([
+			'is_positive' => $vote->pivot->is_positive ? '0': '1',
 			'updated_at' => Carbon\Carbon::now()
 		]);
 	} else {
 		$tool->voters()->attach($user, [
-			'is_positive' => $status == '1',
+			'is_positive' => '1',
 			'created_at' => Carbon\Carbon::now(),
 			'updated_at' => Carbon\Carbon::now()
 		]);
 	}
 
-	return Redirect::back();
+	return $vote->pivot;
 });
 
 Route::post('view/{id}', function ($id)

@@ -14,15 +14,17 @@ class Tool extends Eloquent {
 	}
 	public function voters()
 	{
-		return $this->belongsToMany('User', 'votes');
+		return $this->belongsToMany('User', 'votes')
+			->withPivot('is_positive')
+			->orderBy('votes.updated_at', 'desc');
 	}
 	public function upvoters()
 	{
-		return $this->voters()->where('is_positive', true)->orderBy('updated_at');
+		return $this->voters()->where('is_positive', true);
 	}
 	public function downvoters()
 	{
-		return $this->voters()->where('is_positive', false)->orderBy('updated_at');
+		return $this->voters()->where('is_positive', false);
 	}
 	public function viewers()
 	{
