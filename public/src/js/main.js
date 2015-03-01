@@ -23755,13 +23755,14 @@ ToolsList = React.createClass({displayName: "ToolsList",
 	},
 	render: function () {
 		var createTr = function (tool) {
-			return React.createElement(ToolPanel, {tool: tool, onClick: this.setCurrentTool.bind(this, tool)})
+			return React.createElement(ToolPanel, {key: tool.id, tool: tool, onClick: this.setCurrentTool.bind(this, tool)})
 		}
 		return (
 			React.createElement("div", null, 
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
 					React.createElement(ToolPanel, {
 						tool: this.state.tool, 
+						key: this.state.tool.id, 
 						current: true, 
 						onClick: this.setCurrentTool.bind(this, this.state.tool)})
 				), 
