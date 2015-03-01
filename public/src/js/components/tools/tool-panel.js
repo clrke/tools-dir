@@ -22,21 +22,29 @@ ToolPanel = React.createClass({
 		var tool = this.props.tool;
 		if(this.props.current) {
 			return (
-				<h3>
-					<b className="link-color"> {tool.title} </b>
-					<small> by {tool.authors}, </small>
-					<small> {moment(tool.created_at).fromNow()} </small>
-				</h3>
+				<div>
+					<h3>
+						<b className="link-color"> {tool.title} </b>
+					</h3>
+					<h3>
+						<small> by {tool.authors}, </small>
+						<small> {moment(tool.created_at).fromNow()} </small>
+					</h3>
+				</div>
 			);
 		} else {
 			return (
-				<h5>
-					<a href="#" onClick={this.props.onClick}>
-						<b>{tool.title}</b>
-					</a>
-					<small> by {tool.authors},</small>
-					<small> {moment(tool.created_at).fromNow()} </small>
-				</h5>
+				<div>
+					<h5>
+						<a href="#" onClick={this.props.onClick}>
+							<b>{tool.title}</b>
+						</a>
+					</h5>
+					<h5>
+						<small> by {tool.authors}, </small>
+						<small> {moment(tool.created_at).fromNow()} </small>
+					</h5>
+				</div>
 			);
 		}
 	},
