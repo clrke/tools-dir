@@ -79,7 +79,7 @@ ToolPanel = React.createClass({
 
 		if(this.props.current) {
 			return (
-				<div className="panel white">
+				<div className="panel white animated slideInLeft">
 					{this.getTitle()}
 
 					{this.getAbstact()}
@@ -93,8 +93,13 @@ ToolPanel = React.createClass({
 				</div>
 			)
 		} else {
+			var classNames = React.addons.classSet({
+				'panel small-padding animated fadeIn': true,
+				'callout': this.props.highlight,
+				'white':  !this.props.highlight
+			});
 			return (
-				<div className="panel white small-padding">
+				<div className={classNames}>
 					{this.getTitle()}
 					<ToolStats
 						tool={tool}

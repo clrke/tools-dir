@@ -15,7 +15,13 @@ ToolsList = React.createClass({
 	},
 	render: function () {
 		var createTr = function (tool) {
-			return <ToolPanel key={tool.id} tool={tool} onClick={this.setCurrentTool.bind(this, tool)}/>
+			return (
+				<ToolPanel
+					key={tool.id}
+					tool={tool}
+					highlight={this.state.tool == tool}
+					onClick={this.setCurrentTool.bind(this, tool)}/>
+			);
 		}
 		return (
 			<div>

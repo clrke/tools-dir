@@ -23614,7 +23614,7 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 
 		if(this.props.current) {
 			return (
-				React.createElement("div", {className: "panel white"}, 
+				React.createElement("div", {className: "panel white animated slideInLeft"}, 
 					this.getTitle(), 
 
 					this.getAbstact(), 
@@ -23628,8 +23628,13 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 				)
 			)
 		} else {
+			var classNames = React.addons.classSet({
+				'panel small-padding animated fadeIn': true,
+				'callout': this.props.highlight,
+				'white':  !this.props.highlight
+			});
 			return (
-				React.createElement("div", {className: "panel white small-padding"}, 
+				React.createElement("div", {className: classNames}, 
 					this.getTitle(), 
 					React.createElement(ToolStats, {
 						tool: tool, 
@@ -23755,7 +23760,13 @@ ToolsList = React.createClass({displayName: "ToolsList",
 	},
 	render: function () {
 		var createTr = function (tool) {
-			return React.createElement(ToolPanel, {key: tool.id, tool: tool, onClick: this.setCurrentTool.bind(this, tool)})
+			return (
+				React.createElement(ToolPanel, {
+					key: tool.id, 
+					tool: tool, 
+					highlight: this.state.tool == tool, 
+					onClick: this.setCurrentTool.bind(this, tool)})
+			);
 		}
 		return (
 			React.createElement("div", null, 
