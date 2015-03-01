@@ -23810,6 +23810,23 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		if(this.state.tool != tool) {
 			$.post('/view/'+tool.id, 'view');
 			tool.views++;
+
+			var viewer;
+			for (var i = 0; i < tool.viewers.length; i++) {
+				if(tool.viewers[i].id == authUser.id) {
+					viewer = tool.viewers[i];
+					break;
+				}
+			}
+
+			if(viewer != null) {
+				viewer.pivot.count++;
+			} else {
+				tool.viewers.push({
+					id: authUser.id,
+					pivot: {count:1}
+				});
+			}
 		}
 		this.setState({tool: tool});
 	},
