@@ -23825,7 +23825,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
 					currentTool
 				), 
-				React.createElement("div", {className: "column medium-pull-6 medium-6 animated fadeInRight"}, 
+				React.createElement("div", {className: "column medium-pull-6 medium-6 animated fadeInRight fixed-container"}, 
 					React.createElement("div", {className: "panel white"}, 
 						React.createElement(ToolsPagination, {
 							prev: this.handlePrev, 
