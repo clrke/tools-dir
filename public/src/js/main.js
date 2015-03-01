@@ -23766,7 +23766,6 @@ ToolsList = React.createClass({displayName: "ToolsList",
 	getInitialState: function () {
 		return {
 			tools: this.props.tools,
-			tool: this.props.tools[0],
 			page: 1,
 			pageChange: 0
 		};
@@ -23799,16 +23798,21 @@ ToolsList = React.createClass({displayName: "ToolsList",
 			);
 		}
 
+		var currentTool = this.state.tool?
+			(
+				React.createElement(ToolPanel, {
+					tool: this.state.tool, 
+					key: this.state.tool.id, 
+					current: true, 
+					onClick: this.setCurrentTool.bind(this, this.state.tool)})
+			): null;
+
 		var pageCount = Math.ceil(this.props.tools.length/this.props.pageLength);
 
 		return (
 			React.createElement("div", null, 
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
-					React.createElement(ToolPanel, {
-						tool: this.state.tool, 
-						key: this.state.tool.id, 
-						current: true, 
-						onClick: this.setCurrentTool.bind(this, this.state.tool)})
+					currentTool
 				), 
 				React.createElement("div", {className: "column medium-pull-6 medium-6"}, 
 					React.createElement("div", {className: "panel white"}, 
