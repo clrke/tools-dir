@@ -37,7 +37,7 @@ ToolPanel = React.createClass({
 			return (
 				<div>
 					<h5>
-						<a href="#" onClick={!this.props.highlight? this.props.onClick: null}>
+						<a href="#">
 							<b>{tool.title}</b>
 						</a>
 					</h5>
@@ -109,12 +109,17 @@ ToolPanel = React.createClass({
 		} else {
 			var classNames = React.addons.classSet({
 				'tool panel small-padding animated': true,
+				'clickable': true,
 				'fadeIn': this.props.pageChange != 0,
 				'callout': this.props.highlight,
 				'white':  !this.props.highlight
 			});
 			return (
-				<div className={classNames}>
+				<div className={classNames} key={this.props.tool}
+					onClick={
+					 	!this.props.highlight?
+					 	this.props.onClick: null
+					}>
 					{this.getTitle()}
 					<ToolStats
 						tool={tool}

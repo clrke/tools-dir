@@ -42,6 +42,10 @@
 	margin: 0px;
 }
 
+.clickable {
+	cursor: pointer;
+}
+
 .write.comment {
 	margin: 0px;
 }

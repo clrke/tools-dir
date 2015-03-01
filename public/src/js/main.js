@@ -23650,7 +23650,7 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			return (
 				React.createElement("div", null, 
 					React.createElement("h5", null, 
-						React.createElement("a", {href: "#", onClick: !this.props.highlight? this.props.onClick: null}, 
+						React.createElement("a", {href: "#"}, 
 							React.createElement("b", null, tool.title)
 						)
 					), 
@@ -23722,12 +23722,17 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 		} else {
 			var classNames = React.addons.classSet({
 				'tool panel small-padding animated': true,
+				'clickable': true,
 				'fadeIn': this.props.pageChange != 0,
 				'callout': this.props.highlight,
 				'white':  !this.props.highlight
 			});
 			return (
-				React.createElement("div", {className: classNames}, 
+				React.createElement("div", {className: classNames, key: this.props.tool, 
+					onClick: 
+					 	!this.props.highlight?
+					 	this.props.onClick: null
+					}, 
 					this.getTitle(), 
 					React.createElement(ToolStats, {
 						tool: tool, 
