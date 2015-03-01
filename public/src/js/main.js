@@ -23636,8 +23636,12 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 				)
 			)
 		} else {
+			console.log(this.props.pageChange);
+
 			var classNames = React.addons.classSet({
-				'panel small-padding animated fadeIn': true,
+				'panel small-padding animated': true,
+				'fadeIn': this.props.pageChange != 0,
+				'zoomIn': this.props.pageChange == 0,
 				'callout': this.props.highlight,
 				'white':  !this.props.highlight
 			});
@@ -23763,7 +23767,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		return {
 			tools: this.props.tools,
 			tool: this.props.tools[0],
-			page: 1
+			page: 1,
+			pageChange: 0
 		};
 	},
 	propTypes: {
@@ -23774,13 +23779,13 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		this.setState({tool: tool});
 	},
 	handlePrev: function () {
-		this.setState({page: this.state.page-1});
+		this.setState({page: this.state.page-1, pageChange: -1});
 	},
 	handleNext: function () {
-		this.setState({page: this.state.page+1});
+		this.setState({page: this.state.page+1, pageChange: 1});
 	},
 	handleSkip: function (page) {
-		this.setState({page: page});
+		this.setState({page: page, pageChange: page-this.state.page});
 	},
 	render: function () {
 		var createTr = function (tool) {
@@ -23789,7 +23794,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 					key: tool.id, 
 					tool: tool, 
 					highlight: this.state.tool == tool, 
-					onClick: this.setCurrentTool.bind(this, tool)})
+					onClick: this.setCurrentTool.bind(this, tool), 
+					pageChange: this.state.pageChange})
 			);
 		}
 

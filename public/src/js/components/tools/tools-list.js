@@ -10,7 +10,8 @@ ToolsList = React.createClass({
 		return {
 			tools: this.props.tools,
 			tool: this.props.tools[0],
-			page: 1
+			page: 1,
+			pageChange: 0
 		};
 	},
 	propTypes: {
@@ -21,13 +22,13 @@ ToolsList = React.createClass({
 		this.setState({tool: tool});
 	},
 	handlePrev: function () {
-		this.setState({page: this.state.page-1});
+		this.setState({page: this.state.page-1, pageChange: -1});
 	},
 	handleNext: function () {
-		this.setState({page: this.state.page+1});
+		this.setState({page: this.state.page+1, pageChange: 1});
 	},
 	handleSkip: function (page) {
-		this.setState({page: page});
+		this.setState({page: page, pageChange: page-this.state.page});
 	},
 	render: function () {
 		var createTr = function (tool) {
@@ -36,7 +37,8 @@ ToolsList = React.createClass({
 					key={tool.id}
 					tool={tool}
 					highlight={this.state.tool == tool}
-					onClick={this.setCurrentTool.bind(this, tool)}/>
+					onClick={this.setCurrentTool.bind(this, tool)}
+					pageChange={this.state.pageChange}/>
 			);
 		}
 
@@ -49,7 +51,7 @@ ToolsList = React.createClass({
 						tool={this.state.tool}
 						key={this.state.tool.id}
 						current={true}
-						onClick={this.setCurrentTool.bind(this, this.state.tool)}/>
+						onClick={this.setCurrentTool.bind(this, this.state.tool)} />
 				</div>
 				<div className="column medium-pull-6 medium-6">
 					<div className="panel white">
