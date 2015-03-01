@@ -23547,7 +23547,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 		});
 		return (
 			React.createElement("div", null, 
-				React.createElement(TopBar, {handleSearch: this.handleSearch}), 
+				React.createElement(TopBar, {handleSearch: this.handleSearch, user: authUser}), 
 				React.createElement(ToolsList, {tools: queriedTools, pageLength: 5})
 			)
 		)
@@ -23939,7 +23939,8 @@ var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",
 	propTypes: {
-		handleSearch: React.PropTypes.func
+		handleSearch: React.PropTypes.func,
+		user: React.PropTypes.object,
 	},
 	render: function () {
 		return (
@@ -23954,7 +23955,7 @@ TopBar = React.createClass({displayName: "TopBar",
 					React.createElement("section", {className: "top-bar-section"}, 
 						React.createElement("ul", {className: "right"}, 
 							React.createElement("li", {className: "has-dropdown"}, 
-								React.createElement("a", {href: "#"}, "Clarke Benedict Plumo"), 
+								React.createElement("a", {href: "#"}, this.props.user.name), 
 								React.createElement("ul", {className: "dropdown"}, 
 									React.createElement("li", null, React.createElement("a", {href: "#"}, "Submit Paper")), 
 									React.createElement("li", null, React.createElement("a", {href: "/logout"}, "Log Out"))

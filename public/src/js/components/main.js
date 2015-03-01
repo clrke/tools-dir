@@ -21,7 +21,7 @@ var MainPage = React.createClass({
 		});
 		return (
 			<div>
-				<TopBar handleSearch={this.handleSearch}/>
+				<TopBar handleSearch={this.handleSearch} user={authUser}/>
 				<ToolsList tools={queriedTools} pageLength={5}/>
 			</div>
 		)

@@ -2,7 +2,8 @@ var React = require('react/addons');
 
 TopBar = React.createClass({
 	propTypes: {
-		handleSearch: React.PropTypes.func
+		handleSearch: React.PropTypes.func,
+		user: React.PropTypes.object,
 	},
 	render: function () {
 		return (
@@ -17,7 +18,7 @@ TopBar = React.createClass({
 					<section className="top-bar-section">
 						<ul className="right">
 							<li className="has-dropdown">
-								<a href="#">Clarke Benedict Plumo</a>
+								<a href="#">{this.props.user.name}</a>
 								<ul className="dropdown">
 									<li><a href="#">Submit Paper</a></li>
 									<li><a href="/logout">Log Out</a></li>
