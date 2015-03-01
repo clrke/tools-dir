@@ -3107,6 +3107,10 @@ process.umask = function() { return 0; };
 },{}],"/home/arkeidolon/Documents/laravel/thesis-dir/node_modules/pretty-lists/lib/PrettyLists.js":[function(require,module,exports){
 var pluralize = require('pluralize');
 
+function ref(obj, str) {
+	return str.split(".").reduce(function(o, x) { return o[x] }, obj);
+}
+
 module.exports = {
 	format1: function (items, displayAttr) {
 		if(items.length === 0) {
@@ -3125,6 +3129,17 @@ module.exports = {
 				", " + items[1][displayAttr] +
 				" and " + (items.length - 2) + " others";
 		}
+	},
+	format2: function (items, displayAttr1, displayAttr2) {
+		items2 = [];
+
+		items.forEach(function (item) {
+			items2.push({
+				value: ref(item, displayAttr1) + " (" + ref(item, displayAttr2) + ")"
+			});
+		});
+
+		return this.format1(items2, 'value');
 	}
 }
 
@@ -23722,6 +23737,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		var id = this.props.tool.id;
 		var upvoters = this.getVoters(true);
 		var downvoters = this.getVoters(false);
+		var viewers = this.state.tool.viewers;
 		var views = this.state.tool.views;
 
 		if(this.props.current) {
@@ -23730,6 +23746,10 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					React.createElement("a", {href: "#", onClick: this.vote.bind(this, 1)}, 
 						React.createElement("i", {className: "fa fa-thumbs-up blue"}, " "), 
 						 prettyLists.format1(upvoters, 'username') 
+					), " ", React.createElement("br", null), 
+					React.createElement("a", {href: "#"}, 
+						React.createElement("i", {className: "fa fa-eye red"}, " "), 
+						 prettyLists.format2(viewers, 'username', 'pivot.count') 
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#"}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
