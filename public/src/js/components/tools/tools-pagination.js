@@ -1,21 +1,16 @@
 var React = require('react/addons');
 
 ToolsPagination = React.createClass({
-	getInitialState: function () {
-		pages = [];
+	render: function () {
+		var pages = [];
 
 		for (var i = 0; i < this.props.pageCount; i++) {
 			pages.push({key: i+1});
 		};
 
-		return {
-			pages: pages
-		};
-	},
-	render: function () {
 		var classSet = React.addons.classSet;
 
-		var pages = function (page) {
+		var pageListItem = function (page) {
 
 			var classNames = classSet({
 				'current': this.props.page == page.key
@@ -51,7 +46,7 @@ ToolsPagination = React.createClass({
 								this.props.prev: null
 							}>&laquo;</a>
 					</li>
-					{this.state.pages.map(pages, this)}
+					{pages.map(pageListItem, this)}
 					<li className={nextClassNames}>
 						<a href="#"
 							onClick={

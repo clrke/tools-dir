@@ -1,6 +1,9 @@
 var React = require('react/addons');
 
 TopBar = React.createClass({
+	propTypes: {
+		handleSearch: React.PropTypes.func
+	},
 	render: function () {
 		return (
 			<div className="fixed">
@@ -24,7 +27,8 @@ TopBar = React.createClass({
 
 						<ul className="left">
 							<li>
-								<input type="text" placeholder="Search query" ng-model="search" />
+								<input type="text" placeholder="Search query"
+									onChange={this.props.handleSearch}/>
 							</li>
 						</ul>
 					</section>

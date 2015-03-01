@@ -23515,11 +23515,25 @@ var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
 
 var MainPage = React.createClass({displayName: "MainPage",
+	getInitialState: function () {
+		return { query: '' };
+	},
+	handleSearch: function (event) {
+		this.setState({query: event.target.value});
+	},
 	render: function () {
+		var query = this.state.query;
+		var queriedTools = tools.filter(function (tool) {
+			for(var key in tool) {
+				if(tool[key].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+					return true;
+			}
+			return false;
+		});
 		return (
 			React.createElement("div", null, 
-				React.createElement(TopBar, null), 
-				React.createElement(ToolsList, {tools: tools, pageLength: 5})
+				React.createElement(TopBar, {handleSearch: this.handleSearch}), 
+				React.createElement(ToolsList, {tools: queriedTools, pageLength: 5})
 			)
 		)
 	}
@@ -23838,21 +23852,16 @@ module.exports = ToolsList;
 var React = require('react/addons');
 
 ToolsPagination = React.createClass({displayName: "ToolsPagination",
-	getInitialState: function () {
-		pages = [];
+	render: function () {
+		var pages = [];
 
 		for (var i = 0; i < this.props.pageCount; i++) {
 			pages.push({key: i+1});
 		};
 
-		return {
-			pages: pages
-		};
-	},
-	render: function () {
 		var classSet = React.addons.classSet;
 
-		var pages = function (page) {
+		var pageListItem = function (page) {
 
 			var classNames = classSet({
 				'current': this.props.page == page.key
@@ -23888,7 +23897,7 @@ ToolsPagination = React.createClass({displayName: "ToolsPagination",
 								this.props.prev: null
 							}, "«")
 					), 
-					this.state.pages.map(pages, this), 
+					pages.map(pageListItem, this), 
 					React.createElement("li", {className: nextClassNames}, 
 						React.createElement("a", {href: "#", 
 							onClick: 
@@ -23908,6 +23917,9 @@ module.exports = ToolsPagination;
 var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",
+	propTypes: {
+		handleSearch: React.PropTypes.func
+	},
 	render: function () {
 		return (
 			React.createElement("div", {className: "fixed"}, 
@@ -23931,7 +23943,8 @@ TopBar = React.createClass({displayName: "TopBar",
 
 						React.createElement("ul", {className: "left"}, 
 							React.createElement("li", null, 
-								React.createElement("input", {type: "text", placeholder: "Search query", "ng-model": "search"})
+								React.createElement("input", {type: "text", placeholder: "Search query", 
+									onChange: this.props.handleSearch})
 							)
 						)
 					)
