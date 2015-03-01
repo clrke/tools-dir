@@ -18,8 +18,10 @@ ToolsList = React.createClass({
 		pageLength: React.PropTypes.number
 	},
 	setCurrentTool: function (tool) {
-		$.post('/view/'+tool.id, 'view');
-		tool.views++;
+		if(this.state.tool != tool) {
+			$.post('/view/'+tool.id, 'view');
+			tool.views++;
+		}
 		this.setState({tool: tool});
 	},
 	handlePrev: function () {
