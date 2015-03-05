@@ -67,7 +67,7 @@ ToolStats = React.createClass({
 		if(this.props.current) {
 			return (
 				<ul className="panel callout tool-stats">
-					<a href="#" onClick={this.vote.bind(this)}>
+					<a href="#" onClick={this.vote}>
 						<i className="fa fa-thumbs-up blue"> </i>
 						{ prettyLists.format1(upvoters, 'username') }
 					</a> <br/>
@@ -86,7 +86,7 @@ ToolStats = React.createClass({
 				<div className="tool-stats">
 					<span
 						className="small-padding-left"
-						onClick={this.vote.bind(this)}>
+						onClick={this.vote}>
 						<i className="fa fa-thumbs-up blue"></i>
 						{ upvoters.length }
 					</span>

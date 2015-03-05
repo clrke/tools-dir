@@ -23820,7 +23820,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		if(this.props.current) {
 			return (
 				React.createElement("ul", {className: "panel callout tool-stats"}, 
-					React.createElement("a", {href: "#", onClick: this.vote.bind(this)}, 
+					React.createElement("a", {href: "#", onClick: this.vote}, 
 						React.createElement("i", {className: "fa fa-thumbs-up blue"}, " "), 
 						 prettyLists.format1(upvoters, 'username') 
 					), " ", React.createElement("br", null), 
@@ -23839,7 +23839,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 				React.createElement("div", {className: "tool-stats"}, 
 					React.createElement("span", {
 						className: "small-padding-left", 
-						onClick: this.vote.bind(this)}, 
+						onClick: this.vote}, 
 						React.createElement("i", {className: "fa fa-thumbs-up blue"}), 
 						 upvoters.length
 					), 
@@ -23901,6 +23901,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 			} else {
 				tool.viewers.push({
 					id: authUser.id,
+					username: authUser.username,
 					pivot: {count:1}
 				});
 			}
