@@ -37,6 +37,12 @@ Route::post('/login', function ()
 		return Redirect::back()->withInput(Input::all())->withError('Invalid credentials');
 });
 
+Route::get('/logout', function ()
+{
+	Auth::logout();
+	return Redirect::to('/');
+});
+
 Route::post('/vote/{id}', function ($id)
 {
 	$tool = Tool::find($id);
@@ -93,10 +99,4 @@ Route::post('comment/{id}', function ($id)
 	]);
 
 	return $tool->comments;
-});
-
-Route::get('/logout', function ()
-{
-	Auth::logout();
-	return Redirect::to('/');
 });
