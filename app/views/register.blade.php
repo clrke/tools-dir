@@ -41,7 +41,7 @@
 						<small class="error">{{$errors->first('name')}}</small>
 					@endif
 					</div>
-					<button type="submit" class="button">Log In</button>
+					<button type="submit" class="button">Register</button>
 				</fieldset>
 			</form>
 		</div>
