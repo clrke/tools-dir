@@ -76,3 +76,11 @@
 .fa {
 	margin-right: 5px;
 }
+
+form.margin-fix input {
+	margin-bottom: 0px;
+}
+
+form.margin-fix div {
+	margin-bottom: 1rem;
+}

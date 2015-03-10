@@ -55,8 +55,10 @@ Route::get('/register', function()
 
 Route::post('/register', function ()
 {
-	if(Input::get('password') != Input::get('cpassword'))
-		return Redirect::back()->withInput(Input::all())->withError('Passwords did not match.');
+	$validator = Validator::make(Input::all(), User::$rules);
+
+	if($validator->fails())
+		return Redirect::back()->withInput(Input::all())->withErrors($validator);
 
 	$user = [
 		'username' => Input::get('username'),

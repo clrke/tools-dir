@@ -9,16 +9,38 @@
 	</head>
 	<body>
 		<div class="row">
-			<form method="post" action="/register">
+			<form method="post" action="/register" class="margin-fix">
 				<fieldset class="column medium-6 small-10 small-centered medium-centered">
-					@if(isset($error))
-						<small class="error">{{$error}}</small>
+					<div>
+						{{ Form::input('text', 'username', $input? $input->username: null, ['placeholder' => 'Username']) }}
+						@if($errors->first('username'))
+							<small class="error">{{$errors->first('username')}}</small>
+						@endif
+					</div>
+					<div>
+						{{ Form::input('password', 'password', null, ['placeholder' => 'Password']) }}
+						@if($errors->first('password'))
+							<small class="error">{{$errors->first('password')}}</small>
+						@endif
+					</div>
+					<div>
+					{{ Form::input('password', 'password_confirmation', null, ['placeholder' => 'Confirm Password']) }}
+					@if($errors->first('password_confirmation'))
+						<small class="error">{{$errors->first('password_confirmation')}}</small>
 					@endif
-					{{ Form::input('text', 'username', $input? $input->username: null, ['placeholder' => 'Username']) }}
-					{{ Form::input('password', 'password', null, ['placeholder' => 'Password']) }}
-					{{ Form::input('password', 'cpassword', null, ['placeholder' => 'Confirm Password']) }}
+					</div>
+					<div>
 					{{ Form::input('email', 'email', $input? $input->email: null, ['placeholder' => 'Email Address']) }}
+					@if($errors->first('email'))
+						<small class="error">{{$errors->first('email')}}</small>
+					@endif
+					</div>
+					<div>
 					{{ Form::input('text', 'name', $input? $input->name: null, ['placeholder' => 'First and Last Name']) }}
+					@if($errors->first('name'))
+						<small class="error">{{$errors->first('name')}}</small>
+					@endif
+					</div>
 					<button type="submit" class="button">Log In</button>
 				</fieldset>
 			</form>
