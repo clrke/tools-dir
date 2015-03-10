@@ -43,6 +43,32 @@ Route::get('/logout', function ()
 	return Redirect::to('/');
 });
 
+Route::get('/register', function()
+{
+	$input = Session::get('input');
+	$error = Session::get('error');
+
+	return View::make('register', compact('input', 'error'));
+});
+
+Route::post('/register', function ()
+{
+	if(Input::get('password') != Input::get('cpassword'))
+		return Redirect::back()->withInput(Input::all())->withError('Passwords did not match.');
+
+	$user = [
+		'username' => Input::get('username'),
+		'password' => Hash::make(Input::get('password')),
+		'email' => Input::get('email'),
+		'role' => 0,
+		'name' => Input::get('name')
+	];
+
+	User::create($user);
+
+	return Redirect::to('/');
+});
+
 Route::post('/vote/{id}', function ($id)
 {
 	$tool = Tool::find($id);
