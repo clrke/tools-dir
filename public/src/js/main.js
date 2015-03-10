@@ -23804,6 +23804,8 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		} else if(downvoteId != -1) {
 			tool.downvoters.splice(downvoteId, 1);
 			tool.upvoters.splice(0, 0, authUser);
+		} else {
+			tool.upvoters.splice(0, 0, authUser);
 		}
 
 		this.props.update(tool.id);

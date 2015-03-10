@@ -90,6 +90,7 @@ Route::post('/vote/{id}', function ($id)
 			'created_at' => Carbon\Carbon::now(),
 			'updated_at' => Carbon\Carbon::now()
 		]);
+		$vote = $tool->voters()->whereUserId($user->id)->first();
 	}
 
 	return $vote->pivot;
