@@ -14,6 +14,12 @@
 					@if($error)
 						<small class="error">{{$error}}</small>
 					@endif
+
+					@if($message)
+						<div class="panel callout">
+							{{$message}}
+						</div>
+					@endif
 					{{ Form::input('text', 'username', $input? $input->username: null, ['placeholder' => 'Username']) }}
 					{{ Form::input('password', 'password', null, ['placeholder' => 'Password']) }}
 					<button type="submit" class="button">Log In</button>

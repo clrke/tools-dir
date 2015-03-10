@@ -25,7 +25,9 @@ Route::get('/', function()
 	{
 		$input = Session::get('input');
 		$error = Session::get('error');
-		return View::make('login', compact('input', 'error'));
+		$message = Session::get('message');
+
+		return View::make('login', compact('input', 'error', 'message'));
 	}
 });
 
@@ -66,7 +68,7 @@ Route::post('/register', function ()
 
 	User::create($user);
 
-	return Redirect::to('/');
+	return Redirect::to('/')->with('message', 'Successfully registered.');
 });
 
 Route::post('/vote/{id}', function ($id)
