@@ -61,10 +61,14 @@ ToolPanel = React.createClass({
 			);
 		}
 	},
+	createParagraph: function (paragraph) {
+		return <p> {paragraph} </p>;
+	},
 	getAbstact: function () {
 		var tool = this.props.tool;
 		if(this.props.current) {
-			return tool.abstract;
+			return tool.abstract
+				.split('\n').map(this.createParagraph, this);
 		} else {
 			return this.shorten(tool.abstract);
 		}
