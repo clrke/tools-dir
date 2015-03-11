@@ -24,7 +24,7 @@ Route::get('/', function()
 				->with('upvotes', 'downvotes',
 					'comments', 'toolsCommented',
 					'toolsViewed')->get():
-			null;
+			"[]";
 
 		return View::make('papers.index', compact('tools', 'users'));
 	}
