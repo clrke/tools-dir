@@ -20,7 +20,7 @@ TopBar = React.createClass({
 							<li className="has-dropdown">
 								<a href="#">{this.props.user.name}</a>
 								<ul className="dropdown">
-									<li><a href="#">Submit Paper</a></li>
+									<li><a href="#">New Tool</a></li>
 									<li><a href="/logout">Log Out</a></li>
 								</ul>
 							</li>
