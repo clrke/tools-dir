@@ -20,7 +20,7 @@ Route::get('/', function()
 				'comments', 'commenters')->get();
 
 		$users = Auth::user()->isAdmin()?
-			User::orderBy('created_at')
+			User::orderBy('created_at', 'desc')
 				->with('upvotes', 'downvotes',
 					'comments', 'toolsCommented',
 					'toolsViewed')->get():
