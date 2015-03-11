@@ -23666,11 +23666,23 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 	},
 	getTitle: function () {
 		var tool = this.props.tool;
+		var editButton = authUser.role == "1" ? (
+			React.createElement("a", {
+				href: "tools/"+tool.id+"/edit"}, 
+				"[edit]"
+			)
+		) : null;
+
 		if(this.props.current) {
 			return (
 				React.createElement("div", null, 
 					React.createElement("h3", null, 
-						React.createElement("b", {className: "link-color"}, " ", tool.title, " ")
+						React.createElement("b", {className: "link-color"}, 
+							tool.title
+						), 
+						React.createElement("small", null, 
+							editButton
+						)
 					), 
 					React.createElement("h3", null, 
 						React.createElement("small", null, " by ", tool.authors, ", "), 
@@ -24102,7 +24114,7 @@ TopBar = React.createClass({displayName: "TopBar",
 								React.createElement("ul", {className: "dropdown"}, 
 									
 										this.props.user.role == 1 ?
-										React.createElement("li", null, React.createElement("a", {href: "#"}, "New Tool")) :
+										React.createElement("li", null, React.createElement("a", {href: "/tools/create"}, "New Tool")) :
 										null, 
 									
 									

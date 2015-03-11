@@ -21,11 +21,23 @@ ToolPanel = React.createClass({
 	},
 	getTitle: function () {
 		var tool = this.props.tool;
+		var editButton = authUser.role == "1" ? (
+			<a
+				href={"tools/"+tool.id+"/edit"}>
+				[edit]
+			</a>
+		) : null;
+
 		if(this.props.current) {
 			return (
 				<div>
 					<h3>
-						<b className="link-color"> {tool.title} </b>
+						<b className="link-color">
+							{tool.title}
+						</b>
+						<small>
+							{editButton}
+						</small>
 					</h3>
 					<h3>
 						<small> by {tool.authors}, </small>
