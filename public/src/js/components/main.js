@@ -6,7 +6,7 @@ var UsersList = require('./users/users-list');
 
 var MainPage = React.createClass({
 	getInitialState: function () {
-		return { query: '', route: '' };
+		return { query: '', route: 'Software' };
 	},
 	handleSearch: function (event) {
 		this.setState({query: event.target.value});
@@ -19,7 +19,7 @@ var MainPage = React.createClass({
 		var items;
 
 		switch(this.state.route) {
-			case 'users':
+			case 'Users':
 				items = users;
 				break;
 			default:
@@ -39,7 +39,7 @@ var MainPage = React.createClass({
 
 		var page;
 		switch(this.state.route) {
-			case 'users':
+			case 'Users':
 				page = <UsersList users={queriedItems} pageLength={5}/>;
 				break;
 			default:
@@ -51,7 +51,8 @@ var MainPage = React.createClass({
 			<div>
 				<TopBar user={authUser}
 					handleSearch={this.handleSearch}
-					handleRouteChange={this.handleRouteChange}/>
+					handleRouteChange={this.handleRouteChange}
+					route={this.state.route}/>
 				{page}
 			</div>
 		)

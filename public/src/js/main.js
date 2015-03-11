@@ -23532,7 +23532,7 @@ var UsersList = require('./users/users-list');
 
 var MainPage = React.createClass({displayName: "MainPage",
 	getInitialState: function () {
-		return { query: '', route: '' };
+		return { query: '', route: 'Software' };
 	},
 	handleSearch: function (event) {
 		this.setState({query: event.target.value});
@@ -23545,7 +23545,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 		var items;
 
 		switch(this.state.route) {
-			case 'users':
+			case 'Users':
 				items = users;
 				break;
 			default:
@@ -23565,7 +23565,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 
 		var page;
 		switch(this.state.route) {
-			case 'users':
+			case 'Users':
 				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5});
 				break;
 			default:
@@ -23577,7 +23577,8 @@ var MainPage = React.createClass({displayName: "MainPage",
 			React.createElement("div", null, 
 				React.createElement(TopBar, {user: authUser, 
 					handleSearch: this.handleSearch, 
-					handleRouteChange: this.handleRouteChange}), 
+					handleRouteChange: this.handleRouteChange, 
+					route: this.state.route}), 
 				page
 			)
 		)
@@ -24093,19 +24094,25 @@ TopBar = React.createClass({displayName: "TopBar",
 		handleSearch: React.PropTypes.func,
 		handleRouteChange: React.PropTypes.func.isRequired,
 		user: React.PropTypes.object,
+		route: React.PropTypes.string.isRequired,
 	},
 	render: function () {
 		var handleRouteChange = this.state.handleRouteChange;
-
+		var classSet = React.addons.classSet;
+		var usersClassSet = classSet({
+			'active': this.props.route == 'Users'
+		});
+		var softwareClassSet = classSet({
+			'active': this.props.route == 'Software'
+		});
 		return (
 			React.createElement("div", {className: "fixed"}, 
 				React.createElement("nav", {className: "top-bar", "data-topbar": true, role: "navigation"}, 
 					React.createElement("ul", {className: "title-area"}, 
 						React.createElement("li", {className: "name"}, 
 							React.createElement("h1", null, 
-								React.createElement("a", {href: "#", 
-									onClick: handleRouteChange.bind(null, '')}, 
-									"PUP NLP > Software"
+								React.createElement("a", {href: "#"}, 
+									"PUP NLP > ", this.props.route
 								)
 							)
 						), 
@@ -24123,9 +24130,19 @@ TopBar = React.createClass({displayName: "TopBar",
 									
 									
 										this.props.user.role == 1 ?
-										React.createElement("li", null, 
+										React.createElement("li", {className: softwareClassSet}, 
+											React.createElement("a", {href: "#software", 
+												onClick: handleRouteChange.bind(null, 'Software')}, 
+												"Manage Software"
+											)
+										) :
+										null, 
+									
+									
+										this.props.user.role == 1 ?
+										React.createElement("li", {className: usersClassSet}, 
 											React.createElement("a", {href: "#users", 
-												onClick: handleRouteChange.bind(null, 'users')}, 
+												onClick: handleRouteChange.bind(null, 'Users')}, 
 												"Manage Users"
 											)
 										) :
