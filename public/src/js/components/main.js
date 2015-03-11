@@ -2,15 +2,21 @@ var React = require('react');
 
 var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
+var UsersList = require('./users/users-list');
 
 var MainPage = React.createClass({
 	getInitialState: function () {
-		return { query: '' };
+		return { query: '', route: '' };
 	},
 	handleSearch: function (event) {
 		this.setState({query: event.target.value});
 	},
+	handleRouteChange: function (route) {
+		this.setState({route: route});
+	},
 	render: function () {
+		var page;
+
 		var query = this.state.query;
 		var queriedTools = tools.filter(function (tool) {
 			for(var key in tool) {
@@ -19,10 +25,22 @@ var MainPage = React.createClass({
 			}
 			return false;
 		});
+
+		switch(this.state.route) {
+			case 'users':
+				page = <UsersList/>;
+				break;
+			default:
+				page = <ToolsList tools={queriedTools} pageLength={5}/>;
+				break;
+		}
+
 		return (
 			<div>
-				<TopBar handleSearch={this.handleSearch} user={authUser}/>
-				<ToolsList tools={queriedTools} pageLength={5}/>
+				<TopBar user={authUser}
+					handleSearch={this.handleSearch}
+					handleRouteChange={this.handleRouteChange}/>
+				{page}
 			</div>
 		)
 	}

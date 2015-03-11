@@ -23528,15 +23528,21 @@ var React = require('react');
 
 var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
+var UsersList = require('./users/users-list');
 
 var MainPage = React.createClass({displayName: "MainPage",
 	getInitialState: function () {
-		return { query: '' };
+		return { query: '', route: '' };
 	},
 	handleSearch: function (event) {
 		this.setState({query: event.target.value});
 	},
+	handleRouteChange: function (route) {
+		this.setState({route: route});
+	},
 	render: function () {
+		var page;
+
 		var query = this.state.query;
 		var queriedTools = tools.filter(function (tool) {
 			for(var key in tool) {
@@ -23545,10 +23551,22 @@ var MainPage = React.createClass({displayName: "MainPage",
 			}
 			return false;
 		});
+
+		switch(this.state.route) {
+			case 'users':
+				page = React.createElement(UsersList, null);
+				break;
+			default:
+				page = React.createElement(ToolsList, {tools: queriedTools, pageLength: 5});
+				break;
+		}
+
 		return (
 			React.createElement("div", null, 
-				React.createElement(TopBar, {handleSearch: this.handleSearch, user: authUser}), 
-				React.createElement(ToolsList, {tools: queriedTools, pageLength: 5})
+				React.createElement(TopBar, {user: authUser, 
+					handleSearch: this.handleSearch, 
+					handleRouteChange: this.handleRouteChange}), 
+				page
 			)
 		)
 	}
@@ -23561,7 +23579,7 @@ React.render(
 
 $(document).foundation();
 
-},{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
+},{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","./users/users-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
 var React = require('react/addons');
 
 ToolStats = React.createClass({displayName: "ToolStats",
@@ -24037,17 +24055,31 @@ module.exports = ToolsPagination;
 var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",
+	getInitialState: function () {
+		return {
+			handleSearch: this.props.handleSearch,
+			handleRouteChange: this.props.handleRouteChange
+		};
+	},
 	propTypes: {
 		handleSearch: React.PropTypes.func,
+		handleRouteChange: React.PropTypes.func.isRequired,
 		user: React.PropTypes.object,
 	},
 	render: function () {
+		var handleRouteChange = this.state.handleRouteChange;
+
 		return (
 			React.createElement("div", {className: "fixed"}, 
 				React.createElement("nav", {className: "top-bar", "data-topbar": true, role: "navigation"}, 
 					React.createElement("ul", {className: "title-area"}, 
 						React.createElement("li", {className: "name"}, 
-							React.createElement("h1", null, React.createElement("a", {href: "#"}, "PUP NLP > Software"))
+							React.createElement("h1", null, 
+								React.createElement("a", {href: "#", 
+									onClick: handleRouteChange.bind(null, '')}, 
+									"PUP NLP > Software"
+								)
+							)
 						), 
 					    React.createElement("li", {className: "toggle-topbar menu-icon"}, React.createElement("a", {href: "#"}, React.createElement("span", null, "MENU")))
 					), 
@@ -24057,8 +24089,18 @@ TopBar = React.createClass({displayName: "TopBar",
 								React.createElement("a", {href: "#"}, this.props.user.name), 
 								React.createElement("ul", {className: "dropdown"}, 
 									
-										this.props.user.role == 1?
+										this.props.user.role == 1 ?
 										React.createElement("li", null, React.createElement("a", {href: "#"}, "New Tool")) :
+										null, 
+									
+									
+										this.props.user.role == 1 ?
+										React.createElement("li", null, 
+											React.createElement("a", {href: "#users", 
+												onClick: handleRouteChange.bind(null, 'users')}, 
+												"Manage Users"
+											)
+										) :
 										null, 
 									
 									React.createElement("li", null, React.createElement("a", {href: "/logout"}, "Log Out"))
@@ -24081,4 +24123,27 @@ TopBar = React.createClass({displayName: "TopBar",
 
 module.exports = TopBar;
 
-},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
+},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js":[function(require,module,exports){
+var React = require('react');
+
+var UsersList = React.createClass({displayName: "UsersList",
+	getInitialState: function () {
+		return {};
+	},
+	propTypes: {
+		users: React.PropTypes.array.isRequired
+	},
+	render: function () {
+		return (
+			React.createElement("div", {className: "column small-12"}, 
+				React.createElement("div", {className: "panel white"}, 
+					React.createElement("h1", null, "Users")
+				)
+			)
+		)
+	}
+});
+
+module.exports = UsersList;
+
+},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
