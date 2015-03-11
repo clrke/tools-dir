@@ -9,7 +9,8 @@ class UserTableSeeder extends Seeder {
 			'password' => Hash::make('admin'),
 			'email' => 'admin@thesisdir.com',
 			'role' => 1,
-			'name' => 'Administrator'
+			'name' => 'Administrator',
+			'accepted' => 1
 		]);
 	}
 }

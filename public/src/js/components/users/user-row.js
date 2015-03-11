@@ -16,6 +16,14 @@ var UserRow = React.createClass({
 		$.post('/user/update/'+user.id, {role: user.role});
 		this.forceUpdate();
 	},
+	handleAccept: function () {
+		var user = this.props.user;
+
+		user.accepted = (parseInt(user.accepted)+1)%2;
+
+		$.post('/user/update/'+user.id, {accepted: user.accepted});
+		this.forceUpdate();
+	},
 	render: function () {
 		var user = this.props.user;
 		var roleChangeButton = user.role == 1? (
@@ -29,6 +37,17 @@ var UserRow = React.createClass({
 					User
 				</button>
 			)
+		var acceptButton = user.accepted == 1? (
+				<button className="button success"
+					onClick={this.handleAccept}>
+					Accepted
+				</button>
+			) : (
+				<button className="button secondary"
+					onClick={this.handleAccept}>
+					Pending
+				</button>
+			)
 		return (
 			<tr>
 				<td> {user.id} </td>
@@ -39,6 +58,7 @@ var UserRow = React.createClass({
 				<td> {prettyLists.format1(user.tools_commented, 'title')} </td>
 				<td> {user.created_at} </td>
 				<td> {roleChangeButton} </td>
+				<td> {acceptButton} </td>
 			</tr>
 		);
 	}

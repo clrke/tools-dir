@@ -24154,6 +24154,14 @@ var UserRow = React.createClass({displayName: "UserRow",
 		$.post('/user/update/'+user.id, {role: user.role});
 		this.forceUpdate();
 	},
+	handleAccept: function () {
+		var user = this.props.user;
+
+		user.accepted = (parseInt(user.accepted)+1)%2;
+
+		$.post('/user/update/'+user.id, {accepted: user.accepted});
+		this.forceUpdate();
+	},
 	render: function () {
 		var user = this.props.user;
 		var roleChangeButton = user.role == 1? (
@@ -24167,6 +24175,17 @@ var UserRow = React.createClass({displayName: "UserRow",
 					"User"
 				)
 			)
+		var acceptButton = user.accepted == 1? (
+				React.createElement("button", {className: "button success", 
+					onClick: this.handleAccept}, 
+					"Accepted"
+				)
+			) : (
+				React.createElement("button", {className: "button secondary", 
+					onClick: this.handleAccept}, 
+					"Pending"
+				)
+			)
 		return (
 			React.createElement("tr", null, 
 				React.createElement("td", null, " ", user.id, " "), 
@@ -24176,7 +24195,8 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", null, " ", prettyLists.format2(user.tools_viewed, 'title', 'pivot.count'), " "), 
 				React.createElement("td", null, " ", prettyLists.format1(user.tools_commented, 'title'), " "), 
 				React.createElement("td", null, " ", user.created_at, " "), 
-				React.createElement("td", null, " ", roleChangeButton, " ")
+				React.createElement("td", null, " ", roleChangeButton, " "), 
+				React.createElement("td", null, " ", acceptButton, " ")
 			)
 		);
 	}
@@ -24213,7 +24233,8 @@ var UsersList = React.createClass({displayName: "UsersList",
 							React.createElement("th", null, " Views "), 
 							React.createElement("th", null, " Comments "), 
 							React.createElement("th", null, " Registration "), 
-							React.createElement("th", null, " Role ")
+							React.createElement("th", null, " Role "), 
+							React.createElement("th", null, " Registration Status ")
 						), 
 						React.createElement("tbody", null, 
 							this.props.users.map(this.createTr, this)

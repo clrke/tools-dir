@@ -27,6 +27,7 @@ var UsersList = React.createClass({
 							<th> Comments </th>
 							<th> Registration </th>
 							<th> Role </th>
+							<th> Registration Status </th>
 						</thead>
 						<tbody>
 							{this.props.users.map(this.createTr, this)}

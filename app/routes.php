@@ -40,7 +40,14 @@ Route::get('/', function()
 
 Route::post('/login', function ()
 {
-	if(Auth::attempt(Input::all()))
+	$user = User::whereUsername(Input::get('username'))->first();
+
+	if($user && ! $user->accepted)
+		return Redirect::back()
+			->withInput(Input::all())
+			->withError('Please wait for the administrators
+				to confirm your registration.');
+	else if(Auth::attempt(Input::all()))
 		return Redirect::to('/');
 	else
 		return Redirect::back()->withInput(Input::all())->withError('Invalid credentials');
@@ -72,7 +79,8 @@ Route::post('/register', function ()
 		'password' => Hash::make(Input::get('password')),
 		'email' => Input::get('email'),
 		'role' => 0,
-		'name' => Input::get('name')
+		'name' => Input::get('name'),
+		'accepted' => 0
 	];
 
 	User::create($user);
