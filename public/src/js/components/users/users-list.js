@@ -1,4 +1,5 @@
 var React = require('react');
+var UserPanel = require('./user-row');
 var prettyLists = require('pretty-lists');
 
 var UsersList = React.createClass({
@@ -9,23 +10,7 @@ var UsersList = React.createClass({
 		users: React.PropTypes.array.isRequired
 	},
 	createTr: function (user) {
-		return (
-			<tr key={user.id}>
-				<td> {user.id} </td>
-				<td> {user.username} </td>
-				<td> {user.name} </td>
-				<td> {prettyLists.format1(user.upvotes, 'title')} </td>
-				<td> {prettyLists.format2(user.tools_viewed, 'title', 'pivot.count')} </td>
-				<td> {prettyLists.format1(user.tools_commented, 'title')} </td>
-				<td> {user.created_at} </td>
-				<td>
-					<button className="button secondary"
-						onClick={this.handleRoleChange}>
-						{user.role == 1? <b>Admin</b> : 'User'}
-					</button>
-				</td>
-			</tr>
-		);
+		return <UserPanel user={user} key={user.id}/>
 	},
 	render: function () {
 		return (

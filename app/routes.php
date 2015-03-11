@@ -80,6 +80,11 @@ Route::post('/register', function ()
 	return Redirect::to('/')->with('message', 'Successfully registered.');
 });
 
+Route::post('/user/update/{id}', function ($id)
+{
+	return User::find($id)->update(Input::all());
+});
+
 Route::post('/vote/{id}', function ($id)
 {
 	$tool = Tool::find($id);

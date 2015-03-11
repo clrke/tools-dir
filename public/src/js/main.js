@@ -24135,8 +24135,58 @@ TopBar = React.createClass({displayName: "TopBar",
 
 module.exports = TopBar;
 
-},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js":[function(require,module,exports){
+},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/user-row.js":[function(require,module,exports){
 var React = require('react');
+var prettyLists = require('pretty-lists');
+
+var UserRow = React.createClass({displayName: "UserRow",
+	getInitialState: function () {
+		return {};
+	},
+	propTypes: {
+		user: React.PropTypes.object.isRequired
+	},
+	handleRoleChange: function () {
+		var user = this.props.user;
+
+		user.role = (parseInt(user.role)+1)%2;
+
+		$.post('/user/update/'+user.id, {role: user.role});
+		this.forceUpdate();
+	},
+	render: function () {
+		var user = this.props.user;
+		var roleChangeButton = user.role == 1? (
+				React.createElement("button", {className: "button primary", 
+					onClick: this.handleRoleChange}, 
+					"Admin"
+				)
+			) : (
+				React.createElement("button", {className: "button secondary", 
+					onClick: this.handleRoleChange}, 
+					"User"
+				)
+			)
+		return (
+			React.createElement("tr", null, 
+				React.createElement("td", null, " ", user.id, " "), 
+				React.createElement("td", null, " ", user.username, " "), 
+				React.createElement("td", null, " ", user.name, " "), 
+				React.createElement("td", null, " ", prettyLists.format1(user.upvotes, 'title'), " "), 
+				React.createElement("td", null, " ", prettyLists.format2(user.tools_viewed, 'title', 'pivot.count'), " "), 
+				React.createElement("td", null, " ", prettyLists.format1(user.tools_commented, 'title'), " "), 
+				React.createElement("td", null, " ", user.created_at, " "), 
+				React.createElement("td", null, " ", roleChangeButton, " ")
+			)
+		);
+	}
+});
+
+module.exports = UserRow;
+
+},{"pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js":[function(require,module,exports){
+var React = require('react');
+var UserPanel = require('./user-row');
 var prettyLists = require('pretty-lists');
 
 var UsersList = React.createClass({displayName: "UsersList",
@@ -24147,23 +24197,7 @@ var UsersList = React.createClass({displayName: "UsersList",
 		users: React.PropTypes.array.isRequired
 	},
 	createTr: function (user) {
-		return (
-			React.createElement("tr", {key: user.id}, 
-				React.createElement("td", null, " ", user.id, " "), 
-				React.createElement("td", null, " ", user.username, " "), 
-				React.createElement("td", null, " ", user.name, " "), 
-				React.createElement("td", null, " ", prettyLists.format1(user.upvotes, 'title'), " "), 
-				React.createElement("td", null, " ", prettyLists.format2(user.tools_viewed, 'title', 'pivot.count'), " "), 
-				React.createElement("td", null, " ", prettyLists.format1(user.tools_commented, 'title'), " "), 
-				React.createElement("td", null, " ", user.created_at, " "), 
-				React.createElement("td", null, 
-					React.createElement("button", {className: "button secondary", 
-						onClick: this.handleRoleChange}, 
-						user.role == 1? React.createElement("b", null, "Admin") : 'User'
-					)
-				)
-			)
-		);
+		return React.createElement(UserPanel, {user: user, key: user.id})
 	},
 	render: function () {
 		return (
@@ -24193,4 +24227,4 @@ var UsersList = React.createClass({displayName: "UsersList",
 
 module.exports = UsersList;
 
-},{"pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
+},{"./user-row":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/user-row.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
