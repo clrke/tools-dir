@@ -93,6 +93,26 @@ Route::post('/user/update/{id}', function ($id)
 	return User::find($id)->update(Input::all());
 });
 
+Route::group(['before' => 'admin'], function ()
+{
+	Route::get('/tools/create', function ()
+	{
+		return "Create new tool";
+	});
+	Route::post('/tools', function ()
+	{
+		return "Store new tool";
+	});
+	Route::get('/tools/{id}/edit', function ($id)
+	{
+		return "Edit tool #$id";
+	});
+	Route::post('/tools/{id}', function ($id)
+	{
+		return "Update tool #$id";
+	});
+});
+
 Route::post('/vote/{id}', function ($id)
 {
 	$tool = Tool::find($id);
