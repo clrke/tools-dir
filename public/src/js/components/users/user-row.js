@@ -53,6 +53,7 @@ var UserRow = React.createClass({
 				<td> {user.id} </td>
 				<td> {user.username} </td>
 				<td> {user.name} </td>
+				<td> {user.email} </td>
 				<td> {prettyLists.format1(user.upvotes, 'title')} </td>
 				<td> {prettyLists.format2(user.tools_viewed, 'title', 'pivot.count')} </td>
 				<td> {prettyLists.format1(user.tools_commented, 'title')} </td>

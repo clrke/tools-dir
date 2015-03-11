@@ -22,6 +22,7 @@ var UsersList = React.createClass({
 							<th> Id </th>
 							<th> Username </th>
 							<th> Name </th>
+							<th> Email Address </th>
 							<th> Votes </th>
 							<th> Views </th>
 							<th> Comments </th>
