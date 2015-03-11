@@ -4,6 +4,13 @@ class Tool extends Eloquent {
 	protected $fillable = ['title', 'abstract', 'authors', 'pageCount', 'year'];
 	protected $appends = ['views'];
 
+	public static $rules = [
+		'title' => 'required',
+		'abstract' => 'required',
+		'authors' => 'required',
+		'year' => 'required|numeric'
+	];
+
 	public function getViewsAttribute()
 	{
 		$views = 0;

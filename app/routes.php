@@ -97,19 +97,59 @@ Route::group(['before' => 'admin'], function ()
 {
 	Route::get('/tools/create', function ()
 	{
-		return "Create new tool";
+		$tool = Session::get('input');
+		$error = Session::get('error');
+		$message = Session::get('message');
+		$create = true;
+
+		return View::make('tools.edit',
+			compact('tool', 'error', 'message', 'create')
+		);
 	});
-	Route::post('/tools', function ()
+	Route::post('/tools/store', function ()
 	{
-		return "Store new tool";
+		$validator = Validator::make(Input::all(), Tool::$rules);
+
+		if($validator->fails())
+			return Redirect::back()
+				->withInput(Input::all())
+				->withErrors($validator);
+
+		$tool = Tool::create(Input::all());
+
+		return Redirect::to('/tools/'.$tool->id.'/edit')->with(
+			'message', 'Successfully created "'
+				.$tool->title.'"!'
+		);
 	});
 	Route::get('/tools/{id}/edit', function ($id)
 	{
-		return "Edit tool #$id";
+		$tool = Tool::findOrFail($id);
+		$error = Session::get('error');
+		$message = Session::get('message');
+		$create = false;
+
+		return View::make('tools.edit',
+			compact('tool', 'error', 'message', 'create')
+		);
 	});
 	Route::post('/tools/{id}', function ($id)
 	{
-		return "Update tool #$id";
+		$validator = Validator::make(Input::all(), Tool::$rules);
+
+		if($validator->fails())
+			return Redirect::back()
+				->withInput(Input::all())
+				->withErrors($validator);
+
+		$tool = Tool::findOrFail($id);
+
+		$tool->update(Input::all());
+
+		return Redirect::back()->with(
+			'message', 'Successfully updated "'
+				.$tool->title.'"!'
+		);
 	});
 });
 

@@ -77,7 +77,8 @@
 	margin-right: 5px;
 }
 
-form.margin-fix input {
+form.margin-fix input,
+form.margin-fix textarea {
 	margin-bottom: 0px;
 }
 
