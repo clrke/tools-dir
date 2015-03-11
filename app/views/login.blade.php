@@ -23,6 +23,9 @@
 					{{ Form::input('text', 'username', $input? $input->username: null, ['placeholder' => 'Username']) }}
 					{{ Form::input('password', 'password', null, ['placeholder' => 'Password']) }}
 					<button type="submit" class="button">Log In</button>
+					<a href="/register" class="button info">
+						Register
+					</a>
 				</fieldset>
 			</form>
 		</div>
