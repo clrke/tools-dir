@@ -15,23 +15,35 @@ var MainPage = React.createClass({
 		this.setState({route: route});
 	},
 	render: function () {
-		var page;
+
+		var items;
+
+		switch(this.state.route) {
+			case 'users':
+				items = users;
+				break;
+			default:
+				items = tools;
+				break;
+		}
 
 		var query = this.state.query;
-		var queriedTools = tools.filter(function (tool) {
-			for(var key in tool) {
-				if(tool[key].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+
+		var queriedItems = items.filter(function (item) {
+			for(var key in item) {
+				if(item[key].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
 					return true;
 			}
 			return false;
 		});
 
+		var page;
 		switch(this.state.route) {
 			case 'users':
-				page = <UsersList/>;
+				page = <UsersList users={queriedItems} pageLength={5}/>;
 				break;
 			default:
-				page = <ToolsList tools={queriedTools} pageLength={5}/>;
+				page = <ToolsList tools={queriedItems} pageLength={5}/>;
 				break;
 		}
 

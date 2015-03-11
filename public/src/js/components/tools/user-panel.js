@@ -8,19 +8,22 @@ var UsersList = React.createClass({
 	propTypes: {
 		users: React.PropTypes.array.isRequired
 	},
+	handleRoleChange: function () {
+		this.role = !this.role;
+		this.setState();
+	},
 	createTr: function (user) {
 		return (
 			<tr key={user.id}>
 				<td> {user.id} </td>
 				<td> {user.username} </td>
-				<td> {user.name} </td>
 				<td> {prettyLists.format1(user.upvotes, 'title')} </td>
 				<td> {prettyLists.format2(user.tools_viewed, 'title', 'pivot.count')} </td>
 				<td> {prettyLists.format1(user.tools_commented, 'title')} </td>
 				<td> {user.created_at} </td>
 				<td>
 					<button className="button secondary"
-						onClick={this.handleRoleChange}>
+						onClick={this.handleRoleChange.bind(this)}>
 						{user.role == 1? <b>Admin</b> : 'User'}
 					</button>
 				</td>
@@ -36,7 +39,6 @@ var UsersList = React.createClass({
 						<thead>
 							<th> Id </th>
 							<th> Username </th>
-							<th> Name </th>
 							<th> Votes </th>
 							<th> Views </th>
 							<th> Comments </th>

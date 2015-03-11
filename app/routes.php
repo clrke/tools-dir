@@ -19,7 +19,14 @@ Route::get('/', function()
 			->with('upvoters', 'downvoters',
 				'comments', 'commenters')->get();
 
-		return View::make('papers.index', compact('tools'));
+		$users = Auth::user()->isAdmin()?
+			User::orderBy('created_at')
+				->with('upvotes', 'downvotes',
+					'comments', 'toolsCommented',
+					'toolsViewed')->get():
+			null;
+
+		return View::make('papers.index', compact('tools', 'users'));
 	}
 	else
 	{

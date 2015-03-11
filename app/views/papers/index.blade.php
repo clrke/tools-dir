@@ -11,8 +11,9 @@
 	</head>
 	<body>
 		<script type="text/javascript">
+			var users = {{ $users }}
 			var tools = {{ $tools }};
-			var authUser = {{ Auth::user() }}
+			var authUser = {{ Auth::user() }};
 		</script>
 		<script type="text/javascript" src="src/js/main.js"></script>
 	</body>

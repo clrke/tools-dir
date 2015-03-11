@@ -23541,23 +23541,35 @@ var MainPage = React.createClass({displayName: "MainPage",
 		this.setState({route: route});
 	},
 	render: function () {
-		var page;
+
+		var items;
+
+		switch(this.state.route) {
+			case 'users':
+				items = users;
+				break;
+			default:
+				items = tools;
+				break;
+		}
 
 		var query = this.state.query;
-		var queriedTools = tools.filter(function (tool) {
-			for(var key in tool) {
-				if(tool[key].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+
+		var queriedItems = items.filter(function (item) {
+			for(var key in item) {
+				if(item[key].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
 					return true;
 			}
 			return false;
 		});
 
+		var page;
 		switch(this.state.route) {
 			case 'users':
-				page = React.createElement(UsersList, null);
+				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5});
 				break;
 			default:
-				page = React.createElement(ToolsList, {tools: queriedTools, pageLength: 5});
+				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5});
 				break;
 		}
 
@@ -24125,6 +24137,7 @@ module.exports = TopBar;
 
 },{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js":[function(require,module,exports){
 var React = require('react');
+var prettyLists = require('pretty-lists');
 
 var UsersList = React.createClass({displayName: "UsersList",
 	getInitialState: function () {
@@ -24133,11 +24146,45 @@ var UsersList = React.createClass({displayName: "UsersList",
 	propTypes: {
 		users: React.PropTypes.array.isRequired
 	},
+	createTr: function (user) {
+		return (
+			React.createElement("tr", {key: user.id}, 
+				React.createElement("td", null, " ", user.id, " "), 
+				React.createElement("td", null, " ", user.username, " "), 
+				React.createElement("td", null, " ", user.name, " "), 
+				React.createElement("td", null, " ", prettyLists.format1(user.upvotes, 'title'), " "), 
+				React.createElement("td", null, " ", prettyLists.format2(user.tools_viewed, 'title', 'pivot.count'), " "), 
+				React.createElement("td", null, " ", prettyLists.format1(user.tools_commented, 'title'), " "), 
+				React.createElement("td", null, " ", user.created_at, " "), 
+				React.createElement("td", null, 
+					React.createElement("button", {className: "button secondary", 
+						onClick: this.handleRoleChange}, 
+						user.role == 1? React.createElement("b", null, "Admin") : 'User'
+					)
+				)
+			)
+		);
+	},
 	render: function () {
 		return (
 			React.createElement("div", {className: "column small-12"}, 
 				React.createElement("div", {className: "panel white"}, 
-					React.createElement("h1", null, "Users")
+					React.createElement("h1", null, "Users"), 
+					React.createElement("table", null, 
+						React.createElement("thead", null, 
+							React.createElement("th", null, " Id "), 
+							React.createElement("th", null, " Username "), 
+							React.createElement("th", null, " Name "), 
+							React.createElement("th", null, " Votes "), 
+							React.createElement("th", null, " Views "), 
+							React.createElement("th", null, " Comments "), 
+							React.createElement("th", null, " Registration "), 
+							React.createElement("th", null, " Role ")
+						), 
+						React.createElement("tbody", null, 
+							this.props.users.map(this.createTr, this)
+						)
+					)
 				)
 			)
 		)
@@ -24146,4 +24193,4 @@ var UsersList = React.createClass({displayName: "UsersList",
 
 module.exports = UsersList;
 
-},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
+},{"pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);

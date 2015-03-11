@@ -32,4 +32,38 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'email' => 'required|email',
 		'name' => 'required'
 	];
+
+	public function isAdmin()
+	{
+		return $this->role == 1;
+	}
+	public function toolsVoted()
+	{
+		return $this->belongsToMany('Tool', 'votes')
+			->withPivot('is_positive')
+			->orderBy('votes.updated_at', 'desc');
+	}
+	public function upvotes()
+	{
+		return $this->toolsVoted()->where('is_positive', true);
+	}
+	public function downvotes()
+	{
+		return $this->toolsVoted()->where('is_positive', false);
+	}
+	public function toolsViewed()
+	{
+		return $this->belongsToMany('Tool', 'views')
+			->withPivot('count')->orderBy('count', 'desc');
+	}
+	public function comments()
+	{
+		return $this->belongsToMany('Tool', 'comments')
+			->withPivot('text')->orderBy('comments.id');
+	}
+	public function toolsCommented()
+	{
+		return $this->belongsToMany('Tool', 'comments')
+			->distinct('pivot_user_id');
+	}
 }
