@@ -24056,7 +24056,11 @@ TopBar = React.createClass({displayName: "TopBar",
 							React.createElement("li", {className: "has-dropdown"}, 
 								React.createElement("a", {href: "#"}, this.props.user.name), 
 								React.createElement("ul", {className: "dropdown"}, 
-									React.createElement("li", null, React.createElement("a", {href: "#"}, "New Tool")), 
+									
+										this.props.user.role == 1?
+										React.createElement("li", null, React.createElement("a", {href: "#"}, "New Tool")) :
+										null, 
+									
 									React.createElement("li", null, React.createElement("a", {href: "/logout"}, "Log Out"))
 								)
 							)
