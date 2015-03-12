@@ -23763,8 +23763,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			);
 		}
 	},
-	createParagraph: function (paragraph) {
-		return React.createElement("p", null, " ", paragraph, " ");
+	createParagraph: function (paragraph, i) {
+		return React.createElement("p", {key: i}, " ", paragraph, " ");
 	},
 	getAbstact: function () {
 		var tool = this.props.tool;

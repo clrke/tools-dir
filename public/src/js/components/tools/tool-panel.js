@@ -62,8 +62,8 @@ ToolPanel = React.createClass({
 			);
 		}
 	},
-	createParagraph: function (paragraph) {
-		return <p> {paragraph} </p>;
+	createParagraph: function (paragraph, i) {
+		return <p key={i}> {paragraph} </p>;
 	},
 	getAbstact: function () {
 		var tool = this.props.tool;
