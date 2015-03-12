@@ -6,7 +6,8 @@ ToolStats = React.createClass({
 		return {tool: this.props.tool};
 	},
 	propTypes: {
-		tool: React.PropTypes.object.isRequired
+		tool: React.PropTypes.object.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	getVoters: function (isPositive) {
 		var tool = this.props.tool;
@@ -57,6 +58,13 @@ ToolStats = React.createClass({
 
 		this.props.update(tool.id);
 	},
+	createLi: function (item, i) {
+		return <li key={i}> {item} </li>
+	},
+	modalPresentable: function (items, attr1, attr2) {
+		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
+		return items2.map(this.createLi, this);
+	},
 	render: function () {
 		var id = this.props.tool.id;
 		var upvoters = this.getVoters(true);
@@ -73,17 +81,31 @@ ToolStats = React.createClass({
 				<ul className="panel callout tool-stats">
 					<a href="#" onClick={this.vote}>
 						<i className="fa fa-thumbs-up blue"> </i>
+					</a>
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Voters', this.modalPresentable(
+								upvoters, 'username'))}>
 						{ prettyLists.format1(upvoters, 'username') }
 					</a> <br/>
-					<a href="#">
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Viewers', this.modalPresentable(
+								viewers, 'username', 'pivot.count'))}>
 						<i className="fa fa-eye red"> </i>
 						{ prettyLists.format2(viewers, 'username', 'pivot.count') }
 					</a> <br/>
-					<a href="#">
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Downloaders', this.modalPresentable(
+								downloaders, 'username'))}>
 						<i className="fa fa-download purple"> </i>
 						{ prettyLists.format1(downloaders, 'username') }
 					</a> <br/>
-					<a href="#">
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Commenters', this.modalPresentable(
+								commenters, 'username'))}>
 						<i className="fa fa-comments green"> </i>
 						{ prettyLists.format1(commenters, 'username') }
 					</a>

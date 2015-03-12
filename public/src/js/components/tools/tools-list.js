@@ -15,7 +15,8 @@ ToolsList = React.createClass({
 	},
 	propTypes: {
 		tools: React.PropTypes.array,
-		pageLength: React.PropTypes.number
+		pageLength: React.PropTypes.number,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	setCurrentTool: function (tool) {
 		if(this.state.tool != tool) {
@@ -59,7 +60,8 @@ ToolsList = React.createClass({
 					tool={tool}
 					highlight={this.state.tool == tool}
 					onClick={this.setCurrentTool.bind(this, tool)}
-					pageChange={this.state.pageChange}/>
+					pageChange={this.state.pageChange}
+					setModalContents={this.props.setModalContents}/>
 			);
 		}
 
@@ -69,7 +71,8 @@ ToolsList = React.createClass({
 					tool={this.state.tool}
 					key={this.state.tool.id}
 					current={true}
-					onClick={this.setCurrentTool.bind(this, this.state.tool)} />
+					onClick={this.setCurrentTool.bind(this, this.state.tool)}
+					setModalContents={this.props.setModalContents}/>
 			): null;
 
 		var pageCount = Math.ceil(this.props.tools.length/this.props.pageLength);

@@ -23541,19 +23541,29 @@ module.exports = require('./lib/React');
 },{"./lib/React":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/lib/React.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js":[function(require,module,exports){
 var React = require('react');
 
+var Modal = require('./modals/modal');
+
 var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
 var UsersList = require('./users/users-list');
 
 var MainPage = React.createClass({displayName: "MainPage",
 	getInitialState: function () {
-		return { query: '', route: 'Software' };
+		return {
+			query: '',
+			route: 'Software',
+			modalTitle: '',
+			modalContents: []
+		};
 	},
 	handleSearch: function (event) {
 		this.setState({query: event.target.value});
 	},
 	handleRouteChange: function (route) {
 		this.setState({route: route});
+	},
+	setModalContents: function (title, contents) {
+		this.setState({modalTitle: title, modalContents: contents});
 	},
 	render: function () {
 
@@ -23581,10 +23591,12 @@ var MainPage = React.createClass({displayName: "MainPage",
 		var page;
 		switch(this.state.route) {
 			case 'Users':
-				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5});
+				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5, 
+					setModalContents: this.setModalContents});
 				break;
 			default:
-				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5});
+				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5, 
+					setModalContents: this.setModalContents});
 				break;
 		}
 
@@ -23594,6 +23606,8 @@ var MainPage = React.createClass({displayName: "MainPage",
 					handleSearch: this.handleSearch, 
 					handleRouteChange: this.handleRouteChange, 
 					route: this.state.route}), 
+				React.createElement(Modal, {title: this.state.modalTitle, 
+					contents: this.state.modalContents}), 
 				page
 			)
 		)
@@ -23607,7 +23621,33 @@ React.render(
 
 $(document).foundation();
 
-},{"./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","./users/users-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
+},{"./modals/modal":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/modal.js","./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","./users/users-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/modal.js":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+
+var Modal = React.createClass({
+    displayName: 'Modal',
+    getInitialState: function () {
+        return {};
+    },
+    propTypes: {
+    	title: React.PropTypes.string.isRequired,
+    	contents: React.PropTypes.renderable.isRequired
+    },
+    render: function () {
+        return (
+			React.createElement("div", {id: "myModal", className: "reveal-modal", "data-reveal": true}, 
+				React.createElement("h2", null, this.props.title), 
+				React.createElement("p", null, this.props.contents), 
+				React.createElement("a", {className: "close-reveal-modal"}, "×")
+			)
+        );
+    }
+});
+
+module.exports = Modal;
+
+},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
 var React = require('react/addons');
 
 ToolStats = React.createClass({displayName: "ToolStats",
@@ -23670,7 +23710,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 		return {tool: this.props.tool};
 	},
 	propTypes: {
-		tool: React.PropTypes.object.isRequired
+		tool: React.PropTypes.object.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	shorten: function (string) {
 		if(string.length > 100) {
@@ -23808,7 +23849,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 						React.createElement(ToolStats, {
 							tool: tool, 
 							current: this.props.current, 
-							update: this.props.onClick}), 
+							update: this.props.onClick, 
+							setModalContents: this.props.setModalContents}), 
 						React.createElement(ToolComments, {tool: tool, 
 							update: this.props.onClick}), 
 						React.createElement("div", {className: "clearfix"}, " ")
@@ -23833,7 +23875,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 					React.createElement(ToolStats, {
 						tool: tool, 
 						current: this.props.current, 
-						update: this.props.onClick})
+						update: this.props.onClick, 
+						setModalContents: this.props.setModalContents})
 				)
 			);
 
@@ -23852,7 +23895,8 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		return {tool: this.props.tool};
 	},
 	propTypes: {
-		tool: React.PropTypes.object.isRequired
+		tool: React.PropTypes.object.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	getVoters: function (isPositive) {
 		var tool = this.props.tool;
@@ -23903,6 +23947,13 @@ ToolStats = React.createClass({displayName: "ToolStats",
 
 		this.props.update(tool.id);
 	},
+	createLi: function (item, i) {
+		return React.createElement("li", {key: i}, " ", item, " ")
+	},
+	modalPresentable: function (items, attr1, attr2) {
+		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
+		return items2.map(this.createLi, this);
+	},
 	render: function () {
 		var id = this.props.tool.id;
 		var upvoters = this.getVoters(true);
@@ -23918,18 +23969,32 @@ ToolStats = React.createClass({displayName: "ToolStats",
 			return (
 				React.createElement("ul", {className: "panel callout tool-stats"}, 
 					React.createElement("a", {href: "#", onClick: this.vote}, 
-						React.createElement("i", {className: "fa fa-thumbs-up blue"}, " "), 
+						React.createElement("i", {className: "fa fa-thumbs-up blue"}, " ")
+					), 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Voters', this.modalPresentable(
+								upvoters, 'username'))}, 
 						 prettyLists.format1(upvoters, 'username') 
 					), " ", React.createElement("br", null), 
-					React.createElement("a", {href: "#"}, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Viewers', this.modalPresentable(
+								viewers, 'username', 'pivot.count'))}, 
 						React.createElement("i", {className: "fa fa-eye red"}, " "), 
 						 prettyLists.format2(viewers, 'username', 'pivot.count') 
 					), " ", React.createElement("br", null), 
-					React.createElement("a", {href: "#"}, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Downloaders', this.modalPresentable(
+								downloaders, 'username'))}, 
 						React.createElement("i", {className: "fa fa-download purple"}, " "), 
 						 prettyLists.format1(downloaders, 'username') 
 					), " ", React.createElement("br", null), 
-					React.createElement("a", {href: "#"}, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Commenters', this.modalPresentable(
+								commenters, 'username'))}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
 						 prettyLists.format1(commenters, 'username') 
 					)
@@ -23982,7 +24047,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 	},
 	propTypes: {
 		tools: React.PropTypes.array,
-		pageLength: React.PropTypes.number
+		pageLength: React.PropTypes.number,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	setCurrentTool: function (tool) {
 		if(this.state.tool != tool) {
@@ -24026,7 +24092,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 					tool: tool, 
 					highlight: this.state.tool == tool, 
 					onClick: this.setCurrentTool.bind(this, tool), 
-					pageChange: this.state.pageChange})
+					pageChange: this.state.pageChange, 
+					setModalContents: this.props.setModalContents})
 			);
 		}
 
@@ -24036,7 +24103,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 					tool: this.state.tool, 
 					key: this.state.tool.id, 
 					current: true, 
-					onClick: this.setCurrentTool.bind(this, this.state.tool)})
+					onClick: this.setCurrentTool.bind(this, this.state.tool), 
+					setModalContents: this.props.setModalContents})
 			): null;
 
 		var pageCount = Math.ceil(this.props.tools.length/this.props.pageLength);
@@ -24301,10 +24369,12 @@ var UsersList = React.createClass({displayName: "UsersList",
 		return {};
 	},
 	propTypes: {
-		users: React.PropTypes.array.isRequired
+		users: React.PropTypes.array.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	createTr: function (user) {
-		return React.createElement(UserPanel, {user: user, key: user.id})
+		return React.createElement(UserPanel, {user: user, key: user.id, 
+				setModalContents: this.setModalContents})
 	},
 	render: function () {
 		return (

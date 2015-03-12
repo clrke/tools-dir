@@ -7,10 +7,12 @@ var UsersList = React.createClass({
 		return {};
 	},
 	propTypes: {
-		users: React.PropTypes.array.isRequired
+		users: React.PropTypes.array.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	createTr: function (user) {
-		return <UserPanel user={user} key={user.id}/>
+		return <UserPanel user={user} key={user.id}
+				setModalContents={this.setModalContents}/>
 	},
 	render: function () {
 		return (

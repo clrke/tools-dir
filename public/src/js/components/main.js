@@ -1,18 +1,28 @@
 var React = require('react');
 
+var Modal = require('./modals/modal');
+
 var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
 var UsersList = require('./users/users-list');
 
 var MainPage = React.createClass({
 	getInitialState: function () {
-		return { query: '', route: 'Software' };
+		return {
+			query: '',
+			route: 'Software',
+			modalTitle: '',
+			modalContents: []
+		};
 	},
 	handleSearch: function (event) {
 		this.setState({query: event.target.value});
 	},
 	handleRouteChange: function (route) {
 		this.setState({route: route});
+	},
+	setModalContents: function (title, contents) {
+		this.setState({modalTitle: title, modalContents: contents});
 	},
 	render: function () {
 
@@ -40,10 +50,12 @@ var MainPage = React.createClass({
 		var page;
 		switch(this.state.route) {
 			case 'Users':
-				page = <UsersList users={queriedItems} pageLength={5}/>;
+				page = <UsersList users={queriedItems} pageLength={5}
+					setModalContents={this.setModalContents}/>;
 				break;
 			default:
-				page = <ToolsList tools={queriedItems} pageLength={5}/>;
+				page = <ToolsList tools={queriedItems} pageLength={5}
+					setModalContents={this.setModalContents}/>;
 				break;
 		}
 
@@ -53,6 +65,8 @@ var MainPage = React.createClass({
 					handleSearch={this.handleSearch}
 					handleRouteChange={this.handleRouteChange}
 					route={this.state.route}/>
+				<Modal title={this.state.modalTitle}
+					contents={this.state.modalContents}/>
 				{page}
 			</div>
 		)

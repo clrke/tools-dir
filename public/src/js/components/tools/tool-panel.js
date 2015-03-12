@@ -9,7 +9,8 @@ ToolPanel = React.createClass({
 		return {tool: this.props.tool};
 	},
 	propTypes: {
-		tool: React.PropTypes.object.isRequired
+		tool: React.PropTypes.object.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	shorten: function (string) {
 		if(string.length > 100) {
@@ -147,7 +148,8 @@ ToolPanel = React.createClass({
 						<ToolStats
 							tool={tool}
 							current={this.props.current}
-							update={this.props.onClick} />
+							update={this.props.onClick}
+							setModalContents={this.props.setModalContents}/>
 						<ToolComments tool={tool}
 							update={this.props.onClick} />
 						<div className="clearfix"> </div>
@@ -172,7 +174,8 @@ ToolPanel = React.createClass({
 					<ToolStats
 						tool={tool}
 						current={this.props.current}
-						update={this.props.onClick} />
+						update={this.props.onClick}
+						setModalContents={this.props.setModalContents}/>
 				</div>
 			);
 
