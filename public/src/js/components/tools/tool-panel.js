@@ -99,6 +99,20 @@ ToolPanel = React.createClass({
 	getComments: function (tool) {
 		return 0;
 	},
+	download: function () {
+		var tool = this.state.tool;
+
+		tool.downloads.unshift(authUser);
+
+		var downloaderId = tool.downloaders
+			.map(function(x) {return x.id; })
+			.indexOf(authUser.id);
+
+		if(downloaderId == -1)
+			tool.downloaders.unshift(authUser);
+
+		this.props.onClick(tool.id);
+	},
 	getDownloadButton: function () {
 		var tool = this.props.tool;
 
@@ -110,7 +124,7 @@ ToolPanel = React.createClass({
 			);
 		else
 			return (
-				<a href={"/downloads/"+tool.id}
+				<a href={"/downloads/"+tool.id} onClick={this.download}
 					className="button success"> Download </a>
 			)
 	},

@@ -56,6 +56,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Tool', 'views')
 			->withPivot('count')->orderBy('count', 'desc');
 	}
+	public function downloads()
+	{
+		return $this->belongsToMany('Tool', 'downloads')
+			->withPivot('created_at')->orderBy('created_at', 'desc');
+	}
+	public function toolsDownloaded()
+	{
+		return $this->belongsToMany('Tool', 'downloads')
+			->distinct('pivot_user_id');
+	}
 	public function comments()
 	{
 		return $this->belongsToMany('Tool', 'comments')

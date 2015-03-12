@@ -63,6 +63,8 @@ ToolStats = React.createClass({
 		var downvoters = this.getVoters(false);
 		var viewers = this.state.tool.viewers;
 		var views = this.state.tool.views;
+		var downloaders = this.state.tool.downloaders;
+		var downloads = this.state.tool.downloads;
 		var comments = this.state.tool.comments;
 		var commenters = this.state.tool.commenters;
 
@@ -76,6 +78,10 @@ ToolStats = React.createClass({
 					<a href="#">
 						<i className="fa fa-eye red"> </i>
 						{ prettyLists.format2(viewers, 'username', 'pivot.count') }
+					</a> <br/>
+					<a href="#">
+						<i className="fa fa-download purple"> </i>
+						{ prettyLists.format1(downloaders, 'username') }
 					</a> <br/>
 					<a href="#">
 						<i className="fa fa-comments green"> </i>
@@ -98,7 +104,7 @@ ToolStats = React.createClass({
 					</span>
 					<span className="small-padding-left">
 						<i className="fa fa-download purple"> </i>
-						0
+						{ downloads.length }
 					</span>
 					<span className="small-padding-left">
 						<i className="fa fa-comments green"> </i>

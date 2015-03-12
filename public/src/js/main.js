@@ -23745,6 +23745,20 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 	getComments: function (tool) {
 		return 0;
 	},
+	download: function () {
+		var tool = this.state.tool;
+
+		tool.downloads.unshift(authUser);
+
+		var downloaderId = tool.downloaders
+			.map(function(x) {return x.id; })
+			.indexOf(authUser.id);
+
+		if(downloaderId == -1)
+			tool.downloaders.unshift(authUser);
+
+		this.props.onClick(tool.id);
+	},
 	getDownloadButton: function () {
 		var tool = this.props.tool;
 
@@ -23756,7 +23770,7 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 			);
 		else
 			return (
-				React.createElement("a", {href: "/downloads/"+tool.id, 
+				React.createElement("a", {href: "/downloads/"+tool.id, onClick: this.download, 
 					className: "button success"}, " Download ")
 			)
 	},
@@ -23880,6 +23894,8 @@ ToolStats = React.createClass({displayName: "ToolStats",
 		var downvoters = this.getVoters(false);
 		var viewers = this.state.tool.viewers;
 		var views = this.state.tool.views;
+		var downloaders = this.state.tool.downloaders;
+		var downloads = this.state.tool.downloads;
 		var comments = this.state.tool.comments;
 		var commenters = this.state.tool.commenters;
 
@@ -23893,6 +23909,10 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					React.createElement("a", {href: "#"}, 
 						React.createElement("i", {className: "fa fa-eye red"}, " "), 
 						 prettyLists.format2(viewers, 'username', 'pivot.count') 
+					), " ", React.createElement("br", null), 
+					React.createElement("a", {href: "#"}, 
+						React.createElement("i", {className: "fa fa-download purple"}, " "), 
+						 prettyLists.format1(downloaders, 'username') 
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#"}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
@@ -23915,7 +23935,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "fa fa-download purple"}, " "), 
-						"0"
+						 downloads.length
 					), 
 					React.createElement("span", {className: "small-padding-left"}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
@@ -24244,6 +24264,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", null, " ", user.email, " "), 
 				React.createElement("td", null, " ", prettyLists.format1(user.upvotes, 'title'), " "), 
 				React.createElement("td", null, " ", prettyLists.format2(user.tools_viewed, 'title', 'pivot.count'), " "), 
+				React.createElement("td", null, " ", prettyLists.format1(user.tools_downloaded, 'title'), " "), 
 				React.createElement("td", null, " ", prettyLists.format1(user.tools_commented, 'title'), " "), 
 				React.createElement("td", null, " ", user.created_at, " "), 
 				React.createElement("td", null, " ", roleChangeButton, " "), 
@@ -24283,6 +24304,7 @@ var UsersList = React.createClass({displayName: "UsersList",
 							React.createElement("th", null, " Email Address "), 
 							React.createElement("th", null, " Votes "), 
 							React.createElement("th", null, " Views "), 
+							React.createElement("th", null, " Downloads "), 
 							React.createElement("th", null, " Comments "), 
 							React.createElement("th", null, " Registration "), 
 							React.createElement("th", null, " Role "), 

@@ -17,12 +17,14 @@ Route::get('/', function()
 	{
 		$tools = Tool::orderBy('created_at')
 			->with('upvoters', 'downvoters',
+				'downloads', 'downloaders',
 				'comments', 'commenters')->get();
 
 		$users = Auth::user()->isAdmin()?
 			User::orderBy('created_at', 'desc')
 				->with('upvotes', 'downvotes',
 					'comments', 'toolsCommented',
+					'downloads', 'toolsDownloaded',
 					'toolsViewed')->get():
 			"[]";
 
@@ -247,6 +249,13 @@ Route::post('comment/{id}', function ($id)
 
 Route::get('downloads/{id}', ['before' => 'auth', function ($id)
 {
-	$file = Tool::findOrFail($id)->file;
+	$tool = Tool::findOrFail($id);
+	$file = $tool->file;
+
+	$tool->downloads()->attach(Auth::user(), [
+		'created_at' => Carbon\Carbon::now(),
+		'updated_at' => Carbon\Carbon::now()
+	]);
+
 	return Response::download(storage_path()."/downloads/$file");
 }]);

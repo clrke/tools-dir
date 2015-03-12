@@ -38,6 +38,16 @@ class Tool extends Eloquent {
 		return $this->belongsToMany('User', 'views')
 			->withPivot('count')->orderBy('count', 'desc');
 	}
+	public function downloads()
+	{
+		return $this->belongsToMany('User', 'downloads')
+			->withPivot('created_at')->orderBy('created_at', 'desc');
+	}
+	public function downloaders()
+	{
+		return $this->belongsToMany('User', 'downloads')
+			->distinct('pivot_user_id');
+	}
 	public function comments()
 	{
 		return $this->belongsToMany('User', 'comments')
