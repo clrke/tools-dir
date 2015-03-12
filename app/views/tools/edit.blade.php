@@ -8,7 +8,8 @@
 	</head>
 	<body>
 		<div class="row">
-			<form method="post" action="{{$create?'/tools/store':'/tools/'.$tool->id}}" class="margin-fix">
+			<form method="post" enctype="multipart/form-data"
+				action="{{$create?'/tools/store':'/tools/'.$tool->id}}" class="margin-fix">
 				<fieldset class="column medium-6 small-10 small-centered medium-centered">
 					@if($message)
 						<div class="panel callout">
@@ -49,6 +50,12 @@
 						}}
 						@if($errors->first('year'))
 							<small class="error">{{$errors->first('year')}}</small>
+						@endif
+					</div>
+					<div>
+						{{ Form::file('file', ['placeholder' => 'File'])}}
+						@if($errors->first('file'))
+							<small class="error">{{$errors->first('file')}}</small>
 						@endif
 					</div>
 					<button type="submit" class="button">

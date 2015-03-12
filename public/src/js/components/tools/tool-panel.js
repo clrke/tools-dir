@@ -99,6 +99,21 @@ ToolPanel = React.createClass({
 	getComments: function (tool) {
 		return 0;
 	},
+	getDownloadButton: function () {
+		var tool = this.props.tool;
+
+		if(tool.file.length == 0)
+			return (
+				<button className="button success disabled">
+					Download
+				</button>
+			);
+		else
+			return (
+				<a href={"/downloads/"+tool.id}
+					className="button success"> Download </a>
+			)
+	},
 	render: function () {
 		var tool = this.props.tool;
 
@@ -112,6 +127,8 @@ ToolPanel = React.createClass({
 						{this.getTitle()}
 
 						{this.getAbstact()}
+
+						{this.getDownloadButton()}
 
 						<ToolStats
 							tool={tool}

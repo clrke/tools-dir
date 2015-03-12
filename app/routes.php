@@ -38,6 +38,11 @@ Route::get('/', function()
 	}
 });
 
+Route::get('/login', function ()
+{
+	return Redirect::to('');
+});
+
 Route::post('/login', function ()
 {
 	$user = User::whereUsername(Input::get('username'))->first();
@@ -112,10 +117,24 @@ Route::group(['before' => 'admin'], function ()
 
 		if($validator->fails())
 			return Redirect::back()
-				->withInput(Input::all())
+				->withInput(Input::except('file'))
 				->withErrors($validator);
 
-		$tool = Tool::create(Input::all());
+		$tool = Tool::create(Input::except('file'));
+
+		$file = Input::file('file');
+		if($file && $file->isValid()) {
+
+			$storage_path = storage_path();
+			$id = sprintf("%05d", $tool->id);
+			$extension = $file->getClientOriginalExtension();
+			$filename = "$id.$extension";
+
+			$file->move("$storage_path/downloads/", $filename);
+
+			$tool->file = $filename;
+			$tool->save();
+		}
 
 		return Redirect::to('/tools/'.$tool->id.'/edit')->with(
 			'message', 'Successfully created "'
@@ -139,12 +158,26 @@ Route::group(['before' => 'admin'], function ()
 
 		if($validator->fails())
 			return Redirect::back()
-				->withInput(Input::all())
+				->withInput(Input::except('file'))
 				->withErrors($validator);
 
 		$tool = Tool::findOrFail($id);
 
-		$tool->update(Input::all());
+		$tool->update(Input::except('file'));
+
+		$file = Input::file('file');
+		if($file && $file->isValid()) {
+
+			$storage_path = storage_path();
+			$id = sprintf("%05d", $tool->id);
+			$extension = $file->getClientOriginalExtension();
+			$filename = "$id.$extension";
+
+			$file->move("$storage_path/downloads/", $filename);
+
+			$tool->file = $filename;
+			$tool->save();
+		}
 
 		return Redirect::back()->with(
 			'message', 'Successfully updated "'
@@ -211,3 +244,9 @@ Route::post('comment/{id}', function ($id)
 
 	return $tool->comments;
 });
+
+Route::get('downloads/{id}', ['before' => 'auth', function ($id)
+{
+	$file = Tool::findOrFail($id)->file;
+	return Response::download(storage_path()."/downloads/$file");
+}]);

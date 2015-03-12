@@ -23745,6 +23745,21 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 	getComments: function (tool) {
 		return 0;
 	},
+	getDownloadButton: function () {
+		var tool = this.props.tool;
+
+		if(tool.file.length == 0)
+			return (
+				React.createElement("button", {className: "button success disabled"}, 
+					"Download"
+				)
+			);
+		else
+			return (
+				React.createElement("a", {href: "/downloads/"+tool.id, 
+					className: "button success"}, " Download ")
+			)
+	},
 	render: function () {
 		var tool = this.props.tool;
 
@@ -23758,6 +23773,8 @@ ToolPanel = React.createClass({displayName: "ToolPanel",
 						this.getTitle(), 
 
 						this.getAbstact(), 
+
+						this.getDownloadButton(), 
 
 						React.createElement(ToolStats, {
 							tool: tool, 

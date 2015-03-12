@@ -1,7 +1,7 @@
 <?php
 
 class Tool extends Eloquent {
-	protected $fillable = ['title', 'abstract', 'authors', 'pageCount', 'year'];
+	protected $fillable = ['title', 'abstract', 'authors', 'pageCount', 'year', 'file'];
 	protected $appends = ['views'];
 
 	public static $rules = [
