@@ -12,7 +12,7 @@ var UsersList = React.createClass({
 	},
 	createTr: function (user) {
 		return <UserPanel user={user} key={user.id}
-				setModalContents={this.setModalContents}/>
+				setModalContents={this.props.setModalContents}/>
 	},
 	render: function () {
 		return (

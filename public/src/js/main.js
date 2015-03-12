@@ -24297,7 +24297,8 @@ var UserRow = React.createClass({displayName: "UserRow",
 		return {};
 	},
 	propTypes: {
-		user: React.PropTypes.object.isRequired
+		user: React.PropTypes.object.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	handleRoleChange: function () {
 		var user = this.props.user;
@@ -24314,6 +24315,13 @@ var UserRow = React.createClass({displayName: "UserRow",
 
 		$.post('/user/update/'+user.id, {accepted: user.accepted});
 		this.forceUpdate();
+	},
+	createLi: function (item, i) {
+		return React.createElement("li", {key: i}, " ", item, " ")
+	},
+	modalPresentable: function (items, attr1, attr2) {
+		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
+		return items2.map(this.createLi, this);
 	},
 	render: function () {
 		var user = this.props.user;
@@ -24345,10 +24353,38 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", null, " ", user.username, " "), 
 				React.createElement("td", null, " ", user.name, " "), 
 				React.createElement("td", null, " ", user.email, " "), 
-				React.createElement("td", null, " ", user.upvotes.length||'', " "), 
-				React.createElement("td", null, " ", user.tools_viewed.length||'', " "), 
-				React.createElement("td", null, " ", user.tools_downloaded.length||'', " "), 
-				React.createElement("td", null, " ", user.tools_commented.length||'', " "), 
+				React.createElement("td", null, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Votes', this.modalPresentable(
+								user.upvotes, 'title'))}, 
+						user.upvotes.length||''
+					)
+				), 
+				React.createElement("td", null, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Views', this.modalPresentable(
+								user.tools_viewed, 'title'))}, 
+						user.tools_viewed.length||''
+					)
+				), 
+				React.createElement("td", null, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Downloads', this.modalPresentable(
+								user.tools_downloaded, 'title'))}, 
+						user.tools_downloaded.length||''
+					)
+				), 
+				React.createElement("td", null, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							'Comments', this.modalPresentable(
+								user.tools_commented, 'title'))}, 
+						user.tools_commented.length||''
+					)
+				), 
 				React.createElement("td", null, " ", user.created_at, " "), 
 				React.createElement("td", null, " ", roleChangeButton, " "), 
 				React.createElement("td", null, " ", acceptButton, " ")
@@ -24374,7 +24410,7 @@ var UsersList = React.createClass({displayName: "UsersList",
 	},
 	createTr: function (user) {
 		return React.createElement(UserPanel, {user: user, key: user.id, 
-				setModalContents: this.setModalContents})
+				setModalContents: this.props.setModalContents})
 	},
 	render: function () {
 		return (

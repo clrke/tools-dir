@@ -6,7 +6,8 @@ var UserRow = React.createClass({
 		return {};
 	},
 	propTypes: {
-		user: React.PropTypes.object.isRequired
+		user: React.PropTypes.object.isRequired,
+		setModalContents: React.PropTypes.func.isRequired
 	},
 	handleRoleChange: function () {
 		var user = this.props.user;
@@ -23,6 +24,13 @@ var UserRow = React.createClass({
 
 		$.post('/user/update/'+user.id, {accepted: user.accepted});
 		this.forceUpdate();
+	},
+	createLi: function (item, i) {
+		return <li key={i}> {item} </li>
+	},
+	modalPresentable: function (items, attr1, attr2) {
+		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
+		return items2.map(this.createLi, this);
 	},
 	render: function () {
 		var user = this.props.user;
@@ -54,10 +62,38 @@ var UserRow = React.createClass({
 				<td> {user.username} </td>
 				<td> {user.name} </td>
 				<td> {user.email} </td>
-				<td> {user.upvotes.length||''} </td>
-				<td> {user.tools_viewed.length||''} </td>
-				<td> {user.tools_downloaded.length||''} </td>
-				<td> {user.tools_commented.length||''} </td>
+				<td>
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Votes', this.modalPresentable(
+								user.upvotes, 'title'))}>
+						{user.upvotes.length||''}
+					</a>
+				</td>
+				<td>
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Views', this.modalPresentable(
+								user.tools_viewed, 'title'))}>
+						{user.tools_viewed.length||''}
+					</a>
+				</td>
+				<td>
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Downloads', this.modalPresentable(
+								user.tools_downloaded, 'title'))}>
+						{user.tools_downloaded.length||''}
+					</a>
+				</td>
+				<td>
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							'Comments', this.modalPresentable(
+								user.tools_commented, 'title'))}>
+						{user.tools_commented.length||''}
+					</a>
+				</td>
 				<td> {user.created_at} </td>
 				<td> {roleChangeButton} </td>
 				<td> {acceptButton} </td>
