@@ -73,6 +73,7 @@
 					@endif
 					</div>
 					<button type="submit" class="button">Register</button>
+					<a href="/" class="button secondary">Cancel</a>
 				</fieldset>
 			</form>
 		</div>
