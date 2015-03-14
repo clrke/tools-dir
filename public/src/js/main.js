@@ -24323,6 +24323,27 @@ var UserRow = React.createClass({displayName: "UserRow",
 		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
 		return items2.map(this.createLi, this);
 	},
+	createParagraph: function (paragraph, i) {
+		return React.createElement("p", {key: i}, " ", paragraph, " ");
+	},
+	getAbout: function () {
+		var user = this.props.user;
+			return user.about.split('\n')
+				.map(this.createParagraph, this);
+	},
+	profile: function profile() {
+		var user = this.props.user;
+		return (
+			React.createElement("div", null, 
+				React.createElement("hr", null), 
+				user.gender, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
+				user.email, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
+				user.occupation, 
+				React.createElement("hr", null), 
+				this.getAbout()
+			)
+		);
+	},
 	render: function () {
 		var user = this.props.user;
 		var roleChangeButton = user.role == 1? (
@@ -24350,9 +24371,15 @@ var UserRow = React.createClass({displayName: "UserRow",
 		return (
 			React.createElement("tr", null, 
 				React.createElement("td", null, " ", user.id, " "), 
-				React.createElement("td", null, " ", user.username, " "), 
-				React.createElement("td", null, " ", user.name, " "), 
-				React.createElement("td", null, " ", user.email, " "), 
+				React.createElement("td", null, 
+					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
+						onClick: this.props.setModalContents.bind(null,
+							React.createElement("h2", null, " ", user.name, " ", React.createElement("small", null, user.username), " "),
+							this.profile())}, 
+						user.username
+					), " "), 
+				React.createElement("td", null, " ", user.gender, " "), 
+				React.createElement("td", null, " ", user.occupation, " "), 
 				React.createElement("td", null, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
@@ -24419,17 +24446,19 @@ var UsersList = React.createClass({displayName: "UsersList",
 					React.createElement("h1", null, "Users"), 
 					React.createElement("table", null, 
 						React.createElement("thead", null, 
-							React.createElement("th", null, " Id "), 
-							React.createElement("th", null, " Username "), 
-							React.createElement("th", null, " Name "), 
-							React.createElement("th", null, " Email Address "), 
-							React.createElement("th", null, " Votes "), 
-							React.createElement("th", null, " Views "), 
-							React.createElement("th", null, " Downloads "), 
-							React.createElement("th", null, " Comments "), 
-							React.createElement("th", null, " Registration "), 
-							React.createElement("th", null, " Role "), 
-							React.createElement("th", null, " Registration Status ")
+							React.createElement("tr", null, 
+								React.createElement("th", null, " Id "), 
+								React.createElement("th", null, " Username "), 
+								React.createElement("th", null, " Gender "), 
+								React.createElement("th", null, " Occupation "), 
+								React.createElement("th", null, " Votes "), 
+								React.createElement("th", null, " Views "), 
+								React.createElement("th", null, " Downloads "), 
+								React.createElement("th", null, " Comments "), 
+								React.createElement("th", null, " Registration "), 
+								React.createElement("th", null, " Role "), 
+								React.createElement("th", null, " Registration Status ")
+							)
 						), 
 						React.createElement("tbody", null, 
 							this.props.users.map(this.createTr, this)

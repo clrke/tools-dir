@@ -32,6 +32,27 @@ var UserRow = React.createClass({
 		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
 		return items2.map(this.createLi, this);
 	},
+	createParagraph: function (paragraph, i) {
+		return <p key={i}> {paragraph} </p>;
+	},
+	getAbout: function () {
+		var user = this.props.user;
+			return user.about.split('\n')
+				.map(this.createParagraph, this);
+	},
+	profile: function profile() {
+		var user = this.props.user;
+		return (
+			<div>
+				<hr />
+				{user.gender} <i className="fa fa-ellipsis-v" />
+				{user.email} <i className="fa fa-ellipsis-v" />
+				{user.occupation}
+				<hr />
+				{this.getAbout()}
+			</div>
+		);
+	},
 	render: function () {
 		var user = this.props.user;
 		var roleChangeButton = user.role == 1? (
@@ -59,9 +80,15 @@ var UserRow = React.createClass({
 		return (
 			<tr>
 				<td> {user.id} </td>
-				<td> {user.username} </td>
-				<td> {user.name} </td>
-				<td> {user.email} </td>
+				<td>
+					<a href="#" data-reveal-id="myModal"
+						onClick={this.props.setModalContents.bind(null,
+							<h2> {user.name} <small>{user.username}</small> </h2>,
+							this.profile())}>
+						{user.username}
+					</a> </td>
+				<td> {user.gender} </td>
+				<td> {user.occupation} </td>
 				<td>
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,

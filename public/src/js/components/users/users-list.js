@@ -21,17 +21,19 @@ var UsersList = React.createClass({
 					<h1>Users</h1>
 					<table>
 						<thead>
-							<th> Id </th>
-							<th> Username </th>
-							<th> Name </th>
-							<th> Email Address </th>
-							<th> Votes </th>
-							<th> Views </th>
-							<th> Downloads </th>
-							<th> Comments </th>
-							<th> Registration </th>
-							<th> Role </th>
-							<th> Registration Status </th>
+							<tr>
+								<th> Id </th>
+								<th> Username </th>
+								<th> Gender </th>
+								<th> Occupation </th>
+								<th> Votes </th>
+								<th> Views </th>
+								<th> Downloads </th>
+								<th> Comments </th>
+								<th> Registration </th>
+								<th> Role </th>
+								<th> Registration Status </th>
+							</tr>
 						</thead>
 						<tbody>
 							{this.props.users.map(this.createTr, this)}
