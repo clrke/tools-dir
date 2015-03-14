@@ -30,7 +30,7 @@ var UsersList = React.createClass({
 		var pageCount = Math.ceil(this.props.users.length/this.props.pageLength);
 
 		return (
-			<div className="column small-12">
+			<div className="column small-12 animated fadeInLeft">
 				<div className="panel white">
 					<Pagination
 						prev={this.handlePrev}
