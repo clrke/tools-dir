@@ -87,6 +87,9 @@ Route::post('/register', function ()
 		'email' => Input::get('email'),
 		'role' => 0,
 		'name' => Input::get('name'),
+		'gender' => Input::get('gender'),
+		'occupation' => Input::get('occupation'),
+		'about' => Input::get('about'),
 		'accepted' => 0
 	];
 

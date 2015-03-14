@@ -78,7 +78,8 @@
 }
 
 form.margin-fix input,
-form.margin-fix textarea {
+form.margin-fix textarea,
+form.margin-fix select {
 	margin-bottom: 0px;
 }
 
