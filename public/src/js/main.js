@@ -24052,7 +24052,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							'Downloaders', this.modalPresentable(
-								downloaders, 'username'))}, 
+								downloads, 'pivot.created_at', 'username'))}, 
 						React.createElement("i", {className: "fa fa-download purple"}, " "), 
 						 prettyLists.format1(downloaders, 'username') 
 					), " ", React.createElement("br", null), 
@@ -24400,8 +24400,8 @@ var UserRow = React.createClass({displayName: "UserRow",
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							'Downloads', this.modalPresentable(
-								user.tools_downloaded, 'title'))}, 
-						user.tools_downloaded.length||''
+								user.downloads, 'pivot.created_at', 'title'))}, 
+						user.downloads.length||''
 					)
 				), 
 				React.createElement("td", null, 

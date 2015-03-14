@@ -98,7 +98,7 @@ ToolStats = React.createClass({
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							'Downloaders', this.modalPresentable(
-								downloaders, 'username'))}>
+								downloads, 'pivot.created_at', 'username'))}>
 						<i className="fa fa-download purple"> </i>
 						{ prettyLists.format1(downloaders, 'username') }
 					</a> <br/>

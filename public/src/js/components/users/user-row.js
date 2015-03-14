@@ -109,8 +109,8 @@ var UserRow = React.createClass({
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							'Downloads', this.modalPresentable(
-								user.tools_downloaded, 'title'))}>
-						{user.tools_downloaded.length||''}
+								user.downloads, 'pivot.created_at', 'title'))}>
+						{user.downloads.length||''}
 					</a>
 				</td>
 				<td>
