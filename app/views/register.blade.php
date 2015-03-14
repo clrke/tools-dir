@@ -30,15 +30,15 @@
 					@endif
 					</div>
 					<div>
-					{{ Form::input('email', 'email', $input? $input->email: null, ['placeholder' => 'Email Address']) }}
-					@if($errors->first('email'))
-						<small class="error">{{$errors->first('email')}}</small>
-					@endif
-					</div>
-					<div>
 					{{ Form::input('text', 'name', $input? $input->name: null, ['placeholder' => 'First and Last Name']) }}
 					@if($errors->first('name'))
 						<small class="error">{{$errors->first('name')}}</small>
+					@endif
+					</div>
+					<div>
+					{{ Form::input('email', 'email', $input? $input->email: null, ['placeholder' => 'Email Address']) }}
+					@if($errors->first('email'))
+						<small class="error">{{$errors->first('email')}}</small>
 					@endif
 					</div>
 					<button type="submit" class="button">Register</button>
