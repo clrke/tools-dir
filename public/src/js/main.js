@@ -24227,7 +24227,7 @@ TopBar = React.createClass({displayName: "TopBar",
 		});
 		return (
 			React.createElement("div", {className: "fixed"}, 
-				React.createElement("nav", {className: "top-bar", "data-topbar": true, role: "navigation"}, 
+				React.createElement("nav", {className: "top-bar animated slideInDown", "data-topbar": true, role: "navigation"}, 
 					React.createElement("ul", {className: "title-area"}, 
 						React.createElement("li", {className: "name"}, 
 							React.createElement("h1", null, 

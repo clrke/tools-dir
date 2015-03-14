@@ -24,7 +24,7 @@ TopBar = React.createClass({
 		});
 		return (
 			<div className="fixed">
-				<nav className="top-bar" data-topbar role="navigation">
+				<nav className="top-bar animated slideInDown" data-topbar role="navigation">
 					<ul className="title-area">
 						<li className='name'>
 							<h1>
