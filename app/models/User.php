@@ -37,6 +37,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'about' => 'required',
 	];
 
+	public function getGenderAttribute()
+	{
+		switch ($this->attributes['gender']) {
+			case 1:
+				return "Male";
+			case 2:
+				return "Female";
+			default:
+				return "Unknown";
+		}
+	}
 	public function isAdmin()
 	{
 		return $this->role == 1;
