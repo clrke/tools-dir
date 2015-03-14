@@ -3,7 +3,7 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
-var ToolsPagination = require('./tools-pagination');
+var ToolsPagination = require('../pagination/pagination');
 
 ToolsList = React.createClass({
 	getInitialState: function () {

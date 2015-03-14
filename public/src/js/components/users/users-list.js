@@ -2,23 +2,42 @@ var React = require('react');
 var UserPanel = require('./user-row');
 var prettyLists = require('pretty-lists');
 
+var Pagination = require('../pagination/pagination');
+
 var UsersList = React.createClass({
 	getInitialState: function () {
-		return {};
+		return {page: 1, pageChange: 0};
 	},
 	propTypes: {
 		users: React.PropTypes.array.isRequired,
+		pageLength: React.PropTypes.number,
 		setModalContents: React.PropTypes.func.isRequired
+	},
+	handlePrev: function () {
+		this.setState({page: this.state.page-1, pageChange: -1});
+	},
+	handleNext: function () {
+		this.setState({page: this.state.page+1, pageChange: 1});
+	},
+	handleSkip: function (page) {
+		this.setState({page: page, pageChange: page-this.state.page});
 	},
 	createTr: function (user) {
 		return <UserPanel user={user} key={user.id}
 				setModalContents={this.props.setModalContents}/>
 	},
 	render: function () {
+		var pageCount = Math.ceil(this.props.users.length/this.props.pageLength);
+
 		return (
 			<div className="column small-12">
 				<div className="panel white">
-					<h1>Users</h1>
+					<Pagination
+						prev={this.handlePrev}
+						next={this.handleNext}
+						skip={this.handleSkip}
+						page={this.state.page}
+						pageCount={pageCount}/>
 					<table>
 						<thead>
 							<tr>
@@ -36,7 +55,11 @@ var UsersList = React.createClass({
 							</tr>
 						</thead>
 						<tbody>
-							{this.props.users.map(this.createTr, this)}
+
+							{this.props.users.slice(
+								this.props.pageLength*(this.state.page-1),
+								this.props.pageLength*this.state.page
+							).map(this.createTr, this)}
 						</tbody>
 					</table>
 				</div>

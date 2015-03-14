@@ -23647,7 +23647,72 @@ var Modal = React.createClass({
 
 module.exports = Modal;
 
-},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
+},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js":[function(require,module,exports){
+var React = require('react/addons');
+
+ToolsPagination = React.createClass({displayName: "ToolsPagination",
+	render: function () {
+		var pages = [];
+
+		for (var i = 0; i < this.props.pageCount; i++) {
+			pages.push({key: i+1});
+		};
+
+		var classSet = React.addons.classSet;
+
+		var pageListItem = function (page) {
+
+			var classNames = classSet({
+				'current': this.props.page == page.key
+			});
+
+			return (
+				React.createElement("li", {key: page.key, className: classNames}, 
+					React.createElement("a", {href: "#", 
+						onClick: this.props.skip.bind(null, page.key)}, 
+							page.key
+					)
+				)
+			);
+		};
+
+		var prevClassNames = classSet({
+			'arrow': true,
+			'unavailable': this.props.page <= 1
+		});
+
+		var nextClassNames = classSet({
+			'arrow': true,
+			'unavailable': this.props.page >= this.props.pageCount
+		});
+
+		return (
+			React.createElement("div", {className: "pagination-centered"}, 
+				React.createElement("ul", {className: "pagination"}, 
+					React.createElement("li", {className: prevClassNames}, 
+						React.createElement("a", {href: "#", 
+							onClick: 
+								this.props.page > 1?
+								this.props.prev: null
+							}, "«")
+					), 
+					pages.map(pageListItem, this), 
+					React.createElement("li", {className: nextClassNames}, 
+						React.createElement("a", {href: "#", 
+							onClick: 
+								this.props.page < this.props.pageCount?
+								this.props.next: null
+							}, "»")
+					)
+				)
+			)
+		);
+	}
+});
+
+module.exports = ToolsPagination;
+
+},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-comments.js":[function(require,module,exports){
 var React = require('react/addons');
 
 ToolStats = React.createClass({displayName: "ToolStats",
@@ -24035,7 +24100,7 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
-var ToolsPagination = require('./tools-pagination');
+var ToolsPagination = require('../pagination/pagination');
 
 ToolsList = React.createClass({displayName: "ToolsList",
 	getInitialState: function () {
@@ -24135,72 +24200,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 
 module.exports = ToolsList;
 
-},{"./tool-panel":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-panel.js","./tool-stats":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-stats.js","./tools-pagination":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-pagination.js","react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-pagination.js":[function(require,module,exports){
-var React = require('react/addons');
-
-ToolsPagination = React.createClass({displayName: "ToolsPagination",
-	render: function () {
-		var pages = [];
-
-		for (var i = 0; i < this.props.pageCount; i++) {
-			pages.push({key: i+1});
-		};
-
-		var classSet = React.addons.classSet;
-
-		var pageListItem = function (page) {
-
-			var classNames = classSet({
-				'current': this.props.page == page.key
-			});
-
-			return (
-				React.createElement("li", {key: page.key, className: classNames}, 
-					React.createElement("a", {href: "#", 
-						onClick: this.props.skip.bind(null, page.key)}, 
-							page.key
-					)
-				)
-			);
-		};
-
-		var prevClassNames = classSet({
-			'arrow': true,
-			'unavailable': this.props.page <= 1
-		});
-
-		var nextClassNames = classSet({
-			'arrow': true,
-			'unavailable': this.props.page >= this.props.pageCount
-		});
-
-		return (
-			React.createElement("div", {className: "pagination-centered"}, 
-				React.createElement("ul", {className: "pagination"}, 
-					React.createElement("li", {className: prevClassNames}, 
-						React.createElement("a", {href: "#", 
-							onClick: 
-								this.props.page > 1?
-								this.props.prev: null
-							}, "«")
-					), 
-					pages.map(pageListItem, this), 
-					React.createElement("li", {className: nextClassNames}, 
-						React.createElement("a", {href: "#", 
-							onClick: 
-								this.props.page < this.props.pageCount?
-								this.props.next: null
-							}, "»")
-					)
-				)
-			)
-		);
-	}
-});
-
-module.exports = ToolsPagination;
-
-},{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
+},{"../pagination/pagination":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js","./tool-panel":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-panel.js","./tool-stats":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tool-stats.js","react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js":[function(require,module,exports){
 var React = require('react/addons');
 
 TopBar = React.createClass({displayName: "TopBar",
@@ -24427,23 +24427,42 @@ var React = require('react');
 var UserPanel = require('./user-row');
 var prettyLists = require('pretty-lists');
 
+var Pagination = require('../pagination/pagination');
+
 var UsersList = React.createClass({displayName: "UsersList",
 	getInitialState: function () {
-		return {};
+		return {page: 1, pageChange: 0};
 	},
 	propTypes: {
 		users: React.PropTypes.array.isRequired,
+		pageLength: React.PropTypes.number,
 		setModalContents: React.PropTypes.func.isRequired
+	},
+	handlePrev: function () {
+		this.setState({page: this.state.page-1, pageChange: -1});
+	},
+	handleNext: function () {
+		this.setState({page: this.state.page+1, pageChange: 1});
+	},
+	handleSkip: function (page) {
+		this.setState({page: page, pageChange: page-this.state.page});
 	},
 	createTr: function (user) {
 		return React.createElement(UserPanel, {user: user, key: user.id, 
 				setModalContents: this.props.setModalContents})
 	},
 	render: function () {
+		var pageCount = Math.ceil(this.props.users.length/this.props.pageLength);
+
 		return (
 			React.createElement("div", {className: "column small-12"}, 
 				React.createElement("div", {className: "panel white"}, 
-					React.createElement("h1", null, "Users"), 
+					React.createElement(Pagination, {
+						prev: this.handlePrev, 
+						next: this.handleNext, 
+						skip: this.handleSkip, 
+						page: this.state.page, 
+						pageCount: pageCount}), 
 					React.createElement("table", null, 
 						React.createElement("thead", null, 
 							React.createElement("tr", null, 
@@ -24461,7 +24480,11 @@ var UsersList = React.createClass({displayName: "UsersList",
 							)
 						), 
 						React.createElement("tbody", null, 
-							this.props.users.map(this.createTr, this)
+
+							this.props.users.slice(
+								this.props.pageLength*(this.state.page-1),
+								this.props.pageLength*this.state.page
+							).map(this.createTr, this)
 						)
 					)
 				)
@@ -24472,4 +24495,4 @@ var UsersList = React.createClass({displayName: "UsersList",
 
 module.exports = UsersList;
 
-},{"./user-row":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/user-row.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
+},{"../pagination/pagination":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js","./user-row":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/user-row.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}]},{},["/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/main.js"]);
