@@ -103,7 +103,10 @@ ToolPanel = React.createClass({
 	download: function () {
 		var tool = this.state.tool;
 
-		tool.downloads.unshift(authUser);
+		tool.downloads.unshift({
+			username: authUser.username,
+			pivot: {created_at: moment().fromNow()}
+		});
 
 		var downloaderId = tool.downloaders
 			.map(function(x) {return x.id; })
