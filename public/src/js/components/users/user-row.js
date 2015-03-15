@@ -79,17 +79,17 @@ var UserRow = React.createClass({
 			)
 		return (
 			<tr>
-				<td> {user.id} </td>
-				<td>
+				<td className="animated fadeIn"> {user.id} </td>
+				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							<h2> {user.name} <small>{user.username}</small> </h2>,
 							this.profile())}>
 						{user.username}
 					</a> </td>
-				<td> {user.gender} </td>
-				<td> {user.occupation} </td>
-				<td>
+				<td className="animated fadeIn"> {user.gender} </td>
+				<td className="animated fadeIn"> {user.occupation} </td>
+				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							'Votes', this.modalPresentable(
@@ -97,7 +97,7 @@ var UserRow = React.createClass({
 						{user.upvotes.length||''}
 					</a>
 				</td>
-				<td>
+				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							'Views', this.modalPresentable(
@@ -105,7 +105,7 @@ var UserRow = React.createClass({
 						{user.tools_viewed.length||''}
 					</a>
 				</td>
-				<td>
+				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							'Downloads', this.modalPresentable(
@@ -113,7 +113,7 @@ var UserRow = React.createClass({
 						{user.downloads.length||''}
 					</a>
 				</td>
-				<td>
+				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
 							'Comments', this.modalPresentable(
@@ -121,9 +121,9 @@ var UserRow = React.createClass({
 						{user.tools_commented.length||''}
 					</a>
 				</td>
-				<td> {user.created_at} </td>
-				<td> {roleChangeButton} </td>
-				<td> {acceptButton} </td>
+				<td className="animated fadeIn"> {user.created_at} </td>
+				<td className="animated fadeIn"> {roleChangeButton} </td>
+				<td className="animated fadeIn"> {acceptButton} </td>
 			</tr>
 		);
 	}

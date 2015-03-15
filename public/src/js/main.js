@@ -24373,17 +24373,17 @@ var UserRow = React.createClass({displayName: "UserRow",
 			)
 		return (
 			React.createElement("tr", null, 
-				React.createElement("td", null, " ", user.id, " "), 
-				React.createElement("td", null, 
+				React.createElement("td", {className: "animated fadeIn"}, " ", user.id, " "), 
+				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							React.createElement("h2", null, " ", user.name, " ", React.createElement("small", null, user.username), " "),
 							this.profile())}, 
 						user.username
 					), " "), 
-				React.createElement("td", null, " ", user.gender, " "), 
-				React.createElement("td", null, " ", user.occupation, " "), 
-				React.createElement("td", null, 
+				React.createElement("td", {className: "animated fadeIn"}, " ", user.gender, " "), 
+				React.createElement("td", {className: "animated fadeIn"}, " ", user.occupation, " "), 
+				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							'Votes', this.modalPresentable(
@@ -24391,7 +24391,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 						user.upvotes.length||''
 					)
 				), 
-				React.createElement("td", null, 
+				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							'Views', this.modalPresentable(
@@ -24399,7 +24399,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 						user.tools_viewed.length||''
 					)
 				), 
-				React.createElement("td", null, 
+				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							'Downloads', this.modalPresentable(
@@ -24407,7 +24407,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 						user.downloads.length||''
 					)
 				), 
-				React.createElement("td", null, 
+				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
 							'Comments', this.modalPresentable(
@@ -24415,9 +24415,9 @@ var UserRow = React.createClass({displayName: "UserRow",
 						user.tools_commented.length||''
 					)
 				), 
-				React.createElement("td", null, " ", user.created_at, " "), 
-				React.createElement("td", null, " ", roleChangeButton, " "), 
-				React.createElement("td", null, " ", acceptButton, " ")
+				React.createElement("td", {className: "animated fadeIn"}, " ", user.created_at, " "), 
+				React.createElement("td", {className: "animated fadeIn"}, " ", roleChangeButton, " "), 
+				React.createElement("td", {className: "animated fadeIn"}, " ", acceptButton, " ")
 			)
 		);
 	}
