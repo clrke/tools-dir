@@ -22,8 +22,10 @@ var MainPage = React.createClass({
 	handleRouteChange: function (route) {
 		this.setState({route: route});
 	},
-	handleNotificationClick: function (toolId) {
-		console.log(toolId);
+	handleNotificationClick: function (notification, toolId) {
+		notifications.shift(notification);
+		$.post('notifications/read', {id: notification.id});
+
 		this.setState({
 			route: 'Software',
 			toolId: toolId

@@ -23583,8 +23583,10 @@ var MainPage = React.createClass({displayName: "MainPage",
 	handleRouteChange: function (route) {
 		this.setState({route: route});
 	},
-	handleNotificationClick: function (toolId) {
-		console.log(toolId);
+	handleNotificationClick: function (notification, toolId) {
+		notifications.shift(notification);
+		$.post('notifications/read', {id: notification.id});
+
 		this.setState({
 			route: 'Software',
 			toolId: toolId
@@ -23722,7 +23724,7 @@ var NotificationsList = React.createClass({
     			React.createElement("b", null, 
     				React.createElement("a", {href: "#", 
     					onClick: this.props.handleNotificationClick
-    						.bind(null, notification.tool_id)}, 
+    						.bind(null, notification, notification.tool_id)}, 
     					notification.tool
     				)
     			), ". ", React.createElement("br", null), 

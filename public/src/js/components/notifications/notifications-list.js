@@ -35,7 +35,7 @@ var NotificationsList = React.createClass({
     			<b>
     				<a href="#"
     					onClick={this.props.handleNotificationClick
-    						.bind(null, notification.tool_id)}>
+    						.bind(null, notification, notification.tool_id)}>
     					{notification.tool}
     				</a>
     			</b>. <br />

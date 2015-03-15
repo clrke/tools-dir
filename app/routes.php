@@ -297,3 +297,10 @@ Route::get('downloads/{id}', ['before' => 'auth', function ($id)
 
 	return Response::download(storage_path()."/downloads/$file");
 }]);
+
+Route::post('notifications/read', function ()
+{
+	$id = Input::get('id');
+
+	Notification::find($id)->update(['unread' => false]);
+});
