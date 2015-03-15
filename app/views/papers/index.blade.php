@@ -14,6 +14,7 @@
 			var users = {{ $users }}
 			var tools = {{ $tools }};
 			var authUser = {{ Auth::user() }};
+			var notifications = {{ Auth::user()->unreadNotifications }};
 		</script>
 		<script type="text/javascript" src="src/js/main.js"></script>
 	</body>

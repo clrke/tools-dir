@@ -3113,48 +3113,68 @@ function ref(obj, str) {
 
 module.exports = {
 	getItemsDisplay: function (items, displayAttr1, displayAttr2) {
-		items2 = [];
+		var items2 = [];
 
 		items.forEach(function (item) {
 			if(displayAttr2) {
-				items2.push({
-					value: ref(item, displayAttr1) +
-						" (" + ref(item, displayAttr2) + ")"
-				});
+				items2.push(ref(item, displayAttr1) +
+					" (" + ref(item, displayAttr2) + ")"
+				);
 			} else {
-				items2.push({
-					value: ref(item, displayAttr1)
-				});
+				items2.push(
+					ref(item, displayAttr1)
+				);
 			}
 		});
 
 		return items2;
 	},
-	format1: function (items, displayAttr) {
-		var items2 = this.getItemsDisplay(items, displayAttr);
+	format0: function (items, maximum) {
+		if(maximum == undefined)
+			maximum = 2;
 
 		if(items.length === 0) {
 			return "0";
 		} else if(items.length == 1) {
-			return items2[0].value;
-		} else if(items2.length == 2) {
-			return items2[0].value +
-				" and " + items2[1].value;
-		} else if(items2.length == 3) {
-			return items2[0].value +
-				", " + items2[1].value +
+			return items[0];
+		} else if(items.length <= maximum) {
+			var middleItems = "";
+
+			for (var i = 1; i < maximum-1 && i < items.length-1; i++) {
+				middleItems += ", " + items[i];
+			}
+			return items[0] + middleItems +
+				" and " + items[items.length-1];
+
+		} else if(items.length == maximum+1) {
+			var middleItems = "";
+
+			for (var i = 1; i < maximum; i++) {
+				middleItems += ", " + items[i];
+			}
+			return items[0] + middleItems +
 				" and another";
 		} else {
-			return items2[0].value +
-				", " + items2[1].value +
-				" and " + (items2.length - 2) + " others";
+			var middleItems = "";
+
+			for (var i = 1; i < maximum; i++) {
+				middleItems += ", " + items[i];
+			}
+			return items[0] + middleItems +
+				" and " + (items.length - 2) + " others";
 		}
 	},
-	format2: function (items, displayAttr1, displayAttr2) {
-		return this.format1(
+	format1: function (items, displayAttr, maximum) {
+		return this.format0(
+			this.getItemsDisplay(
+				items, displayAttr
+			), maximum);
+	},
+	format2: function (items, displayAttr1, displayAttr2, maximum) {
+		return this.format0(
 			this.getItemsDisplay(
 				items, displayAttr1, displayAttr2
-			), 'value');
+			), maximum);
 	}
 }
 
@@ -23546,6 +23566,7 @@ var Modal = require('./modals/modal');
 var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
 var UsersList = require('./users/users-list');
+var NotificationsList = require('./notifications/notifications-list');
 
 var MainPage = React.createClass({displayName: "MainPage",
 	getInitialState: function () {
@@ -23573,6 +23594,9 @@ var MainPage = React.createClass({displayName: "MainPage",
 			case 'Users':
 				items = users;
 				break;
+			case 'Notifications':
+				items = notifications;
+				break;
 			default:
 				items = tools;
 				break;
@@ -23593,6 +23617,10 @@ var MainPage = React.createClass({displayName: "MainPage",
 			case 'Users':
 				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5, 
 					setModalContents: this.setModalContents});
+				break;
+			case 'Notifications':
+				page = React.createElement(NotificationsList, {notification: queriedItems, 
+					pageLength: 5});
 				break;
 			default:
 				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5, 
@@ -23621,7 +23649,7 @@ React.render(
 
 $(document).foundation();
 
-},{"./modals/modal":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/modal.js","./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","./users/users-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/modal.js":[function(require,module,exports){
+},{"./modals/modal":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/modal.js","./notifications/notifications-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/notifications/notifications-list.js","./tools/tools-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/tools/tools-list.js","./topbars/topbar":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/topbars/topbar.js","./users/users-list":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/modal.js":[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 
@@ -23647,7 +23675,39 @@ var Modal = React.createClass({
 
 module.exports = Modal;
 
-},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js":[function(require,module,exports){
+},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/notifications/notifications-list.js":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var moment = require('moment');
+var prettyLists = require('pretty-lists');
+
+var NotificationsList = React.createClass({
+    displayName: 'NotificationsList',
+    createLi: function (notification) {
+    	return (
+    		React.createElement("div", {className: "panel white tool", key: notification.id}, 
+    			React.createElement("b", null, " ", notification.doer_name, " "), 
+    			prettyLists.format0(notification.verbs, 4), 
+    			React.createElement("b", null, " ", notification.tool, " "), ". ", React.createElement("br", null), 
+    			moment(notification.updated_at).fromNow()
+    		)
+    	);
+    },
+    render: function () {
+        return (
+        	React.createElement("div", {className: "column small-12 animated fadeInDown"}, 
+	            React.createElement("div", {className: "panel white"}, 
+	            	React.createElement("h1", null, "Notifications"), 
+            		notifications.map(this.createLi, this)
+	           	)
+           	)
+        );
+    }
+});
+
+module.exports = NotificationsList;
+
+},{"moment":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/moment/moment.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js":[function(require,module,exports){
 var React = require('react/addons');
 
 ToolsPagination = React.createClass({displayName: "ToolsPagination",
@@ -24219,6 +24279,9 @@ TopBar = React.createClass({displayName: "TopBar",
 		user: React.PropTypes.object,
 		route: React.PropTypes.string.isRequired,
 	},
+	unread: function (notification) {
+		return notification.unread == 1;
+	},
 	render: function () {
 		var handleRouteChange = this.state.handleRouteChange;
 		var classSet = React.addons.classSet;
@@ -24227,6 +24290,9 @@ TopBar = React.createClass({displayName: "TopBar",
 		});
 		var softwareClassSet = classSet({
 			'active': this.props.route == 'Software'
+		});
+		var notificationsClassSet = classSet({
+			'active': this.props.route == 'Notifications'
 		});
 		return (
 			React.createElement("div", {className: "fixed"}, 
@@ -24243,6 +24309,14 @@ TopBar = React.createClass({displayName: "TopBar",
 					), 
 					React.createElement("section", {className: "top-bar-section"}, 
 						React.createElement("ul", {className: "right"}, 
+							React.createElement("li", {className: notificationsClassSet}, 
+								React.createElement("a", {href: "#", onClick: handleRouteChange.bind(null, 'Notifications')}, 
+									"Notifications  ", 
+									React.createElement("span", {className: "round alert label"}, 
+										notifications.filter(this.unread).length
+									)
+								)
+							), 
 							React.createElement("li", {className: "has-dropdown"}, 
 								React.createElement("a", {href: "#"}, this.props.user.name), 
 								React.createElement("ul", {className: "dropdown"}, 

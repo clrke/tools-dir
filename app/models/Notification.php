@@ -6,7 +6,10 @@ class Notification extends Eloquent {
 		'download_id', 'comment_id', 'updated_at'
 	];
 
-	protected $appends = ['user_id', 'tool_id'];
+	protected $appends = [
+		'user_id', 'tool_id',
+		'doer_name', 'verbs', 'tool'
+	];
 
 	public function getUserIdAttribute()
 	{
@@ -29,6 +32,29 @@ class Notification extends Eloquent {
 			return $this->download()->tool_id;
 		if($this->comment_id != 0)
 			return $this->comment()->tool_id;
+	}
+	public function getDoerNameAttribute()
+	{
+		return User::find($this->user_id)->name;
+	}
+	public function getVerbsAttribute()
+	{
+		$verbs = [];
+
+		if($this->vote_id != 0)
+			array_push($verbs, "upvoted");
+		if($this->view_id != 0)
+			array_push($verbs, "viewed");
+		if($this->download_id != 0)
+			array_push($verbs, "downloaded");
+		if($this->comment_id != 0)
+			array_push($verbs, "commented on");
+
+		return $verbs;
+	}
+	public function getToolAttribute()
+	{
+		return Tool::find($this->tool_id)->title;
 	}
 	public function receiver()
 	{

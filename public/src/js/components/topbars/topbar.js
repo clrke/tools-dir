@@ -13,6 +13,9 @@ TopBar = React.createClass({
 		user: React.PropTypes.object,
 		route: React.PropTypes.string.isRequired,
 	},
+	unread: function (notification) {
+		return notification.unread == 1;
+	},
 	render: function () {
 		var handleRouteChange = this.state.handleRouteChange;
 		var classSet = React.addons.classSet;
@@ -21,6 +24,9 @@ TopBar = React.createClass({
 		});
 		var softwareClassSet = classSet({
 			'active': this.props.route == 'Software'
+		});
+		var notificationsClassSet = classSet({
+			'active': this.props.route == 'Notifications'
 		});
 		return (
 			<div className="fixed">
@@ -37,6 +43,14 @@ TopBar = React.createClass({
 					</ul>
 					<section className="top-bar-section">
 						<ul className="right">
+							<li className={notificationsClassSet}>
+								<a href="#" onClick={handleRouteChange.bind(null, 'Notifications')}>
+									Notifications &nbsp;
+									<span className="round alert label">
+										{notifications.filter(this.unread).length}
+									</span>
+								</a>
+							</li>
 							<li className="has-dropdown">
 								<a href="#">{this.props.user.name}</a>
 								<ul className="dropdown">

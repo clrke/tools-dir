@@ -5,6 +5,7 @@ var Modal = require('./modals/modal');
 var TopBar = require('./topbars/topbar');
 var ToolsList = require('./tools/tools-list');
 var UsersList = require('./users/users-list');
+var NotificationsList = require('./notifications/notifications-list');
 
 var MainPage = React.createClass({
 	getInitialState: function () {
@@ -32,6 +33,9 @@ var MainPage = React.createClass({
 			case 'Users':
 				items = users;
 				break;
+			case 'Notifications':
+				items = notifications;
+				break;
 			default:
 				items = tools;
 				break;
@@ -52,6 +56,10 @@ var MainPage = React.createClass({
 			case 'Users':
 				page = <UsersList users={queriedItems} pageLength={5}
 					setModalContents={this.setModalContents}/>;
+				break;
+			case 'Notifications':
+				page = <NotificationsList notification={queriedItems}
+					pageLength={5} />;
 				break;
 			default:
 				page = <ToolsList tools={queriedItems} pageLength={5}
