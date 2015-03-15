@@ -3,11 +3,28 @@ var React = require('react');
 var moment = require('moment');
 var prettyLists = require('pretty-lists');
 
+var Pagination = require('../pagination/pagination');
+
 var NotificationsList = React.createClass({
     displayName: 'NotificationsList',
+    getInitialState: function () {
+        return {
+            page: 1,
+        };
+    },
     propTypes: {
         notifications: React.PropTypes.array.isRequired,
+        pageLength: React.PropTypes.number,
         handleNotificationClick: React.PropTypes.func.isRequired
+    },
+    handlePrev: function () {
+        this.setState({page: this.state.page-1, pageChange: -1});
+    },
+    handleNext: function () {
+        this.setState({page: this.state.page+1, pageChange: 1});
+    },
+    handleSkip: function (page) {
+        this.setState({page: page, pageChange: page-this.state.page});
     },
     createLi: function (notification) {
     	return (
@@ -27,11 +44,21 @@ var NotificationsList = React.createClass({
     	);
     },
     render: function () {
+        var pageCount = Math.ceil(this.props.notifications.length/this.props.pageLength);
         return (
         	<div className="column small-12 animated fadeInDown">
 	            <div className="panel white">
-	            	<h1>Notifications</h1>
-            		{this.props.notifications.map(this.createLi, this)}
+                    <Pagination
+                        prev={this.handlePrev}
+                        next={this.handleNext}
+                        skip={this.handleSkip}
+                        page={this.state.page}
+                        pageCount={pageCount}/>
+
+                        {this.props.notifications.slice(
+                            this.props.pageLength*(this.state.page-1),
+                            this.props.pageLength*this.state.page
+                        ).map(this.createLi, this)}
 	           	</div>
            	</div>
         );
