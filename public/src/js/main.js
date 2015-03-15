@@ -23764,26 +23764,36 @@ var NotificationsList = React.createClass({
             this.props.pageLength*this.state.page
         );
 
-        return (
-        	React.createElement("div", {className: "column small-12 animated fadeInDown"}, 
-	            React.createElement("div", {className: "panel white"}, 
-                    React.createElement(Pagination, {
-                        prev: this.handlePrev, 
-                        next: this.handleNext, 
-                        skip: this.handleSkip, 
-                        page: this.state.page, 
-                        pageCount: pageCount}), 
+        if(pageNotifications.length) {
+            return (
+            	React.createElement("div", {className: "column small-12 animated fadeInDown"}, 
+    	            React.createElement("div", {className: "panel white"}, 
+                        React.createElement(Pagination, {
+                            prev: this.handlePrev, 
+                            next: this.handleNext, 
+                            skip: this.handleSkip, 
+                            page: this.state.page, 
+                            pageCount: pageCount}), 
 
-                    React.createElement("button", {className: "button small primary margin-fix", 
-                        onClick: this.props.handleNotificationsClick
-                            .bind(null, pageNotifications)}, 
-                        "Mark All as Read"
-                    ), 
+                        React.createElement("button", {className: "button small primary margin-fix", 
+                            onClick: this.props.handleNotificationsClick
+                                .bind(null, pageNotifications)}, 
+                            "Mark All as Read"
+                        ), 
 
-                    pageNotifications.map(this.createLi, this)
-	           	)
-           	)
-        );
+                        pageNotifications.map(this.createLi, this)
+    	           	)
+               	)
+            );
+        } else {
+            return (
+                React.createElement("div", {className: "column small-12 animated fadeInDown"}, 
+                    React.createElement("div", {className: "panel white"}, 
+                        React.createElement("h1", null, " No notifications ")
+                    )
+                )
+            );
+        }
     }
 });
 

@@ -60,26 +60,36 @@ var NotificationsList = React.createClass({
             this.props.pageLength*this.state.page
         );
 
-        return (
-        	<div className="column small-12 animated fadeInDown">
-	            <div className="panel white">
-                    <Pagination
-                        prev={this.handlePrev}
-                        next={this.handleNext}
-                        skip={this.handleSkip}
-                        page={this.state.page}
-                        pageCount={pageCount}/>
+        if(pageNotifications.length) {
+            return (
+            	<div className="column small-12 animated fadeInDown">
+    	            <div className="panel white">
+                        <Pagination
+                            prev={this.handlePrev}
+                            next={this.handleNext}
+                            skip={this.handleSkip}
+                            page={this.state.page}
+                            pageCount={pageCount}/>
 
-                    <button className="button small primary margin-fix"
-                        onClick={this.props.handleNotificationsClick
-                            .bind(null, pageNotifications)}>
-                        Mark All as Read
-                    </button>
+                        <button className="button small primary margin-fix"
+                            onClick={this.props.handleNotificationsClick
+                                .bind(null, pageNotifications)}>
+                            Mark All as Read
+                        </button>
 
-                    {pageNotifications.map(this.createLi, this)}
-	           	</div>
-           	</div>
-        );
+                        {pageNotifications.map(this.createLi, this)}
+    	           	</div>
+               	</div>
+            );
+        } else {
+            return (
+                <div className="column small-12 animated fadeInDown">
+                    <div className="panel white">
+                        <h1> No notifications </h1>
+                    </div>
+                </div>
+            );
+        }
     }
 });
 
