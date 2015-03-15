@@ -15,7 +15,8 @@ var NotificationsList = React.createClass({
     propTypes: {
         notifications: React.PropTypes.array.isRequired,
         pageLength: React.PropTypes.number,
-        handleNotificationClick: React.PropTypes.func.isRequired
+        handleToolClick: React.PropTypes.func.isRequired,
+        handleNotificationClick: React.PropTypes.func.isRequired,
     },
     handlePrev: function () {
         this.setState({page: this.state.page-1, pageChange: -1});
@@ -28,18 +29,26 @@ var NotificationsList = React.createClass({
     },
     createLi: function (notification) {
     	return (
-    		<div className="panel white tool" key={notification.id}>
+    		<div className="panel white tool animated fadeIn" key={notification.id}>
     			<b> {notification.doer_name} </b>
     			{prettyLists.format0(notification.verbs, 4)}
     			&nbsp;
     			<b>
     				<a href="#"
-    					onClick={this.props.handleNotificationClick
+    					onClick={this.props.handleToolClick
     						.bind(null, notification, notification.tool_id)}>
     					{notification.tool}
     				</a>
     			</b>. <br />
-    			{moment(notification.updated_at).fromNow()}
+                {moment(notification.updated_at).fromNow()}
+                &nbsp;
+                [
+                    <a href="#"
+                        onClick={this.props.handleNotificationClick
+                            .bind(null, notification)}>
+                        mark as read
+                    </a>
+                ]
     		</div>
     	);
     },

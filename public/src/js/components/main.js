@@ -22,14 +22,19 @@ var MainPage = React.createClass({
 	handleRouteChange: function (route) {
 		this.setState({route: route});
 	},
-	handleNotificationClick: function (notification, toolId) {
-		notifications.shift(notification);
-		$.post('notifications/read', {id: notification.id});
+	handleToolClick: function (notification, toolId) {
+		this.handleNotificationClick(notification);
 
 		this.setState({
 			route: 'Software',
 			toolId: toolId
 		});
+	},
+	handleNotificationClick: function (notification) {
+		notifications.shift(notification);
+		$.post('notifications/read', {id: notification.id});
+
+		this.setState({notifications: notifications});
 	},
 	setModalContents: function (title, contents) {
 		this.setState({modalTitle: title, modalContents: contents});
@@ -68,6 +73,7 @@ var MainPage = React.createClass({
 				break;
 			case 'Notifications':
 				page = <NotificationsList notifications={queriedItems}
+					handleToolClick={this.handleToolClick}
 					handleNotificationClick={this.handleNotificationClick}
 					pageLength={5} />;
 				break;

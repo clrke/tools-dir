@@ -23583,14 +23583,19 @@ var MainPage = React.createClass({displayName: "MainPage",
 	handleRouteChange: function (route) {
 		this.setState({route: route});
 	},
-	handleNotificationClick: function (notification, toolId) {
-		notifications.shift(notification);
-		$.post('notifications/read', {id: notification.id});
+	handleToolClick: function (notification, toolId) {
+		this.handleNotificationClick(notification);
 
 		this.setState({
 			route: 'Software',
 			toolId: toolId
 		});
+	},
+	handleNotificationClick: function (notification) {
+		notifications.shift(notification);
+		$.post('notifications/read', {id: notification.id});
+
+		this.setState({notifications: notifications});
 	},
 	setModalContents: function (title, contents) {
 		this.setState({modalTitle: title, modalContents: contents});
@@ -23629,6 +23634,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 				break;
 			case 'Notifications':
 				page = React.createElement(NotificationsList, {notifications: queriedItems, 
+					handleToolClick: this.handleToolClick, 
 					handleNotificationClick: this.handleNotificationClick, 
 					pageLength: 5});
 				break;
@@ -23704,7 +23710,8 @@ var NotificationsList = React.createClass({
     propTypes: {
         notifications: React.PropTypes.array.isRequired,
         pageLength: React.PropTypes.number,
-        handleNotificationClick: React.PropTypes.func.isRequired
+        handleToolClick: React.PropTypes.func.isRequired,
+        handleNotificationClick: React.PropTypes.func.isRequired,
     },
     handlePrev: function () {
         this.setState({page: this.state.page-1, pageChange: -1});
@@ -23717,18 +23724,26 @@ var NotificationsList = React.createClass({
     },
     createLi: function (notification) {
     	return (
-    		React.createElement("div", {className: "panel white tool", key: notification.id}, 
+    		React.createElement("div", {className: "panel white tool animated fadeIn", key: notification.id}, 
     			React.createElement("b", null, " ", notification.doer_name, " "), 
     			prettyLists.format0(notification.verbs, 4), 
     			" ", 
     			React.createElement("b", null, 
     				React.createElement("a", {href: "#", 
-    					onClick: this.props.handleNotificationClick
+    					onClick: this.props.handleToolClick
     						.bind(null, notification, notification.tool_id)}, 
     					notification.tool
     				)
     			), ". ", React.createElement("br", null), 
-    			moment(notification.updated_at).fromNow()
+                moment(notification.updated_at).fromNow(), 
+                " " + ' ' +
+                "[", 
+                    React.createElement("a", {href: "#", 
+                        onClick: this.props.handleNotificationClick
+                            .bind(null, notification)}, 
+                        "mark as read"
+                    ), 
+                "]"
     		)
     	);
     },
