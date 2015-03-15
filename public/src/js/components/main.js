@@ -22,6 +22,13 @@ var MainPage = React.createClass({
 	handleRouteChange: function (route) {
 		this.setState({route: route});
 	},
+	handleNotificationClick: function (toolId) {
+		console.log(toolId);
+		this.setState({
+			route: 'Software',
+			toolId: toolId
+		});
+	},
 	setModalContents: function (title, contents) {
 		this.setState({modalTitle: title, modalContents: contents});
 	},
@@ -59,11 +66,13 @@ var MainPage = React.createClass({
 				break;
 			case 'Notifications':
 				page = <NotificationsList notifications={queriedItems}
+					handleNotificationClick={this.handleNotificationClick}
 					pageLength={5} />;
 				break;
 			default:
 				page = <ToolsList tools={queriedItems} pageLength={5}
-					setModalContents={this.setModalContents}/>;
+					setModalContents={this.setModalContents}
+					toolId={this.state.toolId}/>;
 				break;
 		}
 

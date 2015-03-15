@@ -5,12 +5,23 @@ var prettyLists = require('pretty-lists');
 
 var NotificationsList = React.createClass({
     displayName: 'NotificationsList',
+    propTypes: {
+        notifications: React.PropTypes.array.isRequired,
+        handleNotificationClick: React.PropTypes.func.isRequired
+    },
     createLi: function (notification) {
     	return (
     		<div className="panel white tool" key={notification.id}>
     			<b> {notification.doer_name} </b>
     			{prettyLists.format0(notification.verbs, 4)}
-    			<b> {notification.tool} </b>. <br />
+    			&nbsp;
+    			<b>
+    				<a href="#"
+    					onClick={this.props.handleNotificationClick
+    						.bind(null, notification.tool_id)}>
+    					{notification.tool}
+    				</a>
+    			</b>. <br />
     			{moment(notification.updated_at).fromNow()}
     		</div>
     	);

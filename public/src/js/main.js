@@ -23583,6 +23583,13 @@ var MainPage = React.createClass({displayName: "MainPage",
 	handleRouteChange: function (route) {
 		this.setState({route: route});
 	},
+	handleNotificationClick: function (toolId) {
+		console.log(toolId);
+		this.setState({
+			route: 'Software',
+			toolId: toolId
+		});
+	},
 	setModalContents: function (title, contents) {
 		this.setState({modalTitle: title, modalContents: contents});
 	},
@@ -23620,11 +23627,13 @@ var MainPage = React.createClass({displayName: "MainPage",
 				break;
 			case 'Notifications':
 				page = React.createElement(NotificationsList, {notifications: queriedItems, 
+					handleNotificationClick: this.handleNotificationClick, 
 					pageLength: 5});
 				break;
 			default:
 				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5, 
-					setModalContents: this.setModalContents});
+					setModalContents: this.setModalContents, 
+					toolId: this.state.toolId});
 				break;
 		}
 
@@ -23683,12 +23692,23 @@ var prettyLists = require('pretty-lists');
 
 var NotificationsList = React.createClass({
     displayName: 'NotificationsList',
+    propTypes: {
+        notifications: React.PropTypes.array.isRequired,
+        handleNotificationClick: React.PropTypes.func.isRequired
+    },
     createLi: function (notification) {
     	return (
     		React.createElement("div", {className: "panel white tool", key: notification.id}, 
     			React.createElement("b", null, " ", notification.doer_name, " "), 
     			prettyLists.format0(notification.verbs, 4), 
-    			React.createElement("b", null, " ", notification.tool, " "), ". ", React.createElement("br", null), 
+    			" ", 
+    			React.createElement("b", null, 
+    				React.createElement("a", {href: "#", 
+    					onClick: this.props.handleNotificationClick
+    						.bind(null, notification.tool_id)}, 
+    					notification.tool
+    				)
+    			), ". ", React.createElement("br", null), 
     			moment(notification.updated_at).fromNow()
     		)
     	);
@@ -24167,9 +24187,29 @@ var ToolsPagination = require('../pagination/pagination');
 
 ToolsList = React.createClass({displayName: "ToolsList",
 	getInitialState: function () {
+		var tools = this.props.tools;
+		var tool = null;
+		var toolId = this.props.toolId;
+		var initialAnimation = true;
+		var page = 1;
+
+		if(toolId != null) {
+			for (var i = 0; i < tools.length; i++) {
+				console.log(toolId, tools[i].id);
+				if(tools[i].id == toolId) {
+					tool = tools[i];
+					initialAnimation = false;
+					page = Math.ceil((i+1)/this.props.pageLength);
+					break;
+				}
+			}
+		}
+
 		return {
-			tools: this.props.tools,
-			page: 1,
+			tool: tool,
+			tools: tools,
+			initialAnimation: initialAnimation,
+			page: page,
 			pageChange: 0
 		};
 	},
@@ -24237,12 +24277,18 @@ ToolsList = React.createClass({displayName: "ToolsList",
 
 		var pageCount = Math.ceil(this.props.tools.length/this.props.pageLength);
 
+		var classNames = React.addons.classSet({
+			"column medium-pull-6 medium-6 fixed-container": true,
+			"animated fadeInRight": this.state.initialAnimation,
+			"animated fadeIn": !this.state.initialAnimation,
+		});
+
 		return (
 			React.createElement("div", null, 
 				React.createElement("div", {className: "column medium-6 medium-push-6"}, 
 					currentTool
 				), 
-				React.createElement("div", {className: "column medium-pull-6 medium-6 animated fadeInRight fixed-container"}, 
+				React.createElement("div", {className: classNames}, 
 					React.createElement("div", {className: "panel white"}, 
 						React.createElement(ToolsPagination, {
 							prev: this.handlePrev, 

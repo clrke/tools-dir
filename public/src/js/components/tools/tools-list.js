@@ -7,9 +7,29 @@ var ToolsPagination = require('../pagination/pagination');
 
 ToolsList = React.createClass({
 	getInitialState: function () {
+		var tools = this.props.tools;
+		var tool = null;
+		var toolId = this.props.toolId;
+		var initialAnimation = true;
+		var page = 1;
+
+		if(toolId != null) {
+			for (var i = 0; i < tools.length; i++) {
+				console.log(toolId, tools[i].id);
+				if(tools[i].id == toolId) {
+					tool = tools[i];
+					initialAnimation = false;
+					page = Math.ceil((i+1)/this.props.pageLength);
+					break;
+				}
+			}
+		}
+
 		return {
-			tools: this.props.tools,
-			page: 1,
+			tool: tool,
+			tools: tools,
+			initialAnimation: initialAnimation,
+			page: page,
 			pageChange: 0
 		};
 	},
@@ -77,12 +97,18 @@ ToolsList = React.createClass({
 
 		var pageCount = Math.ceil(this.props.tools.length/this.props.pageLength);
 
+		var classNames = React.addons.classSet({
+			"column medium-pull-6 medium-6 fixed-container": true,
+			"animated fadeInRight": this.state.initialAnimation,
+			"animated fadeIn": !this.state.initialAnimation,
+		});
+
 		return (
 			<div>
 				<div className="column medium-6 medium-push-6">
 					{currentTool}
 				</div>
-				<div className="column medium-pull-6 medium-6 animated fadeInRight fixed-container">
+				<div className={classNames}>
 					<div className="panel white">
 						<ToolsPagination
 							prev={this.handlePrev}
