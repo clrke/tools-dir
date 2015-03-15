@@ -20,7 +20,7 @@ var NotificationsList = React.createClass({
         	<div className="column small-12 animated fadeInDown">
 	            <div className="panel white">
 	            	<h1>Notifications</h1>
-            		{notifications.map(this.createLi, this)}
+            		{this.props.notifications.map(this.createLi, this)}
 	           	</div>
            	</div>
         );

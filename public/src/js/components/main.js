@@ -58,7 +58,7 @@ var MainPage = React.createClass({
 					setModalContents={this.setModalContents}/>;
 				break;
 			case 'Notifications':
-				page = <NotificationsList notification={queriedItems}
+				page = <NotificationsList notifications={queriedItems}
 					pageLength={5} />;
 				break;
 			default:

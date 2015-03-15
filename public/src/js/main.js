@@ -23619,7 +23619,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 					setModalContents: this.setModalContents});
 				break;
 			case 'Notifications':
-				page = React.createElement(NotificationsList, {notification: queriedItems, 
+				page = React.createElement(NotificationsList, {notifications: queriedItems, 
 					pageLength: 5});
 				break;
 			default:
@@ -23698,7 +23698,7 @@ var NotificationsList = React.createClass({
         	React.createElement("div", {className: "column small-12 animated fadeInDown"}, 
 	            React.createElement("div", {className: "panel white"}, 
 	            	React.createElement("h1", null, "Notifications"), 
-            		notifications.map(this.createLi, this)
+            		this.props.notifications.map(this.createLi, this)
 	           	)
            	)
         );
