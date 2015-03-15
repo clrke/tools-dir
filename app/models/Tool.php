@@ -22,7 +22,7 @@ class Tool extends Eloquent {
 	public function voters()
 	{
 		return $this->belongsToMany('User', 'votes')
-			->withPivot('is_positive')
+			->withPivot('id', 'is_positive')
 			->orderBy('votes.updated_at', 'desc');
 	}
 	public function upvoters()
@@ -36,12 +36,13 @@ class Tool extends Eloquent {
 	public function viewers()
 	{
 		return $this->belongsToMany('User', 'views')
-			->withPivot('count')->orderBy('count', 'desc');
+			->withPivot('id', 'count')->orderBy('count', 'desc');
 	}
 	public function downloads()
 	{
 		return $this->belongsToMany('User', 'downloads')
-			->withPivot('created_at')->orderBy('created_at', 'desc');
+			->withPivot('id', 'created_at')
+			->orderBy('created_at', 'desc');
 	}
 	public function downloaders()
 	{
@@ -51,7 +52,8 @@ class Tool extends Eloquent {
 	public function comments()
 	{
 		return $this->belongsToMany('User', 'comments')
-			->withPivot('text')->orderBy('comments.id');
+			->withPivot('id', 'text')
+			->orderBy('comments.id');
 	}
 	public function commenters()
 	{

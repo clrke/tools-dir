@@ -211,6 +211,13 @@ Route::post('/vote/{id}', function ($id)
 		$vote = $tool->voters()->whereUserId($user->id)->first();
 	}
 
+	foreach(User::whereRole(1)->get() as $admin) {
+		$admin->notificationFor($user->id, $tool->id)->update([
+			'vote_id' => $vote->pivot->id,
+			'updated_at' => Carbon\Carbon::now()
+		]);
+	}
+
 	return $vote->pivot;
 });
 
@@ -231,9 +238,17 @@ Route::post('view/{id}', function ($id)
 			'created_at' => Carbon\Carbon::now(),
 			'updated_at' => Carbon\Carbon::now()
 		]);
+		$view = $tool->viewers()->whereUserId($user->id)->first();
 	}
 
-	return $view;
+	foreach(User::whereRole(1)->get() as $admin) {
+		$admin->notificationFor($user->id, $tool->id)->update([
+			'view_id' => $view->pivot->id,
+			'updated_at' => Carbon\Carbon::now()
+		]);
+	}
+
+	return $view->pivot;
 });
 
 Route::post('comment/{id}', function ($id)
@@ -247,6 +262,16 @@ Route::post('comment/{id}', function ($id)
 		'updated_at' => Carbon\Carbon::now()
 	]);
 
+	$comment = $tool->comments()->whereUserId($user->id)
+		->orderBy('id', 'desc')->first();
+
+	foreach(User::whereRole(1)->get() as $admin) {
+		$admin->notificationFor($user->id, $tool->id)->update([
+			'comment_id' => $comment->pivot->id,
+			'updated_at' => Carbon\Carbon::now()
+		]);
+	}
+
 	return $tool->comments;
 });
 
@@ -254,11 +279,21 @@ Route::get('downloads/{id}', ['before' => 'auth', function ($id)
 {
 	$tool = Tool::findOrFail($id);
 	$file = $tool->file;
+	$user = Auth::user();
 
-	$tool->downloads()->attach(Auth::user(), [
+	$tool->downloads()->attach($user, [
 		'created_at' => Carbon\Carbon::now(),
 		'updated_at' => Carbon\Carbon::now()
 	]);
+
+	$download = $tool->downloads()->whereUserId($user->id)->first();
+
+	foreach(User::whereRole(1)->get() as $admin) {
+		$admin->notificationFor($user->id, $tool->id)->update([
+			'download_id' => $download->pivot->id,
+			'updated_at' => Carbon\Carbon::now()
+		]);
+	}
 
 	return Response::download(storage_path()."/downloads/$file");
 }]);

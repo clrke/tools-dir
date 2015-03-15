@@ -91,4 +91,29 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Tool', 'comments')
 			->distinct('pivot_user_id');
 	}
+	public function notifications()
+	{
+		return $this->hasMany('Notification', 'receiver_id')
+			->orderBy('id', 'desc');
+	}
+	public function notificationFor($user_id, $tool_id)
+	{
+		$notifications = $this->notifications()
+			->whereUnread(true)->get();
+
+		foreach($notifications as $notification) {
+			if($notification->user_id == $user_id &&
+				$notification->tool_id == $tool_id)
+					return $notification;
+		}
+
+		return Notification::create([
+			'vote_id' => 0,
+			'view_id' => 0,
+			'download_id' => 0,
+			'comment_id' => 0,
+			'unread' => true,
+			'receiver_id' => $this->id
+		]);
+	}
 }
