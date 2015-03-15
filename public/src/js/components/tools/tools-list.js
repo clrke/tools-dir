@@ -15,7 +15,6 @@ ToolsList = React.createClass({
 
 		if(toolId != null) {
 			for (var i = 0; i < tools.length; i++) {
-				console.log(toolId, tools[i].id);
 				if(tools[i].id == toolId) {
 					tool = tools[i];
 					initialAnimation = false;
