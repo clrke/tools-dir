@@ -86,3 +86,7 @@ form.margin-fix select {
 form.margin-fix div {
 	margin-bottom: 1rem;
 }
+
+.button.margin-fix {
+	margin-bottom: 0px;
+}

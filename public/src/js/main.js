@@ -23597,6 +23597,14 @@ var MainPage = React.createClass({displayName: "MainPage",
 
 		this.setState({notifications: notifications});
 	},
+	handleNotificationsClick: function (notifs) {
+		notifs.forEach(function (notification) {
+			notifications.shift(notification);
+			$.post('notifications/read', {id: notification.id});
+		});
+
+		this.setState({notifications: notifications});
+	},
 	setModalContents: function (title, contents) {
 		this.setState({modalTitle: title, modalContents: contents});
 	},
@@ -23636,6 +23644,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 				page = React.createElement(NotificationsList, {notifications: queriedItems, 
 					handleToolClick: this.handleToolClick, 
 					handleNotificationClick: this.handleNotificationClick, 
+					handleNotificationsClick: this.handleNotificationsClick, 
 					pageLength: 5});
 				break;
 			default:
@@ -23712,6 +23721,7 @@ var NotificationsList = React.createClass({
         pageLength: React.PropTypes.number,
         handleToolClick: React.PropTypes.func.isRequired,
         handleNotificationClick: React.PropTypes.func.isRequired,
+        handleNotificationsClick: React.PropTypes.func.isRequired,
     },
     handlePrev: function () {
         this.setState({page: this.state.page-1, pageChange: -1});
@@ -23749,6 +23759,11 @@ var NotificationsList = React.createClass({
     },
     render: function () {
         var pageCount = Math.ceil(this.props.notifications.length/this.props.pageLength);
+        var pageNotifications = this.props.notifications.slice(
+            this.props.pageLength*(this.state.page-1),
+            this.props.pageLength*this.state.page
+        );
+
         return (
         	React.createElement("div", {className: "column small-12 animated fadeInDown"}, 
 	            React.createElement("div", {className: "panel white"}, 
@@ -23759,10 +23774,13 @@ var NotificationsList = React.createClass({
                         page: this.state.page, 
                         pageCount: pageCount}), 
 
-                        this.props.notifications.slice(
-                            this.props.pageLength*(this.state.page-1),
-                            this.props.pageLength*this.state.page
-                        ).map(this.createLi, this)
+                    React.createElement("button", {className: "button small primary margin-fix", 
+                        onClick: this.props.handleNotificationsClick
+                            .bind(null, pageNotifications)}, 
+                        "Mark All as Read"
+                    ), 
+
+                    pageNotifications.map(this.createLi, this)
 	           	)
            	)
         );

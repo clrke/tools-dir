@@ -17,6 +17,7 @@ var NotificationsList = React.createClass({
         pageLength: React.PropTypes.number,
         handleToolClick: React.PropTypes.func.isRequired,
         handleNotificationClick: React.PropTypes.func.isRequired,
+        handleNotificationsClick: React.PropTypes.func.isRequired,
     },
     handlePrev: function () {
         this.setState({page: this.state.page-1, pageChange: -1});
@@ -54,6 +55,11 @@ var NotificationsList = React.createClass({
     },
     render: function () {
         var pageCount = Math.ceil(this.props.notifications.length/this.props.pageLength);
+        var pageNotifications = this.props.notifications.slice(
+            this.props.pageLength*(this.state.page-1),
+            this.props.pageLength*this.state.page
+        );
+
         return (
         	<div className="column small-12 animated fadeInDown">
 	            <div className="panel white">
@@ -64,10 +70,13 @@ var NotificationsList = React.createClass({
                         page={this.state.page}
                         pageCount={pageCount}/>
 
-                        {this.props.notifications.slice(
-                            this.props.pageLength*(this.state.page-1),
-                            this.props.pageLength*this.state.page
-                        ).map(this.createLi, this)}
+                    <button className="button small primary margin-fix"
+                        onClick={this.props.handleNotificationsClick
+                            .bind(null, pageNotifications)}>
+                        Mark All as Read
+                    </button>
+
+                    {pageNotifications.map(this.createLi, this)}
 	           	</div>
            	</div>
         );

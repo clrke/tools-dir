@@ -36,6 +36,14 @@ var MainPage = React.createClass({
 
 		this.setState({notifications: notifications});
 	},
+	handleNotificationsClick: function (notifs) {
+		notifs.forEach(function (notification) {
+			notifications.shift(notification);
+			$.post('notifications/read', {id: notification.id});
+		});
+
+		this.setState({notifications: notifications});
+	},
 	setModalContents: function (title, contents) {
 		this.setState({modalTitle: title, modalContents: contents});
 	},
@@ -75,6 +83,7 @@ var MainPage = React.createClass({
 				page = <NotificationsList notifications={queriedItems}
 					handleToolClick={this.handleToolClick}
 					handleNotificationClick={this.handleNotificationClick}
+					handleNotificationsClick={this.handleNotificationsClick}
 					pageLength={5} />;
 				break;
 			default:
