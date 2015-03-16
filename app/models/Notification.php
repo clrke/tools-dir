@@ -48,7 +48,7 @@ class Notification extends Eloquent {
 		if($this->download_id != 0)
 			array_push($verbs, "downloaded");
 		if($this->comment_id != 0)
-			array_push($verbs, "commented on");
+			array_push($verbs, "wrote a suggestion on");
 
 		return $verbs;
 	}
