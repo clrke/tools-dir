@@ -23906,7 +23906,7 @@ ToolStats = React.createClass({displayName: "ToolStats",
 				React.createElement("form", {onSubmit: this.handleSubmit}, 
 					React.createElement("input", {type: "text", ref: "comment", 
 						className: "write comment", 
-						placeholder: "Write a comment..."})
+						placeholder: "Write a suggestion..."})
 				)
 			)
 		)

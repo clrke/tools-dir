@@ -39,7 +39,7 @@ ToolStats = React.createClass({
 				<form onSubmit={this.handleSubmit}>
 					<input type="text" ref="comment"
 						className="write comment"
-						placeholder="Write a comment..."/>
+						placeholder="Write a suggestion..."/>
 				</form>
 			</div>
 		)
