@@ -24532,7 +24532,8 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("hr", null), 
 				user.gender, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
 				user.email, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
-				user.occupation, 
+				user.occupation, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
+				user.affiliation, 
 				React.createElement("hr", null), 
 				this.getAbout()
 			)

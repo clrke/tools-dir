@@ -67,6 +67,12 @@
 					@endif
 					</div>
 					<div>
+					{{ Form::text('affiliation', $input? $input->affiliation: null, ['placeholder' => 'Affiliation']) }}
+					@if($errors->first('affiliation'))
+						<small class="error">{{$errors->first('affiliation')}}</small>
+					@endif
+					</div>
+					<div>
 					{{ Form::textarea('about', $input? $input->about: null, ['placeholder' => 'Write something about you (e.g. degree, interests)']) }}
 					@if($errors->first('about'))
 						<small class="error">{{$errors->first('about')}}</small>

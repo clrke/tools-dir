@@ -47,7 +47,8 @@ var UserRow = React.createClass({
 				<hr />
 				{user.gender} <i className="fa fa-ellipsis-v" />
 				{user.email} <i className="fa fa-ellipsis-v" />
-				{user.occupation}
+				{user.occupation} <i className="fa fa-ellipsis-v" />
+				{user.affiliation}
 				<hr />
 				{this.getAbout()}
 			</div>
