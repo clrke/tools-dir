@@ -59,16 +59,16 @@ TopBar = React.createClass({
 										<li><a href="/tools/create">New Tool</a></li> :
 										null
 									}
-									{
-										this.props.user.role == 1 ?
-										<li className={softwareClassSet}>
-											<a href="#software"
-												onClick={handleRouteChange.bind(null, 'Software')}>
-												Manage Software
-											</a>
-										</li> :
-										null
-									}
+									<li className={softwareClassSet}>
+										<a href="#software"
+											onClick={handleRouteChange.bind(null, 'Software')}>
+											{
+												this.props.user.role == 1 ?
+													'Manage Software' :
+													'View Software'
+											}
+										</a>
+									</li>
 									{
 										this.props.user.role == 1 ?
 										<li className={usersClassSet}>

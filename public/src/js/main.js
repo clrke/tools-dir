@@ -24442,16 +24442,16 @@ TopBar = React.createClass({displayName: "TopBar",
 										React.createElement("li", null, React.createElement("a", {href: "/tools/create"}, "New Tool")) :
 										null, 
 									
-									
-										this.props.user.role == 1 ?
-										React.createElement("li", {className: softwareClassSet}, 
-											React.createElement("a", {href: "#software", 
-												onClick: handleRouteChange.bind(null, 'Software')}, 
-												"Manage Software"
-											)
-										) :
-										null, 
-									
+									React.createElement("li", {className: softwareClassSet}, 
+										React.createElement("a", {href: "#software", 
+											onClick: handleRouteChange.bind(null, 'Software')}, 
+											
+												this.props.user.role == 1 ?
+													'Manage Software' :
+													'View Software'
+											
+										)
+									), 
 									
 										this.props.user.role == 1 ?
 										React.createElement("li", {className: usersClassSet}, 
