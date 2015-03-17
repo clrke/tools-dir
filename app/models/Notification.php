@@ -3,7 +3,7 @@
 class Notification extends Eloquent {
 	protected $fillable = [
 		'unread', 'receiver_id', 'vote_id', 'view_id',
-		'download_id', 'comment_id', 'updated_at'
+		'download_id', 'comment_id', 'updated_at', 'registration_id'
 	];
 
 	protected $appends = [
@@ -21,6 +21,8 @@ class Notification extends Eloquent {
 			return $this->download()->user_id;
 		if($this->comment_id != 0)
 			return $this->comment()->user_id;
+		if($this->registration_id != 0)
+			return $this->registration_id;
 	}
 	public function getToolIdAttribute()
 	{
@@ -49,12 +51,16 @@ class Notification extends Eloquent {
 			array_push($verbs, "downloaded");
 		if($this->comment_id != 0)
 			array_push($verbs, "wrote a suggestion on");
+		if($this->registration_id != 0)
+			array_push($verbs, "has sent a registration request");
 
 		return $verbs;
 	}
 	public function getToolAttribute()
 	{
-		return Tool::find($this->tool_id)->title;
+		if($this->tool_id)
+			return Tool::find($this->tool_id)->title;
+		else return null;
 	}
 	public function receiver()
 	{

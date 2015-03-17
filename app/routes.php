@@ -94,7 +94,19 @@ Route::post('/register', function ()
 		'accepted' => 0
 	];
 
-	User::create($user);
+	$user = User::create($user);
+
+	foreach(User::whereRole(1)->get() as $admin) {
+		Notification::create([
+			'vote_id' => 0,
+			'view_id' => 0,
+			'download_id' => 0,
+			'comment_id' => 0,
+			'unread' => true,
+			'registration_id' => $user->id,
+			'receiver_id' => $admin->id
+		]);
+	}
 
 	return Redirect::to('/')->with('message', 'Successfully registered.');
 });

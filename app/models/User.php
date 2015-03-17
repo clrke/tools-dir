@@ -95,11 +95,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function unreadNotifications()
 	{
 		return $this->hasMany('Notification', 'receiver_id')
-			->whereUnread(true)->orderBy('updated_at', 'desc');
+			->whereUnread(true)
+			->orderBy('registration_id', 'desc')
+			->orderBy('updated_at', 'desc');
 	}
 	public function notifications()
 	{
 		return $this->hasMany('Notification', 'receiver_id')
+			->orderBy('registration_id', 'desc')
 			->orderBy('updated_at', 'desc');
 	}
 	public function notificationFor($user_id, $tool_id)

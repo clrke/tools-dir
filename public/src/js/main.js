@@ -23733,18 +23733,27 @@ var NotificationsList = React.createClass({
         this.setState({page: page, pageChange: page-this.state.page});
     },
     createLi: function (notification) {
+        var classNames = React.addons.classSet({
+            "panel tool animated fadeIn": true,
+            "white": notification.registration_id == 0,
+            "callout": notification.registration_id != 0
+        });
     	return (
-    		React.createElement("div", {className: "panel white tool animated fadeIn", key: notification.id}, 
+    		React.createElement("div", {className: classNames, key: notification.id}, 
     			React.createElement("b", null, " ", notification.doer_name, " "), 
     			prettyLists.format0(notification.verbs, 4), 
-    			" ", 
-    			React.createElement("b", null, 
-    				React.createElement("a", {href: "#", 
-    					onClick: this.props.handleToolClick
-    						.bind(null, notification, notification.tool_id)}, 
-    					notification.tool
-    				)
-    			), ". ", React.createElement("br", null), 
+                
+                    notification.tool != null ? (
+            			' '
+                    ) : null, 
+                
+                React.createElement("b", null, 
+                    React.createElement("a", {href: "#", 
+                        onClick: this.props.handleToolClick
+                            .bind(null, notification, notification.tool_id)}, 
+                        notification.tool
+                    )
+                ), ". ", React.createElement("br", null), 
                 moment(notification.updated_at).fromNow(), 
                 " " + ' ' +
                 "[", 
