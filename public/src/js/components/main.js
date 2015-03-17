@@ -84,6 +84,7 @@ var MainPage = React.createClass({
 					handleToolClick={this.handleToolClick}
 					handleNotificationClick={this.handleNotificationClick}
 					handleNotificationsClick={this.handleNotificationsClick}
+					setModalContents={this.setModalContents}
 					pageLength={5} />;
 				break;
 			default:

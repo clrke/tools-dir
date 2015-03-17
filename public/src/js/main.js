@@ -23645,6 +23645,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 					handleToolClick: this.handleToolClick, 
 					handleNotificationClick: this.handleNotificationClick, 
 					handleNotificationsClick: this.handleNotificationsClick, 
+					setModalContents: this.setModalContents, 
 					pageLength: 5});
 				break;
 			default:
@@ -23742,6 +23743,8 @@ var React = require('react');
 var moment = require('moment');
 var prettyLists = require('pretty-lists');
 
+var UserModalContents = require('../modals/user-modal-contents');
+
 var Pagination = require('../pagination/pagination');
 
 var NotificationsList = React.createClass({
@@ -23757,6 +23760,7 @@ var NotificationsList = React.createClass({
         handleToolClick: React.PropTypes.func.isRequired,
         handleNotificationClick: React.PropTypes.func.isRequired,
         handleNotificationsClick: React.PropTypes.func.isRequired,
+        setModalContents: React.PropTypes.func.isRequired,
     },
     handlePrev: function () {
         this.setState({page: this.state.page-1, pageChange: -1});
@@ -23767,28 +23771,48 @@ var NotificationsList = React.createClass({
     handleSkip: function (page) {
         this.setState({page: page, pageChange: page-this.state.page});
     },
+    profile: function profile(user) {
+        return (
+            React.createElement(UserModalContents, {user: user})
+        );
+    },
     createLi: function (notification) {
         var classNames = React.addons.classSet({
             "panel tool animated fadeIn": true,
             "white": notification.registration_id == 0,
             "callout": notification.registration_id != 0
         });
+
+        var user = notification.doer;
+
     	return (
     		React.createElement("div", {className: classNames, key: notification.id}, 
-    			React.createElement("b", null, " ", notification.doer_name, " "), 
+    			React.createElement("b", null, 
+                    React.createElement("a", {"data-reveal-id": "myModal", 
+                        onClick: this.props.setModalContents.bind(null,
+                            React.createElement("h2", null, " ", user.name, " ", React.createElement("small", null, user.username), " "),
+                            this.profile(user))}, 
+                        notification.doer.name
+                    )
+                ), " ", 
     			prettyLists.format0(notification.verbs, 4), 
                 
                     notification.tool != null ? (
             			' '
                     ) : null, 
                 
-                React.createElement("b", null, 
-                    React.createElement("a", {href: "#", 
-                        onClick: this.props.handleToolClick
-                            .bind(null, notification, notification.tool_id)}, 
-                        notification.tool
-                    )
-                ), ". ", React.createElement("br", null), 
+                
+                    notification.tool != null ? (
+                        React.createElement("b", null, 
+                            React.createElement("a", {href: "#", 
+                                onClick: this.props.handleToolClick
+                                    .bind(null, notification, notification.tool_id)}, 
+                                notification.tool.title
+                            )
+                        )
+                    ) : null, 
+                
+                ". ", React.createElement("br", null), 
                 moment(notification.updated_at).fromNow(), 
                 " " + ' ' +
                 "[", 
@@ -23843,7 +23867,7 @@ var NotificationsList = React.createClass({
 
 module.exports = NotificationsList;
 
-},{"../pagination/pagination":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js","moment":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/moment/moment.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js":[function(require,module,exports){
+},{"../modals/user-modal-contents":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/user-modal-contents.js","../pagination/pagination":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js","moment":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/moment/moment.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/pagination/pagination.js":[function(require,module,exports){
 var React = require('react/addons');
 
 ToolsPagination = React.createClass({displayName: "ToolsPagination",

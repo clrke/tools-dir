@@ -8,7 +8,7 @@ class Notification extends Eloquent {
 
 	protected $appends = [
 		'user_id', 'tool_id',
-		'doer_name', 'verbs', 'tool'
+		'doer', 'verbs', 'tool'
 	];
 
 	public function getUserIdAttribute()
@@ -35,9 +35,9 @@ class Notification extends Eloquent {
 		if($this->comment_id != 0)
 			return $this->comment()->tool_id;
 	}
-	public function getDoerNameAttribute()
+	public function getDoerAttribute()
 	{
-		return User::find($this->user_id)->name;
+		return User::find($this->user_id);
 	}
 	public function getVerbsAttribute()
 	{
@@ -59,7 +59,7 @@ class Notification extends Eloquent {
 	public function getToolAttribute()
 	{
 		if($this->tool_id)
-			return Tool::find($this->tool_id)->title;
+			return Tool::find($this->tool_id);
 		else return null;
 	}
 	public function receiver()

@@ -3,6 +3,8 @@ var React = require('react');
 var moment = require('moment');
 var prettyLists = require('pretty-lists');
 
+var UserModalContents = require('../modals/user-modal-contents');
+
 var Pagination = require('../pagination/pagination');
 
 var NotificationsList = React.createClass({
@@ -18,6 +20,7 @@ var NotificationsList = React.createClass({
         handleToolClick: React.PropTypes.func.isRequired,
         handleNotificationClick: React.PropTypes.func.isRequired,
         handleNotificationsClick: React.PropTypes.func.isRequired,
+        setModalContents: React.PropTypes.func.isRequired,
     },
     handlePrev: function () {
         this.setState({page: this.state.page-1, pageChange: -1});
@@ -28,28 +31,48 @@ var NotificationsList = React.createClass({
     handleSkip: function (page) {
         this.setState({page: page, pageChange: page-this.state.page});
     },
+    profile: function profile(user) {
+        return (
+            <UserModalContents user={user} />
+        );
+    },
     createLi: function (notification) {
         var classNames = React.addons.classSet({
             "panel tool animated fadeIn": true,
             "white": notification.registration_id == 0,
             "callout": notification.registration_id != 0
         });
+
+        var user = notification.doer;
+
     	return (
     		<div className={classNames} key={notification.id}>
-    			<b> {notification.doer_name} </b>
+    			<b>
+                    <a data-reveal-id="myModal"
+                        onClick={this.props.setModalContents.bind(null,
+                            <h2> {user.name} <small>{user.username}</small> </h2>,
+                            this.profile(user))}>
+                        {notification.doer.name}
+                    </a>
+                </b>&nbsp;
     			{prettyLists.format0(notification.verbs, 4)}
                 {
                     notification.tool != null ? (
             			' '
                     ) : null
                 }
-                <b>
-                    <a href="#"
-                        onClick={this.props.handleToolClick
-                            .bind(null, notification, notification.tool_id)}>
-                        {notification.tool}
-                    </a>
-                </b>. <br />
+                {
+                    notification.tool != null ? (
+                        <b>
+                            <a href="#"
+                                onClick={this.props.handleToolClick
+                                    .bind(null, notification, notification.tool_id)}>
+                                {notification.tool.title}
+                            </a>
+                        </b>
+                    ) : null
+                }
+                . <br />
                 {moment(notification.updated_at).fromNow()}
                 &nbsp;
                 [
