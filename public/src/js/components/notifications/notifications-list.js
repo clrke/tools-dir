@@ -36,6 +36,13 @@ var NotificationsList = React.createClass({
             <UserModalContents user={user} />
         );
     },
+    getUser: function getUser (user_id) {
+        for (var i = users.length - 1; i >= 0; i--) {
+            if(users[i].id == user_id) {
+                return users[i];
+            }
+        };
+    },
     createLi: function (notification) {
         var classNames = React.addons.classSet({
             "panel tool animated fadeIn": true,
@@ -43,7 +50,7 @@ var NotificationsList = React.createClass({
             "callout": notification.registration_id != 0
         });
 
-        var user = notification.doer;
+        var user = this.getUser(notification.user_id);
 
     	return (
     		<div className={classNames} key={notification.id}>

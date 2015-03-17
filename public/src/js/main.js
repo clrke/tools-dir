@@ -23719,8 +23719,46 @@ var UserModalContents = React.createClass({
 			return user.about.split('\n')
 				.map(this.createParagraph, this);
 	},
+	handleRoleChange: function () {
+		var user = this.props.user;
+
+		user.role = (parseInt(user.role)+1)%2;
+
+		$.post('/user/update/'+user.id, {role: user.role});
+		this.forceUpdate();
+	},
+	handleAccept: function () {
+		var user = this.props.user;
+
+		user.accepted = (parseInt(user.accepted)+1)%2;
+
+		$.post('/user/update/'+user.id, {accepted: user.accepted});
+		this.forceUpdate();
+	},
     render: function () {
 		var user = this.props.user;
+		var roleChangeButton = user.role == 1? (
+				React.createElement("button", {className: "button primary margin-fix", 
+					onClick: this.handleRoleChange}, 
+					"Admin"
+				)
+			) : (
+				React.createElement("button", {className: "button secondary margin-fix", 
+					onClick: this.handleRoleChange}, 
+					"User"
+				)
+			)
+		var acceptButton = user.accepted == 1? (
+				React.createElement("button", {className: "button success margin-fix", 
+					onClick: this.handleAccept}, 
+					"Accepted"
+				)
+			) : (
+				React.createElement("button", {className: "button secondary margin-fix", 
+					onClick: this.handleAccept}, 
+					"Pending"
+				)
+			)
 		return (
 			React.createElement("div", null, 
 				React.createElement("hr", null), 
@@ -23728,6 +23766,8 @@ var UserModalContents = React.createClass({
 				user.email, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
 				user.occupation, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
 				user.affiliation, 
+				React.createElement("hr", null), 
+				roleChangeButton, " ", acceptButton, 
 				React.createElement("hr", null), 
 				this.getAbout()
 			)
@@ -23776,6 +23816,13 @@ var NotificationsList = React.createClass({
             React.createElement(UserModalContents, {user: user})
         );
     },
+    getUser: function getUser (user_id) {
+        for (var i = users.length - 1; i >= 0; i--) {
+            if(users[i].id == user_id) {
+                return users[i];
+            }
+        };
+    },
     createLi: function (notification) {
         var classNames = React.addons.classSet({
             "panel tool animated fadeIn": true,
@@ -23783,7 +23830,7 @@ var NotificationsList = React.createClass({
             "callout": notification.registration_id != 0
         });
 
-        var user = notification.doer;
+        var user = this.getUser(notification.user_id);
 
     	return (
     		React.createElement("div", {className: classNames, key: notification.id}, 
