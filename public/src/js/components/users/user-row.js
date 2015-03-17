@@ -1,5 +1,6 @@
 var React = require('react');
 var prettyLists = require('pretty-lists');
+var UserModalContents = require('../modals/user-modal-contents');
 
 var UserRow = React.createClass({
 	getInitialState: function () {
@@ -32,26 +33,9 @@ var UserRow = React.createClass({
 		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
 		return items2.map(this.createLi, this);
 	},
-	createParagraph: function (paragraph, i) {
-		return <p key={i}> {paragraph} </p>;
-	},
-	getAbout: function () {
-		var user = this.props.user;
-			return user.about.split('\n')
-				.map(this.createParagraph, this);
-	},
 	profile: function profile() {
-		var user = this.props.user;
 		return (
-			<div>
-				<hr />
-				{user.gender} <i className="fa fa-ellipsis-v" />
-				{user.email} <i className="fa fa-ellipsis-v" />
-				{user.occupation} <i className="fa fa-ellipsis-v" />
-				{user.affiliation}
-				<hr />
-				{this.getAbout()}
-			</div>
+			<UserModalContents user={this.props.user} />
 		);
 	},
 	render: function () {

@@ -23701,6 +23701,41 @@ var Modal = React.createClass({
 
 module.exports = Modal;
 
+},{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/user-modal-contents.js":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+
+var UserModalContents = React.createClass({
+    displayName: 'UserModalContents',
+    propTypes: {
+    	user: React.PropTypes.object.isRequired
+    },
+	createParagraph: function (paragraph, i) {
+		return React.createElement("p", {key: i}, " ", paragraph, " ");
+	},
+	getAbout: function () {
+		var user = this.props.user;
+			return user.about.split('\n')
+				.map(this.createParagraph, this);
+	},
+    render: function () {
+		var user = this.props.user;
+		return (
+			React.createElement("div", null, 
+				React.createElement("hr", null), 
+				user.gender, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
+				user.email, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
+				user.occupation, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
+				user.affiliation, 
+				React.createElement("hr", null), 
+				this.getAbout()
+			)
+		);
+    }
+});
+
+module.exports = UserModalContents;
+
 },{"react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/notifications/notifications-list.js":[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
@@ -24494,6 +24529,7 @@ module.exports = TopBar;
 },{"react/addons":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/addons.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/user-row.js":[function(require,module,exports){
 var React = require('react');
 var prettyLists = require('pretty-lists');
+var UserModalContents = require('../modals/user-modal-contents');
 
 var UserRow = React.createClass({displayName: "UserRow",
 	getInitialState: function () {
@@ -24526,26 +24562,9 @@ var UserRow = React.createClass({displayName: "UserRow",
 		var items2 = prettyLists.getItemsDisplay(items, attr1, attr2);
 		return items2.map(this.createLi, this);
 	},
-	createParagraph: function (paragraph, i) {
-		return React.createElement("p", {key: i}, " ", paragraph, " ");
-	},
-	getAbout: function () {
-		var user = this.props.user;
-			return user.about.split('\n')
-				.map(this.createParagraph, this);
-	},
 	profile: function profile() {
-		var user = this.props.user;
 		return (
-			React.createElement("div", null, 
-				React.createElement("hr", null), 
-				user.gender, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
-				user.email, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
-				user.occupation, " ", React.createElement("i", {className: "fa fa-ellipsis-v"}), 
-				user.affiliation, 
-				React.createElement("hr", null), 
-				this.getAbout()
-			)
+			React.createElement(UserModalContents, {user: this.props.user})
 		);
 	},
 	render: function () {
@@ -24626,7 +24645,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 
 module.exports = UserRow;
 
-},{"pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js":[function(require,module,exports){
+},{"../modals/user-modal-contents":"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/modals/user-modal-contents.js","pretty-lists":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/pretty-lists/pretty-lists.js","react":"/home/arkeidolon/Documents/laravel/tools-dir/node_modules/react/react.js"}],"/home/arkeidolon/Documents/laravel/tools-dir/public/src/js/components/users/users-list.js":[function(require,module,exports){
 var React = require('react');
 var UserPanel = require('./user-row');
 var prettyLists = require('pretty-lists');
