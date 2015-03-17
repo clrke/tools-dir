@@ -113,7 +113,7 @@ Route::post('/register', function ()
 
 Route::post('/user/update/{id}', function ($id)
 {
-	return User::find($id)->update(Input::all());
+	User::find($id)->update(Input::all());
 });
 
 Route::group(['before' => 'admin'], function ()
