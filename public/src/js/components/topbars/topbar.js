@@ -44,7 +44,7 @@ TopBar = React.createClass({
 					<section className="top-bar-section">
 						<ul className="right">
 							<li className={notificationsClassSet}>
-								<a href="#" onClick={handleRouteChange.bind(null, 'Notifications')}>
+								<a href="#notifications" onClick={handleRouteChange.bind(null, 'Notifications')}>
 									Notifications &nbsp;
 									<span className="round alert label">
 										{notifications.filter(this.unread).length}

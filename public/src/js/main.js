@@ -24542,7 +24542,7 @@ TopBar = React.createClass({displayName: "TopBar",
 					React.createElement("section", {className: "top-bar-section"}, 
 						React.createElement("ul", {className: "right"}, 
 							React.createElement("li", {className: notificationsClassSet}, 
-								React.createElement("a", {href: "#", onClick: handleRouteChange.bind(null, 'Notifications')}, 
+								React.createElement("a", {href: "#notifications", onClick: handleRouteChange.bind(null, 'Notifications')}, 
 									"Notifications  ", 
 									React.createElement("span", {className: "round alert label"}, 
 										notifications.filter(this.unread).length
