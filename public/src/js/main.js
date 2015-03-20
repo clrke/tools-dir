@@ -24701,7 +24701,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Votes', this.modalPresentable(
+							React.createElement("h2", null, "Votes"), this.modalPresentable(
 								user.upvotes, 'title'))}, 
 						user.upvotes.length||''
 					)
@@ -24709,7 +24709,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Views', this.modalPresentable(
+							React.createElement("h2", null, "Views"), this.modalPresentable(
 								user.tools_viewed, 'title'))}, 
 						user.tools_viewed.length||''
 					)
@@ -24717,7 +24717,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Downloads', this.modalPresentable(
+							React.createElement("h2", null, "Downloads"), this.modalPresentable(
 								user.downloads, 'pivot.created_at', 'title'))}, 
 						user.downloads.length||''
 					)
@@ -24725,7 +24725,7 @@ var UserRow = React.createClass({displayName: "UserRow",
 				React.createElement("td", {className: "animated fadeIn"}, 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Comments', this.modalPresentable(
+							React.createElement("h2", null, "Comments"), this.modalPresentable(
 								user.tools_commented, 'title'))}, 
 						user.tools_commented.length||''
 					)

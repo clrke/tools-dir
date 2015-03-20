@@ -77,7 +77,7 @@ var UserRow = React.createClass({
 				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Votes', this.modalPresentable(
+							<h2>Votes</h2>, this.modalPresentable(
 								user.upvotes, 'title'))}>
 						{user.upvotes.length||''}
 					</a>
@@ -85,7 +85,7 @@ var UserRow = React.createClass({
 				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Views', this.modalPresentable(
+							<h2>Views</h2>, this.modalPresentable(
 								user.tools_viewed, 'title'))}>
 						{user.tools_viewed.length||''}
 					</a>
@@ -93,7 +93,7 @@ var UserRow = React.createClass({
 				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Downloads', this.modalPresentable(
+							<h2>Downloads</h2>, this.modalPresentable(
 								user.downloads, 'pivot.created_at', 'title'))}>
 						{user.downloads.length||''}
 					</a>
@@ -101,7 +101,7 @@ var UserRow = React.createClass({
 				<td className="animated fadeIn">
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Comments', this.modalPresentable(
+							<h2>Comments</h2>, this.modalPresentable(
 								user.tools_commented, 'title'))}>
 						{user.tools_commented.length||''}
 					</a>
