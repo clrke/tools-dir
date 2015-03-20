@@ -24389,7 +24389,7 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
-var ToolsPagination = require('../pagination/pagination');
+var Pagination = require('../pagination/pagination');
 
 ToolsList = React.createClass({displayName: "ToolsList",
 	getInitialState: function () {
@@ -24495,7 +24495,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 				), 
 				React.createElement("div", {className: classNames}, 
 					React.createElement("div", {className: "panel white"}, 
-						React.createElement(ToolsPagination, {
+						React.createElement(Pagination, {
 							prev: this.handlePrev, 
 							next: this.handleNext, 
 							skip: this.handleSkip, 

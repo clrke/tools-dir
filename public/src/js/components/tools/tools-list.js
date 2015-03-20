@@ -3,7 +3,7 @@ var ToolPanel = require('./tool-panel');
 
 var ToolStats = require('./tool-stats');
 
-var ToolsPagination = require('../pagination/pagination');
+var Pagination = require('../pagination/pagination');
 
 ToolsList = React.createClass({
 	getInitialState: function () {
@@ -109,7 +109,7 @@ ToolsList = React.createClass({
 				</div>
 				<div className={classNames}>
 					<div className="panel white">
-						<ToolsPagination
+						<Pagination
 							prev={this.handlePrev}
 							next={this.handleNext}
 							skip={this.handleSkip}
