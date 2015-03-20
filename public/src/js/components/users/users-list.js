@@ -6,7 +6,10 @@ var Pagination = require('../pagination/pagination');
 
 var UsersList = React.createClass({
 	getInitialState: function () {
-		return {page: 1, pageChange: 0};
+		return {
+            page: this.props.page || 1,
+            pageChange: 0
+       	};
 	},
 	propTypes: {
 		users: React.PropTypes.array.isRequired,

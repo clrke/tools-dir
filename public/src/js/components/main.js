@@ -78,7 +78,8 @@ var MainPage = React.createClass({
 		var page;
 		switch(route[0]) {
 			case '#users':
-				page = <UsersList users={queriedItems} pageLength={5}
+				page = <UsersList users={queriedItems}
+					pageLength={5} page={route[1]}
 					setModalContents={this.setModalContents}/>;
 				break;
 			case '#notifications':

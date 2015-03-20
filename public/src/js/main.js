@@ -23639,7 +23639,8 @@ var MainPage = React.createClass({displayName: "MainPage",
 		var page;
 		switch(route[0]) {
 			case '#users':
-				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5, 
+				page = React.createElement(UsersList, {users: queriedItems, 
+					pageLength: 5, page: route[1], 
 					setModalContents: this.setModalContents});
 				break;
 			case '#notifications':
@@ -24745,7 +24746,10 @@ var Pagination = require('../pagination/pagination');
 
 var UsersList = React.createClass({displayName: "UsersList",
 	getInitialState: function () {
-		return {page: 1, pageChange: 0};
+		return {
+            page: this.props.page || 1,
+            pageChange: 0
+       	};
 	},
 	propTypes: {
 		users: React.PropTypes.array.isRequired,
