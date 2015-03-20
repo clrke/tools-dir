@@ -23648,7 +23648,8 @@ var MainPage = React.createClass({displayName: "MainPage",
 					handleNotificationClick: this.handleNotificationClick, 
 					handleNotificationsClick: this.handleNotificationsClick, 
 					setModalContents: this.setModalContents, 
-					pageLength: 5});
+					pageLength: 5, 
+					page: route[1]});
 				break;
 			default:
 				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5, 
@@ -23793,7 +23794,7 @@ var NotificationsList = React.createClass({
     displayName: 'NotificationsList',
     getInitialState: function () {
         return {
-            page: 1,
+            page: this.props.page || 1,
         };
     },
     propTypes: {
@@ -23889,6 +23890,7 @@ var NotificationsList = React.createClass({
                             prev: this.handlePrev, 
                             next: this.handleNext, 
                             skip: this.handleSkip, 
+                            route: "#notifications", 
                             page: this.state.page, 
                             pageCount: pageCount}), 
 
@@ -23920,6 +23922,14 @@ module.exports = NotificationsList;
 var React = require('react/addons');
 
 ToolsPagination = React.createClass({displayName: "ToolsPagination",
+	getInitialState: function () {
+		return {
+			route: this.props.route || '#'
+		}
+	},
+	propTypes: {
+		route: React.PropTypes.string
+	},
 	render: function () {
 		var pages = [];
 
@@ -23937,7 +23947,7 @@ ToolsPagination = React.createClass({displayName: "ToolsPagination",
 
 			return (
 				React.createElement("li", {key: page.key, className: classNames}, 
-					React.createElement("a", {href: "#", 
+					React.createElement("a", {href: this.state.route+"/"+page.key, 
 						onClick: this.props.skip.bind(null, page.key)}, 
 							page.key
 					)
@@ -23959,7 +23969,10 @@ ToolsPagination = React.createClass({displayName: "ToolsPagination",
 			React.createElement("div", {className: "pagination-centered"}, 
 				React.createElement("ul", {className: "pagination"}, 
 					React.createElement("li", {className: prevClassNames}, 
-						React.createElement("a", {href: "#", 
+						React.createElement("a", {href: 
+							this.state.route+"/"+
+							(this.props.page), 
+							
 							onClick: 
 								this.props.page > 1?
 								this.props.prev: null
@@ -23967,7 +23980,11 @@ ToolsPagination = React.createClass({displayName: "ToolsPagination",
 					), 
 					pages.map(pageListItem, this), 
 					React.createElement("li", {className: nextClassNames}, 
-						React.createElement("a", {href: "#", 
+						React.createElement("a", {href: 
+							this.state.route+"/"+
+							(this.props.page), 
+							
+
 							onClick: 
 								this.props.page < this.props.pageCount?
 								this.props.next: null
@@ -24482,6 +24499,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 							prev: this.handlePrev, 
 							next: this.handleNext, 
 							skip: this.handleSkip, 
+							route: "#software", 
 							page: this.state.page, 
 							pageCount: pageCount}), 
 						this.props.tools.slice(
@@ -24757,6 +24775,7 @@ var UsersList = React.createClass({displayName: "UsersList",
 						prev: this.handlePrev, 
 						next: this.handleNext, 
 						skip: this.handleSkip, 
+                        route: "#users", 
 						page: this.state.page, 
 						pageCount: pageCount}), 
 					React.createElement("table", null, 

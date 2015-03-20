@@ -11,7 +11,7 @@ var NotificationsList = React.createClass({
     displayName: 'NotificationsList',
     getInitialState: function () {
         return {
-            page: 1,
+            page: this.props.page || 1,
         };
     },
     propTypes: {
@@ -107,6 +107,7 @@ var NotificationsList = React.createClass({
                             prev={this.handlePrev}
                             next={this.handleNext}
                             skip={this.handleSkip}
+                            route="#notifications"
                             page={this.state.page}
                             pageCount={pageCount}/>
 

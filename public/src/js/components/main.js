@@ -87,7 +87,8 @@ var MainPage = React.createClass({
 					handleNotificationClick={this.handleNotificationClick}
 					handleNotificationsClick={this.handleNotificationsClick}
 					setModalContents={this.setModalContents}
-					pageLength={5} />;
+					pageLength={5}
+					page={route[1]}/>;
 				break;
 			default:
 				page = <ToolsList tools={queriedItems} pageLength={5}

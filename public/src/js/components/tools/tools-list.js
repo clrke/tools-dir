@@ -113,6 +113,7 @@ ToolsList = React.createClass({
 							prev={this.handlePrev}
 							next={this.handleNext}
 							skip={this.handleSkip}
+							route="#software"
 							page={this.state.page}
 							pageCount={pageCount}/>
 						{this.props.tools.slice(

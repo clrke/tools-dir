@@ -1,6 +1,14 @@
 var React = require('react/addons');
 
 ToolsPagination = React.createClass({
+	getInitialState: function () {
+		return {
+			route: this.props.route || '#'
+		}
+	},
+	propTypes: {
+		route: React.PropTypes.string
+	},
 	render: function () {
 		var pages = [];
 
@@ -18,7 +26,7 @@ ToolsPagination = React.createClass({
 
 			return (
 				<li key={page.key} className={classNames}>
-					<a href="#"
+					<a href={this.state.route+"/"+page.key}
 						onClick={this.props.skip.bind(null, page.key)}>
 							{page.key}
 					</a>
@@ -40,7 +48,10 @@ ToolsPagination = React.createClass({
 			<div className="pagination-centered">
 				<ul className="pagination">
 					<li className={prevClassNames}>
-						<a href="#"
+						<a href={
+							this.state.route+"/"+
+							(this.props.page)
+							}
 							onClick={
 								this.props.page > 1?
 								this.props.prev: null
@@ -48,7 +59,11 @@ ToolsPagination = React.createClass({
 					</li>
 					{pages.map(pageListItem, this)}
 					<li className={nextClassNames}>
-						<a href="#"
+						<a href={
+							this.state.route+"/"+
+							(this.props.page)
+							}
+
 							onClick={
 								this.props.page < this.props.pageCount?
 								this.props.next: null

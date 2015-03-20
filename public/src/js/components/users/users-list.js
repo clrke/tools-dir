@@ -36,6 +36,7 @@ var UsersList = React.createClass({
 						prev={this.handlePrev}
 						next={this.handleNext}
 						skip={this.handleSkip}
+                        route="#users"
 						page={this.state.page}
 						pageCount={pageCount}/>
 					<table>
