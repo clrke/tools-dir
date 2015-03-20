@@ -23665,7 +23665,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 				React.createElement(TopBar, {user: authUser, 
 					handleSearch: this.handleSearch, 
 					handleRouteChange: this.handleRouteChange, 
-					route: this.state.route}), 
+					route: route[0].substring(1, route[0].length)}), 
 				React.createElement(Modal, {title: this.state.modalTitle, 
 					contents: this.state.modalContents}), 
 				page

@@ -104,7 +104,7 @@ var MainPage = React.createClass({
 				<TopBar user={authUser}
 					handleSearch={this.handleSearch}
 					handleRouteChange={this.handleRouteChange}
-					route={this.state.route}/>
+					route={route[0].substring(1, route[0].length)}/>
 				<Modal title={this.state.modalTitle}
 					contents={this.state.modalContents}/>
 				{page}
