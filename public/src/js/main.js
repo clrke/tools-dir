@@ -23689,13 +23689,13 @@ var Modal = React.createClass({
         return {};
     },
     propTypes: {
-    	title: React.PropTypes.string.isRequired,
+    	title: React.PropTypes.renderable.isRequired,
     	contents: React.PropTypes.renderable.isRequired
     },
     render: function () {
         return (
 			React.createElement("div", {id: "myModal", className: "reveal-modal", "data-reveal": true}, 
-				React.createElement("h2", null, this.props.title), 
+				this.props.title, 
 				React.createElement("p", null, this.props.contents), 
 				React.createElement("a", {className: "close-reveal-modal"}, "×")
 			)
@@ -24327,27 +24327,27 @@ ToolStats = React.createClass({displayName: "ToolStats",
 					), 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Voters', this.modalPresentable(
+							React.createElement("h2", null, "Voters"), this.modalPresentable(
 								upvoters, 'username'))}, 
 						 prettyLists.format1(upvoters, 'username') 
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Viewers', this.modalPresentable(
+							React.createElement("h2", null, "Viewers"), this.modalPresentable(
 								viewers, 'username', 'pivot.count'))}, 
 						React.createElement("i", {className: "fa fa-eye red"}, " "), 
 						 prettyLists.format2(viewers, 'username', 'pivot.count') 
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Downloaders', this.modalPresentable(
+							React.createElement("h2", null, "Downloaders"), this.modalPresentable(
 								downloads, 'pivot.created_at', 'username'))}, 
 						React.createElement("i", {className: "fa fa-download purple"}, " "), 
 						 prettyLists.format1(downloaders, 'username') 
 					), " ", React.createElement("br", null), 
 					React.createElement("a", {href: "#", "data-reveal-id": "myModal", 
 						onClick: this.props.setModalContents.bind(null,
-							'Commenters', this.modalPresentable(
+							React.createElement("h2", null, "Commenters"), this.modalPresentable(
 								commenters, 'username'))}, 
 						React.createElement("i", {className: "fa fa-comments green"}, " "), 
 						 prettyLists.format1(commenters, 'username') 

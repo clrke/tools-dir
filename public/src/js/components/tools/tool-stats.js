@@ -84,27 +84,27 @@ ToolStats = React.createClass({
 					</a>
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Voters', this.modalPresentable(
+							<h2>Voters</h2>, this.modalPresentable(
 								upvoters, 'username'))}>
 						{ prettyLists.format1(upvoters, 'username') }
 					</a> <br/>
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Viewers', this.modalPresentable(
+							<h2>Viewers</h2>, this.modalPresentable(
 								viewers, 'username', 'pivot.count'))}>
 						<i className="fa fa-eye red"> </i>
 						{ prettyLists.format2(viewers, 'username', 'pivot.count') }
 					</a> <br/>
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Downloaders', this.modalPresentable(
+							<h2>Downloaders</h2>, this.modalPresentable(
 								downloads, 'pivot.created_at', 'username'))}>
 						<i className="fa fa-download purple"> </i>
 						{ prettyLists.format1(downloaders, 'username') }
 					</a> <br/>
 					<a href="#" data-reveal-id="myModal"
 						onClick={this.props.setModalContents.bind(null,
-							'Commenters', this.modalPresentable(
+							<h2>Commenters</h2>, this.modalPresentable(
 								commenters, 'username'))}>
 						<i className="fa fa-comments green"> </i>
 						{ prettyLists.format1(commenters, 'username') }

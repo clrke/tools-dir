@@ -7,13 +7,13 @@ var Modal = React.createClass({
         return {};
     },
     propTypes: {
-    	title: React.PropTypes.string.isRequired,
+    	title: React.PropTypes.renderable.isRequired,
     	contents: React.PropTypes.renderable.isRequired
     },
     render: function () {
         return (
 			<div id="myModal" className="reveal-modal" data-reveal>
-				<h2>{this.props.title}</h2>
+				{this.props.title}
 				<p>{this.props.contents}</p>
 				<a className="close-reveal-modal">&#215;</a>
 			</div>
