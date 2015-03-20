@@ -11,7 +11,7 @@ ToolsList = React.createClass({
 		var tool = null;
 		var toolId = this.props.toolId;
 		var initialAnimation = true;
-		var page = 1;
+		var page = this.props.page || 1;
 
 		if(toolId != null) {
 			for (var i = 0; i < tools.length; i++) {
@@ -39,6 +39,8 @@ ToolsList = React.createClass({
 	},
 	setCurrentTool: function (tool) {
 		if(this.state.tool != tool) {
+			window.location.hash = '#software/'+
+				this.state.page+'/'+tool.id;
 			$.post('/view/'+tool.id, 'view');
 			tool.views++;
 

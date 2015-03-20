@@ -92,9 +92,10 @@ var MainPage = React.createClass({
 					page={route[1]}/>;
 				break;
 			default:
-				page = <ToolsList tools={queriedItems} pageLength={5}
+				page = <ToolsList tools={queriedItems}
+					pageLength={5} page={route[1]}
 					setModalContents={this.setModalContents}
-					toolId={route[1] || this.state.toolId}/>;
+					toolId={route[2] || this.state.toolId}/>;
 				break;
 		}
 

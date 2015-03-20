@@ -23653,9 +23653,10 @@ var MainPage = React.createClass({displayName: "MainPage",
 					page: route[1]});
 				break;
 			default:
-				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5, 
+				page = React.createElement(ToolsList, {tools: queriedItems, 
+					pageLength: 5, page: route[1], 
 					setModalContents: this.setModalContents, 
-					toolId: route[1] || this.state.toolId});
+					toolId: route[2] || this.state.toolId});
 				break;
 		}
 
@@ -23855,7 +23856,7 @@ var NotificationsList = React.createClass({
                 
                     notification.tool != null ? (
                         React.createElement("b", null, 
-                            React.createElement("a", {href: "#software/"+notification.tool_id, 
+                            React.createElement("a", {href: "#software/?/"+notification.tool_id, 
                                 onClick: this.props.handleToolClick
                                     .bind(null, notification, notification.tool_id)}, 
                                 notification.tool.title
@@ -24398,7 +24399,7 @@ ToolsList = React.createClass({displayName: "ToolsList",
 		var tool = null;
 		var toolId = this.props.toolId;
 		var initialAnimation = true;
-		var page = 1;
+		var page = this.props.page || 1;
 
 		if(toolId != null) {
 			for (var i = 0; i < tools.length; i++) {
@@ -24426,6 +24427,8 @@ ToolsList = React.createClass({displayName: "ToolsList",
 	},
 	setCurrentTool: function (tool) {
 		if(this.state.tool != tool) {
+			window.location.hash = '#software/'+
+				this.state.page+'/'+tool.id;
 			$.post('/view/'+tool.id, 'view');
 			tool.views++;
 

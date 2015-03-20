@@ -71,7 +71,7 @@ var NotificationsList = React.createClass({
                 {
                     notification.tool != null ? (
                         <b>
-                            <a href={"#software/"+notification.tool_id}
+                            <a href={"#software/?/"+notification.tool_id}
                                 onClick={this.props.handleToolClick
                                     .bind(null, notification, notification.tool_id)}>
                                 {notification.tool.title}
