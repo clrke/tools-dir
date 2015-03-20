@@ -20,13 +20,13 @@ TopBar = React.createClass({
 		var handleRouteChange = this.state.handleRouteChange;
 		var classSet = React.addons.classSet;
 		var usersClassSet = classSet({
-			'active': this.props.route == 'Users'
+			'active': this.props.route == '#users'
 		});
 		var softwareClassSet = classSet({
-			'active': this.props.route == 'Software'
+			'active': this.props.route == '#software'
 		});
 		var notificationsClassSet = classSet({
-			'active': this.props.route == 'Notifications'
+			'active': this.props.route == '#notifications'
 		});
 		return (
 			<div className="fixed">
@@ -44,7 +44,7 @@ TopBar = React.createClass({
 					<section className="top-bar-section">
 						<ul className="right">
 							<li className={notificationsClassSet}>
-								<a href="#notifications" onClick={handleRouteChange.bind(null, 'Notifications')}>
+								<a href="#notifications" onClick={handleRouteChange.bind(null, '#notifications')}>
 									Notifications &nbsp;
 									<span className="round alert label">
 										{notifications.filter(this.unread).length}
@@ -61,7 +61,7 @@ TopBar = React.createClass({
 									}
 									<li className={softwareClassSet}>
 										<a href="#software"
-											onClick={handleRouteChange.bind(null, 'Software')}>
+											onClick={handleRouteChange.bind(null, '#software')}>
 											{
 												this.props.user.role == 1 ?
 													'Manage Software' :
@@ -73,7 +73,7 @@ TopBar = React.createClass({
 										this.props.user.role == 1 ?
 										<li className={usersClassSet}>
 											<a href="#users"
-												onClick={handleRouteChange.bind(null, 'Users')}>
+												onClick={handleRouteChange.bind(null, '#users')}>
 												Manage Users
 											</a>
 										</li> :

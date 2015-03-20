@@ -11,7 +11,7 @@ var MainPage = React.createClass({
 	getInitialState: function () {
 		return {
 			query: '',
-			route: 'Software',
+			route: window.location.hash || '#software',
 			modalTitle: '',
 			modalContents: []
 		};
@@ -51,11 +51,13 @@ var MainPage = React.createClass({
 
 		var items;
 
-		switch(this.state.route) {
-			case 'Users':
+		var route = this.state.route.split('/');
+
+		switch(route[0]) {
+			case '#users':
 				items = users;
 				break;
-			case 'Notifications':
+			case '#notifications':
 				items = notifications;
 				break;
 			default:
@@ -74,12 +76,12 @@ var MainPage = React.createClass({
 		});
 
 		var page;
-		switch(this.state.route) {
-			case 'Users':
+		switch(route[0]) {
+			case '#users':
 				page = <UsersList users={queriedItems} pageLength={5}
 					setModalContents={this.setModalContents}/>;
 				break;
-			case 'Notifications':
+			case '#notifications':
 				page = <NotificationsList notifications={queriedItems}
 					handleToolClick={this.handleToolClick}
 					handleNotificationClick={this.handleNotificationClick}
@@ -90,7 +92,7 @@ var MainPage = React.createClass({
 			default:
 				page = <ToolsList tools={queriedItems} pageLength={5}
 					setModalContents={this.setModalContents}
-					toolId={this.state.toolId}/>;
+					toolId={route[1] || this.state.toolId}/>;
 				break;
 		}
 

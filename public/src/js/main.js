@@ -23572,7 +23572,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 	getInitialState: function () {
 		return {
 			query: '',
-			route: 'Software',
+			route: window.location.hash || '#software',
 			modalTitle: '',
 			modalContents: []
 		};
@@ -23612,11 +23612,13 @@ var MainPage = React.createClass({displayName: "MainPage",
 
 		var items;
 
-		switch(this.state.route) {
-			case 'Users':
+		var route = this.state.route.split('/');
+
+		switch(route[0]) {
+			case '#users':
 				items = users;
 				break;
-			case 'Notifications':
+			case '#notifications':
 				items = notifications;
 				break;
 			default:
@@ -23635,12 +23637,12 @@ var MainPage = React.createClass({displayName: "MainPage",
 		});
 
 		var page;
-		switch(this.state.route) {
-			case 'Users':
+		switch(route[0]) {
+			case '#users':
 				page = React.createElement(UsersList, {users: queriedItems, pageLength: 5, 
 					setModalContents: this.setModalContents});
 				break;
-			case 'Notifications':
+			case '#notifications':
 				page = React.createElement(NotificationsList, {notifications: queriedItems, 
 					handleToolClick: this.handleToolClick, 
 					handleNotificationClick: this.handleNotificationClick, 
@@ -23651,7 +23653,7 @@ var MainPage = React.createClass({displayName: "MainPage",
 			default:
 				page = React.createElement(ToolsList, {tools: queriedItems, pageLength: 5, 
 					setModalContents: this.setModalContents, 
-					toolId: this.state.toolId});
+					toolId: route[1] || this.state.toolId});
 				break;
 		}
 
@@ -23851,7 +23853,7 @@ var NotificationsList = React.createClass({
                 
                     notification.tool != null ? (
                         React.createElement("b", null, 
-                            React.createElement("a", {href: "#", 
+                            React.createElement("a", {href: "#software/"+notification.tool_id, 
                                 onClick: this.props.handleToolClick
                                     .bind(null, notification, notification.tool_id)}, 
                                 notification.tool.title
@@ -24518,13 +24520,13 @@ TopBar = React.createClass({displayName: "TopBar",
 		var handleRouteChange = this.state.handleRouteChange;
 		var classSet = React.addons.classSet;
 		var usersClassSet = classSet({
-			'active': this.props.route == 'Users'
+			'active': this.props.route == '#users'
 		});
 		var softwareClassSet = classSet({
-			'active': this.props.route == 'Software'
+			'active': this.props.route == '#software'
 		});
 		var notificationsClassSet = classSet({
-			'active': this.props.route == 'Notifications'
+			'active': this.props.route == '#notifications'
 		});
 		return (
 			React.createElement("div", {className: "fixed"}, 
@@ -24542,7 +24544,7 @@ TopBar = React.createClass({displayName: "TopBar",
 					React.createElement("section", {className: "top-bar-section"}, 
 						React.createElement("ul", {className: "right"}, 
 							React.createElement("li", {className: notificationsClassSet}, 
-								React.createElement("a", {href: "#notifications", onClick: handleRouteChange.bind(null, 'Notifications')}, 
+								React.createElement("a", {href: "#notifications", onClick: handleRouteChange.bind(null, '#notifications')}, 
 									"Notifications  ", 
 									React.createElement("span", {className: "round alert label"}, 
 										notifications.filter(this.unread).length
@@ -24559,7 +24561,7 @@ TopBar = React.createClass({displayName: "TopBar",
 									
 									React.createElement("li", {className: softwareClassSet}, 
 										React.createElement("a", {href: "#software", 
-											onClick: handleRouteChange.bind(null, 'Software')}, 
+											onClick: handleRouteChange.bind(null, '#software')}, 
 											
 												this.props.user.role == 1 ?
 													'Manage Software' :
@@ -24571,7 +24573,7 @@ TopBar = React.createClass({displayName: "TopBar",
 										this.props.user.role == 1 ?
 										React.createElement("li", {className: usersClassSet}, 
 											React.createElement("a", {href: "#users", 
-												onClick: handleRouteChange.bind(null, 'Users')}, 
+												onClick: handleRouteChange.bind(null, '#users')}, 
 												"Manage Users"
 											)
 										) :
