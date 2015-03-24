@@ -91,18 +91,21 @@ class MailSendCommand extends Command {
 		foreach(User::all() as $user)
 		{
 			$unreadNotifications = $user->unreadNotifications;
-			if($unreadNotifications->count()) {
+			$unreadNotifsCount = $unreadNotifications->count();
+			if($unreadNotifsCount) {
+
+				$subject = "PUP NLP SIG ($unreadNotifsCount)";
 				$name = $user->name;
-				$content = 'You have '.$unreadNotifications->count().
+				$content = 'You have '.$unreadNotifsCount.
 						' unread notification(s)! Please go to'.
 						'the PUP NLP SIG website for more details.';
 
 				Mail::send('mail',
 					compact('name', 'content'),
-					function($message) use ($user)
+					function($message) use ($user, $subject)
 					{
 						$message->to($user->email, $user->name)
-							->subject('PUP NLP SIG Notifications');
+							->subject($subject);
 					}
 				);
 			}
